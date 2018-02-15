@@ -1,0 +1,22 @@
+TODO LIST
+
+X - Marked as finished
+? - Marked as under development
+
+
+1. Features
+
+X - Develop first level base mechanics 			(TP1 - Task #1 to #4)
+  - Develop second level (Ogre Boss Battle)		(TP1 - Task #5 to #6)
+
+2. Refactoring (Code organization and Readability)
+
+? - Develop a class for representing guards (might be useful if many guards of the same style appear).
+  - Develop a class for the player to keep track of its position, movement and other effects.
+  - Develop a class for representing positions, movement direction and adjacency effects (like guard capturing player)
+	to avoid repeating code for various entities.
+	
+  - Clean up main() by distributing load across other classes to make it more readable and straightforward.
+  - Develop a mechanism to avoid repeating code for exiting program (a simple exit() function can solve this for now, 
+  	might not be necessary depending on how main() is organized).
+	
