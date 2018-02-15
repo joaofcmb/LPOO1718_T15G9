@@ -46,4 +46,10 @@ public class Guard {
 			break;
 		}			
 	}
+	
+	// FUNCTION: Checks if the player is nearby guard
+	public static boolean playerTrigger(int[] playerPos) {
+		// notice how the calculated gap is only equal to 1 when the player is near the guard (non diagonally)
+		return (Math.abs(playerPos[0] - guardPos[0]) + Math.abs(playerPos[1] - guardPos[1]) < 2); 	
+	}
 }

@@ -10,8 +10,13 @@ public class DungeonKeep {
 		while(true) {
 			// Render map
 			Map.toString(Map.startingMap);
-			
+
 			// check if guard moved near player
+			if (Guard.playerTrigger(playerPos)) {
+				System.out.println("You were caught!");
+				playerInput.close();
+				return;
+			}
 
 			// calculate new player position
 			nextplayerPos = playerPos.clone();
@@ -37,14 +42,20 @@ public class DungeonKeep {
 			}
 
 			// check for map collisions and triggers caused by new player position
-			switch(Map.startingMap[nextplayerPos[0]][nextplayerPos[1]]) {
+			switch (Map.startingMap[nextplayerPos[0]][nextplayerPos[1]]) {
 			case 'k':
 				Map.startingMap[5][0] = Map.startingMap[6][0] = 'S';
 				break;
 			case ' ': {
+				// update player's position and change map accordingly
 				Map.startingMap[playerPos[0]][playerPos[1]] = ' ';
 				playerPos=nextplayerPos.clone();
 				Map.startingMap[playerPos[0]][playerPos[1]] = 'H';
+				
+				// update guard's position and change map accordingly (Notice it's duplicate code from player)
+				Map.startingMap[Guard.guardPos[0]][Guard.guardPos[1]] = ' ';
+				Guard.updatePos();
+				Map.startingMap[Guard.guardPos[0]][Guard.guardPos[1]] = 'G';
 				break;
 			}
 			case 'S': {
@@ -53,13 +64,6 @@ public class DungeonKeep {
 				return;
 			}
 			}
-			
-			// check if player moved near guard
-			
-			// update guard's position and change map accordingly (Notice it's duplicate code from player)
-			Map.startingMap[Guard.guardPos[0]][Guard.guardPos[1]] = ' ';
-			Guard.updatePos();
-			Map.startingMap[Guard.guardPos[0]][Guard.guardPos[1]] = 'G';
 		}		
 	}
 }
