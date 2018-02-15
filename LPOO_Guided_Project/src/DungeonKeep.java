@@ -4,25 +4,14 @@ public class DungeonKeep {
 	public static void main(String[] args) {
 		Scanner playerInput = new Scanner(System.in);
 
-		char[][] startingMap = {
-				{'X','X','X','X','X','X','X','X','X','X'},
-				{'X','H',' ',' ','I',' ','X',' ','G','X'},
-				{'X','X','X',' ','X','X','X',' ',' ','X'},
-				{'X',' ','I',' ','I',' ','X',' ',' ','X'},
-				{'X','X','X',' ','X','X','X',' ',' ','X'},
-				{'I',' ',' ',' ',' ',' ',' ',' ',' ','X'},
-				{'I',' ',' ',' ',' ',' ',' ',' ',' ','X'},
-				{'X','X','X',' ','X','X','X','X',' ','X'},
-				{'X',' ','I',' ','I',' ','X','k',' ','X'},
-				{'X','X','X','X','X','X','X','X','X','X'}
-		};
+		
 
-		int[] playerPos = {1,1}, guardPos = {1,8};
+		int[] playerPos = {1,1};
 		int[] nextplayerPos = new int[2];
 
-		
+
 		while(true) {
-			Map.toString(startingMap);
+			Map.toString(Map.startingMap);
 
 			nextplayerPos = playerPos.clone();
 
@@ -46,14 +35,14 @@ public class DungeonKeep {
 				return;
 			}
 
-			switch(startingMap[nextplayerPos[0]][nextplayerPos[1]]) {
+			switch(Map.startingMap[nextplayerPos[0]][nextplayerPos[1]]) {
 			case 'k':
-				startingMap[5][0] = startingMap[6][0] = 'S';
+				Map.startingMap[5][0] = Map.startingMap[6][0] = 'S';
 				break;
 			case ' ': {
-				startingMap[playerPos[0]][playerPos[1]] = ' ';
+				Map.startingMap[playerPos[0]][playerPos[1]] = ' ';
 				playerPos=nextplayerPos.clone();
-				startingMap[playerPos[0]][playerPos[1]] = 'H';
+				Map.startingMap[playerPos[0]][playerPos[1]] = 'H';
 				break;
 			}
 			case 'S': {
