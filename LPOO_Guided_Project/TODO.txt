@@ -12,7 +12,7 @@ X - Develop first level base mechanics 			(TP1 - Task #1 to #4)
 2. Refactoring (Code organization and Readability)
 
 ? - Develop a class for representing guards (might be useful if many guards of the same style appear).
-  - Develop a class for the player to keep track of its position, movement and other effects.
+X - Develop a class for the player to keep track of its position, movement and other effects.
   - Develop a class for representing positions, movement direction and adjacency effects (like guard capturing player)
 	to avoid repeating code for various entities.
 	
