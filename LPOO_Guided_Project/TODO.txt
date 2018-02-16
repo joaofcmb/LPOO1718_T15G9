@@ -8,7 +8,10 @@ X - Marked as finished
 
 X - Develop first level base mechanics 			(TP1 - Task #1 to #4)
   - Develop second level (Ogre Boss Battle)		(TP1 - Task #5 to #6)
-
+	X - Design map
+	? - Ogre behavior (adapt to new guard representing class when available)
+	- Ogre's club implementation
+	
 2. Refactoring (Code organization and Readability)
 
 ? - Develop a class for representing guards (might be useful if many guards of the same style appear).

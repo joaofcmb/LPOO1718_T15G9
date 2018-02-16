@@ -27,9 +27,9 @@ public class DungeonKeep {
 				Map.startingMap[Player.position[0]][Player.position[1]] = 'H';
 
 				// update guard's position and change map accordingly (Notice it's duplicate code from player)
-				Map.startingMap[Guard.guardPos[0]][Guard.guardPos[1]] = ' ';
-				Guard.updatePos();
-				Map.startingMap[Guard.guardPos[0]][Guard.guardPos[1]] = 'G';
+				Map.startingMap[Guard.position[0]][Guard.position[1]] = ' ';
+				Guard.updatePosition();
+				Map.startingMap[Guard.position[0]][Guard.position[1]] = 'G';
 				break;
 			}
 			case 'S': {
