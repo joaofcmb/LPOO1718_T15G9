@@ -8,9 +8,9 @@ X - Marked as finished
 
 X - Develop first level base mechanics 			(TP1 - Task #1 to #4)
   - Develop second level (Ogre Boss Battle)		(TP1 - Task #5 to #6)
-	X - Design map
-	? - Ogre behavior (adapt to new guard representing class when available)
-	- Ogre's club implementation
+		X - Design map
+		? - Ogre behavior (adapt to new guard representing class when available)
+		- Ogre's club implementation
 	
 2. Refactoring (Code organization and Readability)
 
@@ -18,6 +18,7 @@ X - Develop first level base mechanics 			(TP1 - Task #1 to #4)
 X - Develop a class for the player to keep track of its position, movement and other effects.
   - Develop a class for representing positions, movement direction and adjacency effects (like guard capturing player)
 	to avoid repeating code for various entities.
+  - Develop a class for managing game logic (game initialization and exit, map gameplay loop, etc..)
 	
   - Clean up main() by distributing load across other classes to make it more readable and straightforward.
   - Develop a mechanism to avoid repeating code for exiting program (a simple exit() function can solve this for now, 
