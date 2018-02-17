@@ -2,32 +2,36 @@ import java.util.Scanner;
 
 public class Player {
 	static Scanner playerInput = new Scanner(System.in);
+	
+	public static Position position = new Position(1, 1);
+	public static Position nextPosition = new Position();
 
-	public static int[] position = {1,1};
-	static int[] nextPosition = new int[2];
-
-	public static int move() {
-		nextPosition = position.clone();
+	public static int updatePosition() {
+		Position.Direction direction = Position.Direction.NONE;
 
 		char keyInput = playerInput.next().charAt(0);
 		switch(keyInput) {
 		case 'w':
-			nextPosition[0]--;
+			direction = Position.Direction.UP;
 			break;
 		case 'a':
-			nextPosition[1]--;
-			break;
-		case 'd':
-			nextPosition[1]++;
+			direction = Position.Direction.LEFT;
 			break;
 		case 's':
-			nextPosition[0]++;
+			direction = Position.Direction.DOWN;
+			break;
+		case 'd':
+			direction = Position.Direction.RIGHT;
 			break;
 		default:
 			endgame();
 			System.out.println("End of program");
 			return -1;
 		}
+		// TODO Separate Input retrieval from this function (maybe add it to a Game class)
+		
+		nextPosition = position.move(direction);
+		
 		return 0;
 	}
 
@@ -35,8 +39,7 @@ public class Player {
 	public static void levelPosition(int level) {
 		switch(level) {
 		case 2: 
-			position[0] = 7;
-			position[1] = 1;
+			position = new Position(7, 1);
 			break;
 		default:
 			System.out.println("levelPosition() - Unknown level");

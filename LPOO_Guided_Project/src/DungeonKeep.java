@@ -6,30 +6,31 @@ public class DungeonKeep {
 			Map.toString(Map.startingMap);
 
 			// check if guard moved near player
-			if (Guard.playerTrigger(Player.position)) {
+			if (Player.position.isAdjacent(Guard.position)) {
 				Player.endgame();
 				System.out.println("You were caught!");
 				return;
 			}
 
 			// calculate new player position
-			Player.move();
+			Player.updatePosition();
 
 			// check for map collisions and triggers caused by new player position
-			switch (Map.startingMap[Player.nextPosition[0]][Player.nextPosition[1]]) {
+			switch (Player.nextPosition.tile(Map.startingMap)) {
 			case 'k':
 				Map.startingMap[5][0] = Map.startingMap[6][0] = 'S';
 				break;
 			case ' ': {
+				
+				// TODO create a superclass or interface for player and guard since they share variables and methods
+				// TODO wrapper function for Position.move in the referred superclass or interface
+				
 				// update player's position and change map accordingly
-				Map.startingMap[Player.position[0]][Player.position[1]] = ' ';
-				Player.position=Player.nextPosition.clone();
-				Map.startingMap[Player.position[0]][Player.position[1]] = 'H';
-
-				// update guard's position and change map accordingly (Notice it's duplicate code from player)
-				Map.startingMap[Guard.position[0]][Guard.position[1]] = ' ';
-				Guard.updatePosition();
-				Map.startingMap[Guard.position[0]][Guard.position[1]] = 'G';
+				Player.position.moveTile(Player.nextPosition, 'H', Map.startingMap);
+				
+				// update guard's position and change map accordingly
+				Guard.updatePosition(); 
+				Guard.position.moveTile(Guard.nextPosition, 'G', Map.startingMap);
 				break;
 			}
 			case 'S': {
