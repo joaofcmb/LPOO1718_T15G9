@@ -1,5 +1,5 @@
 public class Map {
-	static char[][] startingMap = {
+	public static char[][] mapLevel1 = {
 			{'X','X','X','X','X','X','X','X','X','X'},
 			{'X','H',' ',' ','I',' ','X',' ','G','X'},
 			{'X','X','X',' ','X','X','X',' ',' ','X'},
@@ -12,7 +12,7 @@ public class Map {
 			{'X','X','X','X','X','X','X','X','X','X'}
 	};
 
-	static char[][] maplevel2 = {
+	public static char[][] mapLevel2 = {
 			{'X','X','X','X','X','X','X','X','X'},
 			{'I',' ',' ',' ','O',' ',' ','k','X'},
 			{'X',' ',' ',' ',' ',' ',' ',' ','X'},
@@ -23,12 +23,21 @@ public class Map {
 			{'X','H',' ',' ',' ',' ',' ',' ','X'},
 			{'X','X','X','X','X','X','X','X','X'}
 	};
-	
+
+	public static char[][] current = mapLevel1;
+	public static int level = 1;
+
 	public static void toString(char[][] map) {
 		for(int i=0;i<map.length;i++) {
 			for(int j=0;j<map[i].length;j++) 
 				System.out.print(map[i][j] + " ");
 			System.out.println();
 		}
+	}
+
+	public static void nextLevel() 
+	{
+		current = mapLevel2;
+		Player.levelPosition(2);
 	}
 }

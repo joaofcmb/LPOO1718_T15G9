@@ -1,6 +1,6 @@
 public class Guard {
 	
-	public static Position.Direction direction = Position.Direction.LEFT;
+	private static Position.Direction direction = Position.Direction.LEFT;
 	public static Position position = new Position(1, 8);
 	public static Position nextPosition = new Position();
 
