@@ -53,6 +53,7 @@ public class DungeonKeep {
 		level=true;
 		while(level) {
 			boolean ogreOnKey = false;
+			
 			Map.toString(Map.current);
 			
 			if (Player.position.isAdjacent(Ogre.position)) {
@@ -81,11 +82,14 @@ public class DungeonKeep {
 				Player.position.moveTile(Player.nextPosition,  Player.getLetter(), Map.current);
 
 				// update ogre's position and change map accordingly
-				if(Ogre.getLetter() == '$') {
+				if(Ogre.getLetter() == '$' || Ogre.getClubLetter() == '$') {
 					ogreOnKey = true;
 				}
-				Ogre.updatePosition(); 
+				
+				Ogre.updatePosition();
+				Ogre.updateClub(); 
 				Ogre.position.moveTile(Ogre.nextPosition, Ogre.getLetter(), Map.current);
+				Ogre.clubPos.moveTile(Ogre.nextClubPos, Ogre.getClubLetter(), Map.current);
 				if(ogreOnKey)
 				{
 					Map.current[1][7] = 'k';
@@ -95,7 +99,9 @@ public class DungeonKeep {
 			case 'I': {
 				Map.current[1][0] = 'S';
 				Ogre.updatePosition();
+				Ogre.updateClub();
 				Ogre.position.moveTile(Ogre.nextPosition, Ogre.getLetter(), Map.current);
+				Ogre.clubPos.moveTile(Ogre.nextClubPos, Ogre.getClubLetter(), Map.current);
 				break;
 			}
 			case 'S': {
