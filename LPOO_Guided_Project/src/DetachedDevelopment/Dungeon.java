@@ -4,24 +4,11 @@ package DetachedDevelopment;
  * 	CLASS - LEVEL (Will replace Map class)
  */
 
-public class Level {
-	private char[][] layout; // Matrix with a representation of the map using characters
+public class Dungeon extends AbstractLevel {
 	
-	public Level(char[][] mapLayout) 
+	public Dungeon(char[][] mapLayout) 
 	{
-		this.layout = mapLayout;
-	}
-	
-	public String toString() {
-		String str = "";
-	
-		for(char[] line: layout) {
-			for(char symbol: line) {
-				str += symbol + " "; 
-			}
-			str += "\n";
-		}
-		
-		return str;
+		// Create any sort of entities depending on necessities and standards assumed
+		super(mapLayout);
 	}
 }
