@@ -14,10 +14,11 @@ X - Develop first level base mechanics 			(TP1 - Task #1 to #4)
 	
 2. Refactoring (Code organization and Readability)
 
-? - Develop a class for representing guards (might be useful if many guards of the same style appear).
+X - Develop a class for representing guards (might be useful if many guards of the same style appear).
 X - Develop a class for the player to keep track of its position, movement and other effects.
-?  - Develop a class for representing positions, movement direction and adjacency effects (like guard capturing player)
+X  - Develop a class for representing positions, movement direction and adjacency effects (like guard capturing player)
 	to avoid repeating code for various entities.
+? - Develop an Entity SuperClass serving as a backbone to all entities (Player, Guard, Ogre, etc..)
   - Develop a class for managing game logic (game initialization and exit, map gameplay loop, etc..)
 	
   - Clean up main() by distributing load across other classes to make it more readable and straightforward.

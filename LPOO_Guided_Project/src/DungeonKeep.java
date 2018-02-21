@@ -1,6 +1,6 @@
 public class DungeonKeep {
 	public static void main(String[] args) {	
-		boolean level=false;
+		boolean level = false;
 		//level 1 cycle
 		while(level) {
 			// Render map
