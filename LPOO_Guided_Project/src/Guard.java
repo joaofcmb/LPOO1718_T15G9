@@ -3,7 +3,8 @@ public class Guard {
 	private static Position.Direction direction = Position.Direction.LEFT;
 	public static Position position = new Position(1, 8);
 	public static Position nextPosition = new Position();
-
+	
+	private static char letter = 'G';
 	// FUNCTION: updates guard's position based on its patrol (Doesn't render new position)
 	public static void updatePosition() {
 		// check if there is movement direction change for the guard patrol
@@ -28,4 +29,5 @@ public class Guard {
 		
 		nextPosition = position.move(direction);
 	}
+	public static char getLetter() {return letter;	}
 }

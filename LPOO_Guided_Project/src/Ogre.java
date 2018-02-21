@@ -4,7 +4,8 @@ public class Ogre {
 	private static Position.Direction direction = Position.Direction.NONE;
 	public static Position position = new Position(1, 4);
 	public  static Position nextPosition = new Position();
-
+	
+	private static char letter = 'O';
 	private static Random random = new Random();
 
 	public static void updatePosition() 
@@ -34,13 +35,29 @@ public class Ogre {
 				break;
 			}
 			}
-			
+
 			//check if possible to move in that direction
 			nextPosition = position.move(direction);
-			if(nextPosition.tile(Map.mapLevel2) == ' ')
+			switch(nextPosition.tile(Map.mapLevel2) )
 			{
+			case ' ':
+			{
+				if(letter == '$') {
+					
+				letter = 'O';
+				}
+				return;
+
+			}
+			case 'k':
+			{
+				letter = '$';
 				return;
 			}
+			}
 		}
+	}
+	public static char getLetter() {
+		return letter;
 	}
 }

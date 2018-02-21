@@ -3,9 +3,11 @@ import java.util.Scanner;
 public class Player {
 	static Scanner playerInput = new Scanner(System.in);
 	
+	private static char letter = 'H';
+	
 	public static Position position = new Position(1, 1);
 	public static Position nextPosition = new Position();
-
+	
 	public static int updatePosition() {
 		Position.Direction direction = Position.Direction.NONE;
 
@@ -46,6 +48,11 @@ public class Player {
 		}
 	}
 	
+	public static void pickKey() {
+		letter = 'K';
+	}
+	
+	public static char getLetter() {return letter;	}
 	//public function that calls the private function that closes the Scanner
 	public static void endgame() {
 		closePlayerInput();

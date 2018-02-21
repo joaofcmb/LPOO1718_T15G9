@@ -31,11 +31,11 @@ public class DungeonKeep {
 				// TODO wrapper function for Position.move in the referred superclass or interface
 
 				// update player's position and change map accordingly
-				Player.position.moveTile(Player.nextPosition, 'H', Map.current);
+				Player.position.moveTile(Player.nextPosition, Player.getLetter(), Map.current);
 
 				// update guard's position and change map accordingly
 				Guard.updatePosition(); 
-				Guard.position.moveTile(Guard.nextPosition, 'G', Map.current);
+				Guard.position.moveTile(Guard.nextPosition, Guard.getLetter(), Map.current);
 				break;
 			}
 			case 'S': {
@@ -52,6 +52,7 @@ public class DungeonKeep {
 		//LEVEL 2
 		level=true;
 		while(level) {
+			boolean ogreOnKey = false;
 			Map.toString(Map.current);
 			
 			if (Player.position.isAdjacent(Ogre.position)) {
@@ -69,25 +70,38 @@ public class DungeonKeep {
 			// check for map collisions and triggers caused by new player position
 			switch (Player.nextPosition.tile(Map.current)) {
 			case 'k':
-				Map.current[5][0] = Map.current[6][0] = 'S';
-				break;
+				Player.pickKey();
+				//not breaking, so it updates position anyway
 			case ' ': {
 
 				// TODO create a superclass or interface for player and guard since they share variables and methods
 				// TODO wrapper function for Position.move in the referred superclass or interface
 
 				// update player's position and change map accordingly
-				Player.position.moveTile(Player.nextPosition, 'H', Map.current);
+				Player.position.moveTile(Player.nextPosition,  Player.getLetter(), Map.current);
 
 				// update ogre's position and change map accordingly
+				if(Ogre.getLetter() == '$') {
+					ogreOnKey = true;
+				}
 				Ogre.updatePosition(); 
-				Ogre.position.moveTile(Ogre.nextPosition, 'O', Map.current);
+				Ogre.position.moveTile(Ogre.nextPosition, Ogre.getLetter(), Map.current);
+				if(ogreOnKey)
+				{
+					Map.current[1][7] = 'k';
+				}
+				break;
+			}
+			case 'I': {
+				Map.current[1][0] = 'S';
+				Ogre.updatePosition();
+				Ogre.position.moveTile(Ogre.nextPosition, Ogre.getLetter(), Map.current);
 				break;
 			}
 			case 'S': {
 				level=false;
 				Player.endgame();
-				System.out.println("Game Over.");
+				System.out.println("Freedom.");
 				break;
 			}
 			}
