@@ -1,8 +1,10 @@
 package DetachedDevelopment;
 
+import dkeep.logic.MapEntity;
+
 public abstract class AbstractLevel {
 
-	private Entity[] entities;
+	private MapEntity[] entities;
 	private char[][] layout; // Matrix with a representation of the map using characters
 	
 	private void OnLevelStart() {
@@ -16,18 +18,5 @@ public abstract class AbstractLevel {
 	public AbstractLevel(char[][] mapLayout) 
 	{
 		this.layout = mapLayout;
-	}
-
-	public String toString() {
-		String str = "";
-	
-		for(char[] line: layout) {
-			for(char symbol: line) {
-				str += symbol + " "; 
-			}
-			str += "\n";
-		}
-		
-		return str;
 	}
 }
