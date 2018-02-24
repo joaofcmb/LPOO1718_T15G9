@@ -18,7 +18,7 @@ public class Game {
 	
 	private void changeLevel(int index) {
 		currentMapIndex = index;
-		// changeMap(index);
+		changeMap(index);
 	}
 	
 	
