@@ -14,7 +14,7 @@ public class Player extends GameEntity {
 		yPos = y;
 	}
 	
-	public void move(Direction dir) {
+	public void move(Game.Direction dir) {
 		switch(dir) {
 		case UP: 
 			yPos--;

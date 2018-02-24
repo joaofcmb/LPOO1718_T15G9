@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 public class Game {
 	public enum GameState {DEFAULT, GAME_OVER, VICTORY}
+	public enum Direction {NONE, UP, LEFT, DOWN, RIGHT}
 	
 	private int currentMapIndex;
 	
@@ -19,6 +20,14 @@ public class Game {
 		changeLevel(0);
 	}
 	
+	// Function that updates the game to move to the next "turn".
+	public int update(Direction playerDirection) {
+		return 0;
+	}
+	
+	public boolean notOver() {
+		return (state != GameState.GAME_OVER);
+	}
 	
 	private void changeLevel(int index) {
 		// Change Map Layout
