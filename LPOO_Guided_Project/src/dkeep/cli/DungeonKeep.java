@@ -17,7 +17,7 @@ public class DungeonKeep {
 		// Game Loop
 		while (game.notOver()) {
 			// Process output
-			String output = null; // call game.toString()
+			String output = game.toString();
 			System.out.println(output);
 			
 			// Process input and game logic

@@ -7,7 +7,6 @@ public class Game {
 	public enum GameState {DEFAULT, GAME_OVER, VICTORY}
 	public enum Direction {NONE, UP, LEFT, DOWN, RIGHT}
 	
-	private int currentMapIndex;
 	
 	private GameEntity player;
 	private List<MapEntity> entityList = new ArrayList<MapEntity>(); // Must be movable (0 = Player)
@@ -16,22 +15,46 @@ public class Game {
 	
 	
 	public Game() {
-		player = new Player();
 		changeLevel(0);
 	}
 	
-	// Function that updates the game to move to the next "turn".
-	public int update(Direction playerDirection) {
-		return 0;
-	}
+	/*
+	 * Functions interacting with CLI (notOver, update and toString)
+	 * 
+	 * notOver - returns true if game has ended, otherwise returns false
+	 * 
+	 * update - updates the game to the next turn, considering the player input (playerDirection)
+	 * 
+	 * toString - returns a string with a ASCII art representation of the game
+	 */
 	
 	public boolean notOver() {
-		return (state != GameState.GAME_OVER);
+		return (state != GameState.GAME_OVER && state != GameState.VICTORY);
 	}
+	
+	public int update(Direction playerDirection) {
+		if (playerDirection == Direction.NONE)
+			return -1;
+		
+		// calculate next position
+		player.nextPosition(playerDirection);
+		
+		// Interrogate Map if the player movement is valid
+		if (Map.validTile(player.getNextX(), player.getNextY())) {
+			player.updatePosition(); // Updates player position in both the class and the map layout
+		}
+		
+		return 0;
+	}
+
+	public String toString() {
+		return Map.layoutString();
+	}
+
+	
 	
 	private void changeLevel(int index) {
 		// Change Map Layout
-		currentMapIndex = index;
 		Map.changeMap(index);
 		
 		// Setup Entities
@@ -39,27 +62,9 @@ public class Game {
 		
 		switch(index) {
 		case 0:
-			player.updatePosition(1,  1);
+			player = new Player(1, 1);
 			// entityList.add(new Guard(1, 7, 'G'));
 		}
 		
 	}
-	
-	
-	
-	
-	/*
-	public String toString() {
-		String str = "";
-	
-		for(char[] line: currentMap) {
-			for(char symbol: line) {
-				str += symbol + " "; 
-			}
-			str += "\n";
-		}
-		
-		return str;
-	}
-	*/
 }
