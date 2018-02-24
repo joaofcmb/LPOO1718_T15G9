@@ -1,12 +1,12 @@
 package dkeep.logic;
-
-public class Guard extends MapEntity implements Movable {
+/*
+public class Guard extends GameEntity {
 
 	public Guard(int x, int y, char symbol) {
 		super(x, y, symbol);
 	}
 	
-	public void updatePosition(Movable.Direction dir) {
+	public void updatePosition(Direction dir) {
 		switch(dir) {
 		case UP: 
 			yPos--;
@@ -23,3 +23,4 @@ public class Guard extends MapEntity implements Movable {
 		}
 	}
 }
+*/

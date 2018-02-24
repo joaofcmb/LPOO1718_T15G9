@@ -1,6 +1,6 @@
 
 public class DungeonKeep {
-	public static void main(String[] args) {	
+	/*public static void main(String[] args) {	
 		boolean level = false;
 		//level 1 cycle
 		while(level) {
@@ -113,5 +113,5 @@ public class DungeonKeep {
 			}
 			}
 		}
-	}
+	}*/
 }

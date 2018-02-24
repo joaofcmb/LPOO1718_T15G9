@@ -1,6 +1,6 @@
 package dkeep.logic;
 
-public class Player extends MapEntity implements Movable {
+public class Player extends GameEntity {
 
 	public Player() {
 		this(0, 0);
@@ -14,7 +14,7 @@ public class Player extends MapEntity implements Movable {
 		yPos = y;
 	}
 	
-	public void move(Movable.Direction dir) {
+	public void move(Direction dir) {
 		switch(dir) {
 		case UP: 
 			yPos--;

@@ -2,21 +2,21 @@ package dkeep.logic;
 
 public class Map {
 	private static char[][] layout;
-	private static MapEntity[] entityList;
-
-
-	public void changeMap(int index) {
+	
+	public static void changeMap(int index) {
 		switch(index) {
 		case 0:
-			layoutList = startPrison;
+			layout = startPrison;
 			break;
 		case 1:
-			layoutList = crazyOgreRoom;
+			layout = crazyOgreRoom;
 			break;
 		}
 	}
 
-
+	public static char getTileOn(int x, int y) {
+		return layout[x][y];
+	}
 
 	private static char[][] startPrison = {
 			{'X','X','X','X','X','X','X','X','X','X'},
@@ -42,4 +42,5 @@ public class Map {
 			{'X',' ',' ',' ',' ',' ',' ',' ','X'},
 			{'X','X','X','X','X','X','X','X','X'}
 	};
+
 }
