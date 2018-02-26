@@ -1,6 +1,6 @@
 package dkeep.logic;
 
-public class Map {
+public class MapLevels {/*
 	private static char[][] layout;
 	private static MapEntity[] entityList;
 
@@ -8,15 +8,14 @@ public class Map {
 	public void changeMap(int index) {
 		switch(index) {
 		case 0:
-			layoutList = startPrison;
+			layout = startPrison;
+			
 			break;
 		case 1:
-			layoutList = crazyOgreRoom;
+			layout = crazyOgreRoom;
 			break;
 		}
 	}
-
-
 
 	private static char[][] startPrison = {
 			{'X','X','X','X','X','X','X','X','X','X'},
@@ -24,8 +23,8 @@ public class Map {
 			{'X','X','X',' ','X','X','X',' ',' ','X'},
 			{'X',' ','I',' ','I',' ','X',' ',' ','X'},
 			{'X','X','X',' ','X','X','X',' ',' ','X'},
-			{'i',' ',' ',' ',' ',' ',' ',' ',' ','X'},
-			{'i',' ',' ',' ',' ',' ',' ',' ',' ','X'},
+			{'I',' ',' ',' ',' ',' ',' ',' ',' ','X'},
+			{'I',' ',' ',' ',' ',' ',' ',' ',' ','X'},
 			{'X','X','X',' ','X','X','X','X',' ','X'},
 			{'X',' ','I',' ','I',' ','X','k',' ','X'},
 			{'X','X','X','X','X','X','X','X','X','X'}
@@ -33,7 +32,7 @@ public class Map {
 
 	private static char[][] crazyOgreRoom = {
 			{'X','X','X','X','X','X','X','X','X'},
-			{'I',' ',' ',' ',' ',' ',' ','e','X'},
+			{'I',' ',' ',' ',' ',' ',' ','k','X'},
 			{'X',' ',' ',' ',' ',' ',' ',' ','X'},
 			{'X',' ',' ',' ',' ',' ',' ',' ','X'},
 			{'X',' ',' ',' ',' ',' ',' ',' ','X'},
@@ -41,5 +40,5 @@ public class Map {
 			{'X',' ',' ',' ',' ',' ',' ',' ','X'},
 			{'X',' ',' ',' ',' ',' ',' ',' ','X'},
 			{'X','X','X','X','X','X','X','X','X'}
-	};
+	};*/
 }

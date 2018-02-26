@@ -1,12 +1,14 @@
 package dkeep.logic;
 
-public class Player extends MapEntity implements Movable {
+public class Player extends MapEntity /*implements Movable*/ {
 
-	public Player() {
-		this(0, 0);
+	public Player()
+	{
+		super();
 	}
-	public Player(int x, int y) {
-		super(x, y, 'P');
+	
+	public Player(int x, int y, char symbol) {
+		super(x, y, symbol);
 	}
 	
 	public void updatePosition(int x, int y) {
@@ -14,7 +16,7 @@ public class Player extends MapEntity implements Movable {
 		yPos = y;
 	}
 	
-	public void move(Movable.Direction dir) {
+	public void move(MapEntity.Direction dir) {
 		switch(dir) {
 		case UP: 
 			yPos--;
