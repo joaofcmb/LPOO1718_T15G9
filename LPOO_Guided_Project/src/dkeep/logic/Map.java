@@ -15,7 +15,6 @@ public class Map {
 	private static char[][] layout; // keeps track of GameEntities and has fixed MapEntities on it
 	private static char[][] blueprint; // static layout of map itself
 
-
 	public static String layoutString() {
 		String str = "";
 
@@ -27,17 +26,6 @@ public class Map {
 		}
 
 		return str;
-	}
-
-	private static void setupMap(char[][] map) {
-		blueprint = map; // assign map to blueprint since blueprint is constant
-		
-		// make copy of map to layout
-		layout = new char[map.length][];
-		
-		for (int i = 0; i < map.length; i++) {
-			layout[i] = map[i].clone();
-		}
 	}
 
 	public static void changeMap(int index) {
@@ -78,6 +66,19 @@ public class Map {
 		layout[destY][destX] = symbol;
 	}
 
+	
+	
+	private static void setupMap(char[][] map) {
+		blueprint = map; // assign map to blueprint since blueprint is constant
+		
+		// make copy of map to layout
+		layout = new char[map.length][];
+		
+		for (int i = 0; i < map.length; i++) {
+			layout[i] = map[i].clone();
+		}
+	}
+	
 	/*
 	 * Map Layouts
 	 */

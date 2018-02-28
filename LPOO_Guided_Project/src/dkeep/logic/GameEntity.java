@@ -11,10 +11,13 @@ public class GameEntity extends MapEntity {
 		Map.setTile(x, y, symbol);
 	}
 	
+	
+	
 	/*
 	 * FUNCTION - move -	this family is functions is used to process an entity's movement, 
 	 * 						whose movement logic is implemented in nextPosition();
 	 */
+	
 	public void move(Game.Direction dir) {
 		nextXPos = xPos;
 		nextYPos = yPos;

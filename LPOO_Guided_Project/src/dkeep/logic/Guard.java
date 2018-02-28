@@ -1,26 +1,26 @@
 package dkeep.logic;
-/*
-public class Guard extends GameEntity {
 
-	public Guard(int x, int y, char symbol) {
-		super(x, y, symbol);
+public class Guard extends GameEntity {
+	private Patrol patrol;
+	private Game.Direction direction;
+	
+	public Guard(int x, int y, char symbol, Patrol patrol) {
+		super(x, y, 'G');
+		this.patrol = patrol;
 	}
 	
-	public void updatePosition(Direction dir) {
-		switch(dir) {
-		case UP: 
-			yPos--;
-			break;
-		case LEFT:
-			xPos--;
-			break;
-		case DOWN:
-			yPos++;
-			break;
-		case RIGHT:
-			xPos++;
-			break;
-		}
+	public void move() {
+		// Get Direction from its patrol if there's any change in direction (if it is not on node, it returns NONE)
+		Game.Direction patrolDirection = patrol.nodeDirection(xPos, yPos);
+		
+		if (patrolDirection == Game.Direction.NONE)
+			// guard is not on node, use last direction
+			patrolDirection = direction;
+		else
+			// otherwise save the new direction
+			direction = patrolDirection;
+			
+		// use GameEntity move() to move as usual
+		super.move(patrolDirection);
 	}
 }
-*/

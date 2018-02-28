@@ -7,11 +7,10 @@ public class Game {
 	public enum GameState {DEFAULT, GAME_OVER, VICTORY}
 	public enum Direction {NONE, UP, LEFT, DOWN, RIGHT}
 	
+	private GameState state = GameState.DEFAULT;
 	
 	private GameEntity player;
 	private List<MapEntity> entityList = new LinkedList<MapEntity>(); // Must be movable
-	
-	private GameState state = GameState.DEFAULT;
 	
 	
 	public Game() {
@@ -58,8 +57,13 @@ public class Game {
 		switch(index) {
 		case 0:
 			player = new Player(1, 1);
-			// entityList.add(new Guard(1, 7, 'G'));
+			
+			// Starting Prison Guard Patrol
+			entityList.add(	new Guard(1, 7, 'G', 
+							new Patrol(	new Integer[][] 		{{1, 8}, {5, 7}, {1, 7}, {5, 1}, {6, 1}, {6, 8}}, 
+										new Game.Direction[]	{Game.Direction.LEFT, Game.Direction.LEFT,
+																Game.Direction.DOWN, Game.Direction.DOWN,
+																Game.Direction.RIGHT, Game.Direction.UP})));
 		}
-		
 	}
 }
