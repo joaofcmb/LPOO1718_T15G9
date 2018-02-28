@@ -33,13 +33,13 @@ public class DungeonKeep {
 		String input = inputScanner.nextLine();
 		
 		switch(input.charAt(0)) {
-		case 'W':
+		case 'w':
 			return Game.Direction.UP;
-		case 'A':
+		case 'a':
 			return Game.Direction.LEFT;
-		case 'S':
+		case 's':
 			return Game.Direction.DOWN;
-		case 'D':
+		case 'd':
 			return Game.Direction.RIGHT;
 		default:
 			return Game.Direction.NONE;

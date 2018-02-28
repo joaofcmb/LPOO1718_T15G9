@@ -12,13 +12,4 @@ public class MapEntity { // Key, Levers, etc..
 		mapSymbol = symbol;
 		Map.setTile(x, y, symbol);
 	}
-	
-	
-	public int getX() {
-		return xPos;
-	}
-	
-	public int getY() {
-		return xPos;
-	}
 }

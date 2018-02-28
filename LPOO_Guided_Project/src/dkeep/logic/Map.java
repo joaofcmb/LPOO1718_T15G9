@@ -1,9 +1,19 @@
 package dkeep.logic;
 
-public class Map {
-	private static char[][] layout; // keeps track of GameEntities
-	private static char[][] blueprint; // static layout of map itself
+/*
+ * CLASS - MAP - Stores current map info
+ * 
+ * 
+ * * * * *
+ * WARNING:
+ * 
+ * Transpose coordinates (Entity(x, y) == layout[y][x])
+ * * * * *
+ */
 
+public class Map {
+	private static char[][] layout; // keeps track of GameEntities and has fixed MapEntities on it
+	private static char[][] blueprint; // static layout of map itself
 
 
 	public static String layoutString() {
@@ -19,20 +29,35 @@ public class Map {
 		return str;
 	}
 
+	private static void setupMap(char[][] map) {
+		blueprint = map; // assign map to blueprint since blueprint is constant
+		
+		// make copy of map to layout
+		layout = new char[map.length][];
+		
+		for (int i = 0; i < map.length; i++) {
+			layout[i] = map[i].clone();
+		}
+	}
 
 	public static void changeMap(int index) {
 		switch(index) {
 		case 0:
-			layout = blueprint = startPrison;
+				setupMap(startPrison);
 			break;
 		case 1:
-			layout = blueprint = crazyOgreRoom;
+				setupMap(crazyOgreRoom);	
 			break;
 		}
 	}
 
+	/*
+	 * FUNCTION: validTile - checks if a give tile at the current map is valid for movement (X, Y coordinates)
+	 * Returns true if valid, false otherwise.
+	 */
+	
 	public static boolean validTile(int x, int y) {
-		switch(tileOn(x, y)) {
+		switch(layout[y][x]) {
 		case ' ':
 			return true;
 		default:
@@ -40,20 +65,17 @@ public class Map {
 		}
 	}
 	
+	
 	public static void setTile(int x, int y, char symbol) {
-		layout[x][y] = symbol;
+		layout[y][x] = symbol;
 	}
 	
 	public static void updateTile(int sourceX, int sourceY, int destX, int destY) {
-		char symbol = layout[sourceX][sourceY];
+		char symbol = layout[sourceY][sourceX];
 		
-		layout[sourceX][sourceY] = blueprint[sourceX][sourceY];
+		layout[sourceY][sourceX] = blueprint[sourceY][sourceX];
 		
-		layout[destX][destY] = symbol;
-	}
-
-	private static char tileOn(int x, int y) {
-		return layout[x][y];
+		layout[destY][destX] = symbol;
 	}
 
 	/*
@@ -61,7 +83,7 @@ public class Map {
 	 */
 	private static char[][] startPrison = {
 			{'X','X','X','X','X','X','X','X','X','X'},
-			{'X','P',' ',' ','I',' ','X',' ','G','X'},
+			{'X',' ',' ',' ','I',' ','X',' ',' ','X'},
 			{'X','X','X',' ','X','X','X',' ',' ','X'},
 			{'X',' ','I',' ','I',' ','X',' ',' ','X'},
 			{'X','X','X',' ','X','X','X',' ',' ','X'},
@@ -74,7 +96,7 @@ public class Map {
 
 	private static char[][] crazyOgreRoom = {
 			{'X','X','X','X','X','X','X','X','X'},
-			{'I',' ',' ',' ',' ',' ',' ','k','X'},
+			{'I',' ',' ',' ',' ',' ',' ',' ','X'},
 			{'X',' ',' ',' ',' ',' ',' ',' ','X'},
 			{'X',' ',' ',' ',' ',' ',' ',' ','X'},
 			{'X',' ',' ',' ',' ',' ',' ',' ','X'},

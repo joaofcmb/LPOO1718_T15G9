@@ -1,7 +1,7 @@
 package dkeep.logic;
 
 import java.util.List;
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class Game {
 	public enum GameState {DEFAULT, GAME_OVER, VICTORY}
@@ -9,7 +9,7 @@ public class Game {
 	
 	
 	private GameEntity player;
-	private List<MapEntity> entityList = new ArrayList<MapEntity>(); // Must be movable (0 = Player)
+	private List<MapEntity> entityList = new LinkedList<MapEntity>(); // Must be movable
 	
 	private GameState state = GameState.DEFAULT;
 	
@@ -36,13 +36,8 @@ public class Game {
 		if (playerDirection == Direction.NONE)
 			return -1;
 		
-		// calculate next position
-		player.nextPosition(playerDirection);
-		
-		// Interrogate Map if the player movement is valid
-		if (Map.validTile(player.getNextX(), player.getNextY())) {
-			player.updatePosition(); // Updates player position in both the class and the map layout
-		}
+		// move player in input direction
+		player.move(playerDirection);
 		
 		return 0;
 	}
