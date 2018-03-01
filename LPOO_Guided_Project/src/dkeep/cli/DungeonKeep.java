@@ -3,49 +3,43 @@ package dkeep.cli;
 import java.util.Scanner;
 
 import dkeep.logic.Game;
-import dkeep.logic.MapEntity;
 
 public class DungeonKeep {
+	private static Scanner inputScanner; 
 
 	public static void main(String[] args) {
-		Scanner input = new Scanner(System.in);
+		// Game Startup
+		inputScanner = new Scanner(System.in);
 		Game game = new Game();
-		game.printMap();
 
-		int state = 1;//0 is victory, 1 is no movement, 2 is capture
+		// Game Loop
+		while (game.notOver()) {
+			// Process output
+			String output = game.toString();
+			System.out.println(output);
 
-		while(state != 0)
-		{
-			state = game.keyInput(input.next().charAt(0));
-			game.printMap();
-			if(state == 2)
-			{
-				System.out.println("You were captured\n");
-				return;
-			}
+			// Process input and game logic
+			System.out.println("Move Player(P) in a direction (W|A|S|D). End input with RET, first letter processed");
+			game.update(playerInput());
 		}
-		input.close();
-		System.out.println("Victory!");
+
+		// Game End
 	}
 
-	private MapEntity.Direction playerInput() 
-	{
-		switch(dir)
-		{
+	private static Game.Direction playerInput() {
+		String input = inputScanner.nextLine();
+
+		switch(input.charAt(0)) {
 		case 'w':
-			return MapEntity.Direction.UP;
+			return Game.Direction.UP;
 		case 'a':
-			return MapEntity.Direction.LEFT;
-
+			return Game.Direction.LEFT;
 		case 's':
-			return MapEntity.Direction.DOWN;
-
+			return Game.Direction.DOWN;
 		case 'd':
-			return MapEntity.Direction.RIGHT;
-
+			return Game.Direction.RIGHT;
 		default:
-			break;
+			return Game.Direction.NONE;
 		}
-		
 	}
 }

@@ -1,75 +1,107 @@
 package dkeep.logic;
 
-public class Guard extends Enemy /*implements Movable*/ {
+import java.util.Random;
+
+public class Guard extends GameEntity {
+	private Random random;
+	
 	private enum Personality {ROOKIE, DRUNK, SUSPICIOUS}
-	private static final int MIN_STEPS_SUSPICION = 3; //Steps until suspicious might trigger his patrol reversion
+	private static final int MIN_STEPS_SUSPICION = 3; // Steps until suspicious might trigger his patrol reversion
 
 	private boolean isSuspicious;
 	private Personality personality;
 	private int suspicionInc;
+	
+	private Patrol patrol;
+	private Game.Direction direction;
 
-
-	public Guard()
-	{
-		super();
+	
+	public Guard(int x, int y, Patrol patrol) {
+		super(x, y, 'G');
+		this.patrol = patrol;
 		personality = Personality.ROOKIE;
 		suspicionInc = 0;
 	}
 
-	public Guard(int x, int y, char symbol, int type) {
-		super(x, y, symbol);
+	public Guard(int x, int y, Patrol patrol, int type) {
+		this(x, y, patrol);
+		
 		switch(type){
 		case 1: 
 			personality = Personality.DRUNK;
-			System.out.println("The Guard is Drunk");
+			// System.out.println("The Guard is Drunk");
 			break;
 		case 2: 
 			personality = Personality.SUSPICIOUS;
-			System.out.println("The Guard is Suspicious");
+			// System.out.println("The Guard is Suspicious");
 			break;
-		default : 
+		default: 
 			personality = Personality.ROOKIE;
-			System.out.println("The Guard is a Rookie");
+			// System.out.println("The Guard is a Rookie");
 			break;
 		}
-		suspicionInc = 0;
+	}
+	
+	private void triggerSuspicion()
+	{
+		if(random.nextBoolean()) {
+			isSuspicious = !isSuspicious;
+			switch(direction) {
+			case UP: 
+				direction = Game.Direction.DOWN;
+				break;
+			case DOWN: 
+				direction = Game.Direction.UP;
+				break;
+			case LEFT: 
+				direction = Game.Direction.RIGHT;
+				break;
+			case RIGHT: 
+				direction = Game.Direction.LEFT;
+				break;
+			case NONE:
+				break;
+			}
+		}
+	}
+	
+	// Override the default move, to prevent accidentally using it
+	public int move(Game.Direction dir) {
+		move();
+		return 0;
 	}
 
 	public void move() {
-		// check if there is movement direction change for the guard patrol
-
-		patrolShift();
-
-		switch(this.direction) {
-		case UP: 
-			xPos--;
-			break;
-		case LEFT:
-			yPos--;
-			break;
-		case DOWN:
-			xPos++;
-			break;
-		case RIGHT:
-			yPos++;
-			break;
-		}
+		Game.Direction patrolDirection = patrolMovement();
+		
+		// TODO Change movement depending on Personality	
+		
+		// use GameEntity move() to move as usual
+		super.move(patrolDirection);
 	}
 
-
-	//check if in position to change direction
-	private void patrolShift() {
-		if(this.personality == Personality.SUSPICIOUS) //or if guard woke up and switches direction TODO add later
-		{	
-			this.suspicionInc++;
-
-			if(this.suspicionInc > MIN_STEPS_SUSPICION) {
-				triggerSuspicion();
-				this.suspicionInc = 0;
-			}
-		}
-
-		if(this.xPos == 1)
+	
+	private Game.Direction patrolMovement() {
+		// Get Direction from its patrol if there's any change in direction (if it is not on node, it returns NONE)
+		Game.Direction patrolDirection = patrol.nodeDirection(xPos, yPos);
+		
+		if (patrolDirection == Game.Direction.NONE)
+			// guard is not on node, use last direction
+			patrolDirection = direction;
+		else
+			// otherwise save the new direction
+			direction = patrolDirection;
+		return patrolDirection;
+	}
+	
+	/*
+	new Integer[][] 		{{1, 8}, {5, 7}, {1, 7}, {5, 1}, {6, 1}, {6, 8}}, 
+	new Game.Direction[]	{Game.Direction.LEFT, Game.Direction.LEFT,
+							Game.Direction.DOWN, Game.Direction.DOWN,
+							Game.Direction.RIGHT, Game.Direction.UP})));
+							
+	
+	if(this.xPos == 1)
 		{
 			if( this.yPos == 8)
 			{
@@ -117,26 +149,5 @@ public class Guard extends Enemy /*implements Movable*/ {
 			else
 				direction = Direction.UP;
 		}
-	}
-
-	private void triggerSuspicion()
-	{
-		if(random.nextBoolean()) {
-			isSuspicious = !isSuspicious;
-			switch(direction) {
-			case UP: 
-				direction = Direction.DOWN;
-				break;
-			case DOWN: 
-				direction = Direction.UP;
-				break;
-			case LEFT: 
-				direction = Direction.RIGHT;
-				break;
-			case RIGHT: 
-				direction = Direction.LEFT;
-				break;
-			}
-		}
-	}
+		*/
 }

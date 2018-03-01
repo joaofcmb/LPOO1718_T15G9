@@ -1,11 +1,9 @@
 package dkeep.logic;
 
-public abstract class MapEntity { // Key, Levers, etc..
-	public enum Direction {UP, LEFT, DOWN, RIGHT}
-	// Variable for entity position and nextPosition
-	
-	protected int xPos; // Coordinates of the Entity's position
+public class MapEntity { // Key, Levers, etc..
+	protected int xPos;
 	protected int yPos;
+
 	protected char mapSymbol; // Representation on the map layout (Command Line Interface)
 	
 	public MapEntity()
@@ -19,16 +17,6 @@ public abstract class MapEntity { // Key, Levers, etc..
 		xPos = x;
 		yPos = y;
 		mapSymbol = symbol;
+		Map.setTile(x, y, symbol);
 	}
-	
-	
-	public int getX() { return this.xPos;}
-	
-	public int getY() { return this.yPos;}
-	
-	public char getSymbol() { return this.mapSymbol;}
-	
-	public void setCoordenateX(int x) { this.xPos=x;}
-	
-	public void setCoordenateY(int y) { this.yPos=y;}
 }

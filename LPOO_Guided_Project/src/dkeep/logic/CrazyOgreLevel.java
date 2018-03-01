@@ -2,7 +2,7 @@ package dkeep.logic;
 
 import java.util.ArrayList;
 
-public class CrazyOgreLevel extends Level{
+public class CrazyOgreLevel extends Map{
 	private int row=0, column=0;
 
 	private Player hero = new Player(7,1, 'H');
@@ -45,24 +45,4 @@ public class CrazyOgreLevel extends Level{
 		}
 		return true;
 	}
-
-	public boolean hasGuard() {return false;}
-	public Guard getGuard() {return null;}
-
-	public boolean hasOgre() {return true;}
-	public Ogre getOgre() {return ogre;} 
-
-	public boolean hasLever() {return false;}
-	public Lever getLever() {return null;}
-
-	public boolean hasKey() {return true;}
-	public Key getKey() {return key;} 
-
-	public boolean hasHeroClub() {return false;}
-
-	public char[][] getMap() {return this.map;}
-
-	public int getRows() {return this.row;}
-
-	public int getColumns() {return this.column;}
 }
