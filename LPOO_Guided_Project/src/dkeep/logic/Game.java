@@ -59,8 +59,8 @@ public class Game {
 			player = new Player(1, 1);
 			
 			// Starting Prison Guard Patrol
-			entityList.add(	new Guard(1, 7, 'G', 
-							new Patrol(	new Integer[][] 		{{1, 8}, {5, 7}, {1, 7}, {5, 1}, {6, 1}, {6, 8}}, 
+			entityList.add(	new Guard(7, 1,
+							new Patrol(	new Integer[][] 		{{8, 1}, {7, 5}, {7, 1}, {1, 5}, {1, 6}, {8, 6}}, 
 										new Game.Direction[]	{Game.Direction.LEFT, Game.Direction.LEFT,
 																Game.Direction.DOWN, Game.Direction.DOWN,
 																Game.Direction.RIGHT, Game.Direction.UP})));

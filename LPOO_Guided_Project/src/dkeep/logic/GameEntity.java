@@ -8,9 +8,7 @@ public class GameEntity extends MapEntity {
 		super(x, y, symbol);
 		nextXPos = x;
 		nextYPos = y;
-		Map.setTile(x, y, symbol);
 	}
-	
 	
 	
 	/*
