@@ -3,6 +3,7 @@ package dkeep.cli;
 import java.util.Scanner;
 
 import dkeep.logic.Game;
+import dkeep.logic.MapEntity;
 
 public class DungeonKeep {
 
@@ -25,5 +26,26 @@ public class DungeonKeep {
 		}
 		input.close();
 		System.out.println("Victory!");
+	}
+
+	private MapEntity.Direction playerInput() 
+	{
+		switch(dir)
+		{
+		case 'w':
+			return MapEntity.Direction.UP;
+		case 'a':
+			return MapEntity.Direction.LEFT;
+
+		case 's':
+			return MapEntity.Direction.DOWN;
+
+		case 'd':
+			return MapEntity.Direction.RIGHT;
+
+		default:
+			break;
+		}
+		
 	}
 }

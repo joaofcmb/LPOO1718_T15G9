@@ -142,27 +142,12 @@ public class Game {
 		return false;
 	}
 
-	public int keyInput(char input) 
+	public int keyInput(MapEntity.Direction dir) 
 	{
 		int state = 1;
-		switch(input)
-		{
-		case 'w':
-			state = update(MapEntity.Direction.UP);
-			break;
-		case 'a':
-			state = update(MapEntity.Direction.LEFT);
-			break;
-		case 's':
-			state = update(MapEntity.Direction.DOWN);
-			break;
-		case 'd':
-			state = update(MapEntity.Direction.RIGHT);
-			break;
-		default:
-			state = 1;
-			break;
-		}
+		state = update(dir);
+
+
 		if(state == 1 || state == 0)
 			return state;
 		//move enemies and check if captured
@@ -252,6 +237,7 @@ public class Game {
 
 	private void interactions()
 	{	
+		//lista staticobjj percorrer
 		interactionHeroLever();
 		interactionHeroKey();
 		//TODO ogrekey clubkey
