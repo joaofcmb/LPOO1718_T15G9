@@ -10,4 +10,10 @@ public class Key extends MapEntity {
 		super(x, y, symbol);
 		// TODO Auto-generated constructor stub
 	}
+	
+	//maybe think of a way to remove it instead of hiding it
+	public void wasPicked()
+	{
+		this.mapSymbol = ' ';
+	}
 }

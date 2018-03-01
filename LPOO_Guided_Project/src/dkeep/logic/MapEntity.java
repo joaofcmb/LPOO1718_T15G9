@@ -21,6 +21,7 @@ public abstract class MapEntity { // Key, Levers, etc..
 		mapSymbol = symbol;
 	}
 	
+	
 	public int getX() { return this.xPos;}
 	
 	public int getY() { return this.yPos;}
@@ -30,5 +31,4 @@ public abstract class MapEntity { // Key, Levers, etc..
 	public void setCoordenateX(int x) { this.xPos=x;}
 	
 	public void setCoordenateY(int y) { this.yPos=y;}
-
 }

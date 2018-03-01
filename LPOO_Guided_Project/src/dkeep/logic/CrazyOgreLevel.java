@@ -5,92 +5,64 @@ import java.util.ArrayList;
 public class CrazyOgreLevel extends Level{
 	private int row=0, column=0;
 
-	public CrazyOgreLevel()
+	private Player hero = new Player(7,1, 'H');
+
+	private Ogre ogre = new Ogre(1,8,'G');
+
+	private Key key = new Key(1,7,'k');
+
+	private ArrayList<Door> doors = new ArrayList<Door>();
+
+	private char[][] map = {
+			{'X','X','X','X','X','X','X','X','X'},
+			{'I',' ',' ',' ',' ',' ',' ',' ','X'},
+			{'X',' ',' ',' ',' ',' ',' ',' ','X'},
+			{'X',' ',' ',' ',' ',' ',' ',' ','X'},
+			{'X',' ',' ',' ',' ',' ',' ',' ','X'},
+			{'I',' ',' ',' ',' ',' ',' ',' ','X'},
+			{'I',' ',' ',' ',' ',' ',' ',' ','X'},
+			{'X',' ',' ',' ',' ',' ',' ',' ','X'},
+			{'X',' ',' ',' ',' ',' ',' ',' ','X'},
+			{'X','X','X','X','X','X','X','X','X'}
+	};
+
+	public CrazyOgreLevel() {
+		doors.add(new Door(1,0,'I'));
+		row = map.length;
+		column = map[0].length;
+	}
+
+	public Player getHero() {return this.hero;}
+
+	public ArrayList<Door> getDoors(){return this.doors;}
+
+	public boolean isValidPosition(int x, int y)
 	{
-		super();
+		switch(map[x][y]) {
+		case 'X':
+		case 'I':
+			return false;
+		}
+		return true;
 	}
 
-	public Player getHero() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public boolean hasGuard() {return false;}
+	public Guard getGuard() {return null;}
 
+	public boolean hasOgre() {return true;}
+	public Ogre getOgre() {return ogre;} 
 
-	public ArrayList<Door> getDoors() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public boolean hasLever() {return false;}
+	public Lever getLever() {return null;}
 
+	public boolean hasKey() {return true;}
+	public Key getKey() {return key;} 
 
-	public boolean hasGuard() {
-		// TODO Auto-generated method stub
-		return false;
-	}
+	public boolean hasHeroClub() {return false;}
 
+	public char[][] getMap() {return this.map;}
 
-	public Guard getGuard() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public int getRows() {return this.row;}
 
-
-	public boolean hasOgre() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-
-	public Ogre getOgre() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	public boolean hasLever() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-
-	public Lever getLever() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	public boolean hasKey() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-
-	public Key getKey() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	public boolean hasHeroClub() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-
-	public char[][] getMap() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	public int getRows() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-
-	public int getColumns() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	
+	public int getColumns() {return this.column;}
 }

@@ -8,6 +8,8 @@ public abstract class Level {
 
 	public abstract ArrayList<Door> getDoors();
 
+	public abstract boolean isValidPosition(int x, int y);
+	
 	public abstract boolean hasGuard();
 	public abstract Guard getGuard();
 

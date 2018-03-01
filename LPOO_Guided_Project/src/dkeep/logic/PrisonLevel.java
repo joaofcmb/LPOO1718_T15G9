@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class PrisonLevel extends Level{
 	private int row=0, column=0;
-	
+
 	private Player hero = new Player(1,1, 'H');
 
 	private Guard guard = new Guard(1,8,'G',2); // Suspicious for testing
@@ -15,12 +15,12 @@ public class PrisonLevel extends Level{
 
 	private char[][] map = {
 			{'X','X','X','X','X','X','X','X','X','X'},
-			{'X','H',' ',' ','I',' ','X',' ','G','X'},
+			{'X',' ',' ',' ','I',' ','X',' ',' ','X'},
 			{'X','X','X',' ','X','X','X',' ',' ','X'},
 			{'X',' ','I',' ','I',' ','X',' ',' ','X'},
 			{'X','X','X',' ','X','X','X',' ',' ','X'},
-			{' ',' ',' ',' ',' ',' ',' ',' ',' ','X'},
-			{' ',' ',' ',' ',' ',' ',' ',' ',' ','X'},
+			{'I',' ',' ',' ',' ',' ',' ',' ',' ','X'},
+			{'I',' ',' ',' ',' ',' ',' ',' ',' ','X'},
 			{'X','X','X',' ','X','X','X','X',' ','X'},
 			{'X',' ','I',' ','I',' ','X',' ',' ','X'},
 			{'X','X','X','X','X','X','X','X','X','X'}
@@ -36,6 +36,16 @@ public class PrisonLevel extends Level{
 	public Player getHero() {return this.hero;}
 
 	public ArrayList<Door> getDoors(){return this.doors;}
+
+	public boolean isValidPosition(int x, int y)
+	{
+		switch(map[x][y]) {
+		case 'X':
+		case 'I':
+			return false;
+		}
+		return true;
+	}
 
 	public boolean hasGuard() {return true;}
 	public Guard getGuard() {return this.guard;}
@@ -56,4 +66,5 @@ public class PrisonLevel extends Level{
 	public int getRows() {return this.row;}
 
 	public int getColumns() {return this.column;}
+
 }

@@ -1,21 +1,21 @@
 package dkeep.logic;
 
-import java.util.Random;
-
-public class Guard extends MapEntity /*implements Movable*/ {
+public class Guard extends Enemy /*implements Movable*/ {
 	private enum Personality {ROOKIE, DRUNK, SUSPICIOUS}
-	private Random rand = new Random();
+	private static final int MIN_STEPS_SUSPICION = 3; //Steps until suspicious might trigger his patrol reversion
 
-	private Direction direction = Direction.LEFT;
 	private boolean isSuspicious;
 	private Personality personality;
+	private int suspicionInc;
+
 
 	public Guard()
 	{
 		super();
 		personality = Personality.ROOKIE;
+		suspicionInc = 0;
 	}
-	
+
 	public Guard(int x, int y, char symbol, int type) {
 		super(x, y, symbol);
 		switch(type){
@@ -32,32 +32,43 @@ public class Guard extends MapEntity /*implements Movable*/ {
 			System.out.println("The Guard is a Rookie");
 			break;
 		}
+		suspicionInc = 0;
 	}
 
-	public void updatePosition(MapEntity.Direction dir) {
+	public void move() {
 		// check if there is movement direction change for the guard patrol
 
-		if(this.personality == Personality.SUSPICIOUS ) //or if guard woke up and switches direction TODO add later
-			patrolShift();
+		patrolShift();
 
-		switch(dir) {
+		switch(this.direction) {
 		case UP: 
-			yPos--;
-			break;
-		case LEFT:
 			xPos--;
 			break;
+		case LEFT:
+			yPos--;
+			break;
 		case DOWN:
-			yPos++;
+			xPos++;
 			break;
 		case RIGHT:
-			xPos++;
+			yPos++;
 			break;
 		}
 	}
+
+
 	//check if in position to change direction
 	private void patrolShift() {
-		triggerSuspicion();
+		if(this.personality == Personality.SUSPICIOUS) //or if guard woke up and switches direction TODO add later
+		{	
+			this.suspicionInc++;
+
+			if(this.suspicionInc > MIN_STEPS_SUSPICION) {
+				triggerSuspicion();
+				this.suspicionInc = 0;
+			}
+		}
+
 		if(this.xPos == 1)
 		{
 			if( this.yPos == 8)
@@ -110,7 +121,7 @@ public class Guard extends MapEntity /*implements Movable*/ {
 
 	private void triggerSuspicion()
 	{
-		if(rand.nextBoolean()) {
+		if(random.nextBoolean()) {
 			isSuspicious = !isSuspicious;
 			switch(direction) {
 			case UP: 
