@@ -27,22 +27,4 @@ public class PrisonLevel extends Map {
 		
 		// Add props (levers, etc...)
 	}
-
-	public Player getHero() {return this.hero;}
-
-	public ArrayList<Door> getDoors(){return this.doors;}
-
-	public boolean isValidPosition(int x, int y)
-	{
-		switch(map[x][y]) {
-		case 'X':
-		case 'I':
-			return false;
-		}
-		return true;
-	}
-
-	
-	// Starting Prison Guard Patrol
-	/*entityList.add(	new Guard(7, 1,*/
 }
