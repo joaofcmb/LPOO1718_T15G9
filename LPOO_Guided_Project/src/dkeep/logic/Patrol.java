@@ -1,14 +1,12 @@
 package dkeep.logic;
 
-import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Scanner;
-import java.util.Arrays;
-import java.util.ArrayList;
 
 public class Patrol {
-	private List<Integer[]> nodes; // (x, y)
-	private List<Game.Direction> direction;
-	
+	private HashMap<Integer[],  Game.Direction> nodes;
 	
 	/*
 	 * Patrol syntax: "x, y, Dir,..." // each 3 elems is a node, must be ordered (to infer the suspicion direction too)
@@ -18,15 +16,20 @@ public class Patrol {
 	Patrol(String config) {
 		// Add the nodes and dir to the object
 		Scanner patrolConfig = new Scanner(config);
-		
 		patrolConfig.useDelimiter(", ");
 		
+		Integer[] pos = new Integer[2];
+		nodes = new LinkedHashMap<Integer[], Game.Direction>();
+		
+		// Iterate each node and add it to the Map
 		while (patrolConfig.hasNextInt()) {
 			int x = patrolConfig.nextInt();
 			int y = patrolConfig.nextInt();
-			Game.Direction direction = directionConfig(patrolConfig.next());
+			pos[0] = x; 	pos[1] = y;
 			
-			// add to ArrayLists
+			Game.Direction direction = directionConfig(patrolConfig.next());
+		
+			nodes.put(pos, direction);
 		}
 		
 		patrolConfig.close();
@@ -47,16 +50,22 @@ public class Patrol {
 		}
 	}
 	
-	public Game.Direction nodeDirection(int x, int y) {
-		for(Integer[] node: nodes) {
-			if (node[0] == x && node[1] == y) {
-				// Found a node, return new direction
-				return directions.get(nodes.indexOf(node));
+	public Game.Direction nodeDirection(int x, int y, boolean guardIsSuspicious) {
+		Integer[] pos = new Integer[2];
+		pos[0] = x;
+		pos[1] = y;
+		
+		if (nodes.containsKey(pos)) {
+			if (guardIsSuspicious)
+				return nodes.get(pos);
+			else {
+				// use API to get a Set of positions to get to the node before this one 
+				// which contains the reverse direction for a suspicious guard
 			}
 		}
+			
 		
 		// no node found, return no direction
 		return Game.Direction.NONE;
 	}
-	
 }
