@@ -5,9 +5,9 @@ import java.util.ArrayList;
 public class CrazyOgreLevel extends Map{
 	private int row=0, column=0;
 
-	private Player hero = new Player(7,1, 'H');
+	private Player hero = new Player(7,1);
 
-	private Ogre ogre = new Ogre(1,8,'G');
+	//private Ogre ogre = new Ogre(1,8,'G');
 
 	private Key key = new Key(1,7,'k');
 

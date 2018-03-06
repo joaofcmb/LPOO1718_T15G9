@@ -25,18 +25,18 @@ public class Map {
 		}
 	}
 	
-	protected int playerMove(Player hero, Game.Direction direction) {
+	protected boolean playerMove(Game.Direction direction) {
 		hero.nextPosition(direction); // calculate next Position
 		
 		if (validTile(hero.getNextX(), hero.getNextY())) {
 			hero.move();
-			return 0;
+			return true;
 		}
-		return -1;
+		return false;
 	}
 	
 	
-	protected int guardMove(Guard guard) {
+	protected boolean guardMove(Guard guard) {
 		// check for patrol tile to see in which direction to go
 		switch(tacticalMap[guard.getX()][guard.getY()]) {
 		case 'u':
@@ -52,9 +52,9 @@ public class Map {
 			guard.move(Game.Direction.RIGHT);
 			break;
 		default:
-			return -1;
+			return false;
 		}
-		return 0;
+		return true;
 	}
 	
 	public Map() {
@@ -62,7 +62,10 @@ public class Map {
 		propList = new ArrayList<MapEntity>();
 	}
 	
-	public int update() {
+	public int update(Game.Direction heroDirection) {
+		if (!playerMove(heroDirection))
+			return -1;
+		
 		for(GameEntity enemy : enemyList) {
 			if (enemy instanceof Guard)
 				guardMove((Guard) enemy);
@@ -80,7 +83,15 @@ public class Map {
 			map[i] = blueprint[i].clone();
 		}
 
-		// TODO Add entities to map matrix
+		// Add entities to map matrix
+		map[hero.getX()][hero.getY()] = hero.getSymbol();
+		
+		for (GameEntity enemy : enemyList) {
+			map[enemy.getX()][enemy.getY()] = enemy.getSymbol();
+		}
+		for (MapEntity prop : propList) {
+			map[prop.getX()][prop.getY()] = prop.getSymbol();
+		}
 		
 		// Assemble string from matrix
 		for(char[] line: map) {

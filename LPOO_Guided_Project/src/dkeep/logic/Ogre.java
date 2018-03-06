@@ -1,4 +1,4 @@
-package dkeep.logic;
+/*package dkeep.logic;
 
 import java.util.Random;
 
@@ -37,4 +37,4 @@ public class Ogre extends Enemy {
 		}
 		while(impossibleMovement);
 	}
-}
+}*/

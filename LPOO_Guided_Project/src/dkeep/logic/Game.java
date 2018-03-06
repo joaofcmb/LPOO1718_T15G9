@@ -1,12 +1,5 @@
 package dkeep.logic;
 
-import java.util.ArrayList;
-import java.util.Random;
-
-import java.util.List;
-import java.util.LinkedList;
-
-
 public class Game {
 	public enum GameState {DEFAULT, GAME_OVER, VICTORY}
 	public enum Direction {NONE, UP, LEFT, DOWN, RIGHT}
@@ -23,7 +16,7 @@ public class Game {
 	private void changeLevel(int index) {
 		switch(index) {
 		case 0:
-			// Call Map Constructor
+			map = new PrisonLevel();
 			break;
 		case 1:
 			// Call Map Constructor
@@ -54,7 +47,7 @@ public class Game {
 			return -1;
 		
 		// tell map to process its entities
-		map.update();
+		map.update(heroDirection);
 		
 		return 0;
 	}
