@@ -1,10 +1,10 @@
 package dkeep.logic;
 
 public class GameEntity extends MapEntity {
-	protected int nextXPos;
-	protected int nextYPos;
+	private int nextXPos;
+	private int nextYPos;
 	
-	public GameEntity(int x, int y, char symbol) {
+	protected GameEntity(int x, int y, char symbol) {
 		super(x, y, symbol);
 		nextXPos = x;
 		nextYPos = y;
@@ -16,24 +16,15 @@ public class GameEntity extends MapEntity {
 	 * 						whose movement logic is implemented in nextPosition();
 	 */
 	
-	public int move(Game.Direction dir) {
+	protected void move() {
+		xPos = nextXPos;
+		yPos = nextYPos;
+	}
+	
+	protected void nextPosition(Game.Direction dir) {
 		nextXPos = xPos;
 		nextYPos = yPos;
 		
-		// Calculate next position to which the entity will move
-		nextPosition(dir);
-		
-		// Interrogate Map if the movement is valid
-		if (Map.validTile(nextXPos, nextYPos)) {
-			xPos = nextXPos;
-			yPos = nextYPos;
-			return 0;
-		}
-		else
-			return -1;
-	}
-	
-	private void nextPosition(Game.Direction dir) {
 		switch(dir) {
 		case UP: 
 			nextXPos--;
@@ -50,5 +41,13 @@ public class GameEntity extends MapEntity {
 		default:
 			break;
 		}
+	}
+	
+	protected int getNextX() {
+		return nextXPos;
+	}
+	
+	protected int getNextY() {
+		return nextYPos;
 	}
 }

@@ -3,8 +3,8 @@ package dkeep.logic;
 import java.util.ArrayList;
 
 public class PrisonLevel extends Map {
-	private Lever lever = new Lever(8,7,'k');
-	private ArrayList<Door> doors = new ArrayList<Door>(); 
+	private Lever lever = new Lever(8,7,'k'); // TODO remove this and add it to propList
+	private ArrayList<Door> doors = new ArrayList<Door>(); // TODO remove this to add to propList
 
 	public PrisonLevel() {
 		super();
@@ -22,7 +22,7 @@ public class PrisonLevel extends Map {
 			{'X','X','X','X','X','X','X','X','X','X'}
 		};
 
-		blueprint =  new char[][] {
+		tacticalMap =  new char[][] {
 			{'X','X','X','X','X','X','X','X','X','X'},
 			{'X',' ',' ',' ','I',' ','X','d','l','X'},
 			{'X','X','X',' ','X','X','X','d','u','X'},

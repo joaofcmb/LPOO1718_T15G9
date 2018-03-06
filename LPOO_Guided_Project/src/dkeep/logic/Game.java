@@ -54,6 +54,7 @@ public class Game {
 			return -1;
 		
 		// tell map to process its entities
+		map.update();
 		
 		return 0;
 	}
