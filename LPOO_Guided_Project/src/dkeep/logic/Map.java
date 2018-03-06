@@ -64,11 +64,14 @@ public class Map {
 	
 	public int update(Game.Direction heroDirection) {
 		if (!playerMove(heroDirection))
-			return -1;
+			return 1;
 		
 		for(GameEntity enemy : enemyList) {
 			if (enemy instanceof Guard)
 				guardMove((Guard) enemy);
+			
+			if (enemy.entityTrigger(hero))
+				return -1; // enemy trigger with hero signifies hero death (game over)
 		}
 		
 		return 0;

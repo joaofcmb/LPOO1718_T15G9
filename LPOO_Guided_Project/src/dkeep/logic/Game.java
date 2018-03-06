@@ -47,7 +47,8 @@ public class Game {
 			return -1;
 		
 		// tell map to process its entities
-		map.update(heroDirection);
+		if (map.update(heroDirection) == -1)
+			state = GameState.GAME_OVER;
 		
 		return 0;
 	}

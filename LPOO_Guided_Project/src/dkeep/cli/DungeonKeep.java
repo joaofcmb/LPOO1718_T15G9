@@ -13,17 +13,21 @@ public class DungeonKeep {
 		Game game = new Game();
 
 		// Game Loop
+		
+		// Process output
+		System.out.println(game);
+		
 		while (game.notOver()) {
-			// Process output
-			String output = game.toString();
-			System.out.println(output);
-
 			// Process input and game logic
 			System.out.println("Move Player(P) in a direction (W|A|S|D). End input with RET, first letter processed");
 			game.update(playerInput());
+			
+			// Process output
+			System.out.println(game);
 		}
-
-		// Game End
+		
+		// Game End	
+		System.out.println("Game Over");
 	}
 
 	private static Game.Direction playerInput() {

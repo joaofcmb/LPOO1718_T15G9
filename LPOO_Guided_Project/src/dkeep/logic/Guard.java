@@ -4,17 +4,17 @@ import java.util.Random;
 
 public class Guard extends GameEntity {
 	private Random random;
-	
+
 	private enum Personality {ROOKIE, DRUNK, SUSPICIOUS} // TODO Make enum public and use it to refer to a personality (constructor arg, etc)
 	private static final int MIN_STEPS_SUSPICION = 3; // Steps until suspicious might trigger his patrol reversion
 
 	private boolean isSuspicious;
 	private Personality personality;
 	private int suspicionInc;
-	
+
 	private Game.Direction lastDirection;
 
-	
+
 	public Guard(int x, int y) {
 		super(x, y, 'G');
 		personality = Personality.ROOKIE;
@@ -23,7 +23,7 @@ public class Guard extends GameEntity {
 
 	public Guard(int x, int y, int type) {
 		this(x, y);
-		
+
 		switch(type){
 		case 1: 
 			personality = Personality.DRUNK;
@@ -39,7 +39,7 @@ public class Guard extends GameEntity {
 			break;
 		}
 	}
-	
+
 	private void triggerSuspicion()
 	{
 		if(random.nextBoolean()) {
@@ -62,22 +62,25 @@ public class Guard extends GameEntity {
 			}
 		}
 	}
-	
+
 	public void move(Game.Direction dir) {
 		// TODO Change movement depending on Personality	
-		
+
 		// use GameEntity nextPosition() and move() to move as usual
 		nextPosition(dir);
 		super.move();
 	}
-	
+
+	protected boolean entityTrigger(MapEntity entity) {
+		if (entity instanceof Player) {
+			if (Math.abs(this.xPos - entity.xPos) + Math.abs(this.yPos - entity.yPos) < 2)
+				return true;
+		}
+		
+		return false;
+	}
+
 	/*
-	new Integer[][] 		{{1, 8}, {5, 7}, {1, 7}, {5, 1}, {6, 1}, {6, 8}}, 
-	new Game.Direction[]	{Game.Direction.LEFT, Game.Direction.LEFT,
-							Game.Direction.DOWN, Game.Direction.DOWN,
-							Game.Direction.RIGHT, Game.Direction.UP})));
-							
-	
 	if(this.xPos == 1)
 		{
 			if( this.yPos == 8)
@@ -126,5 +129,5 @@ public class Guard extends GameEntity {
 			else
 				direction = Direction.UP;
 		}
-		*/
+	 */
 }
