@@ -12,19 +12,17 @@ public class Guard extends GameEntity {
 	private Personality personality;
 	private int suspicionInc;
 	
-	private Patrol patrol;
-	private Game.Direction direction;
+	private Game.Direction lastDirection;
 
 	
-	public Guard(int x, int y, Patrol patrol) {
+	public Guard(int x, int y) {
 		super(x, y, 'G');
-		this.patrol = patrol;
 		personality = Personality.ROOKIE;
 		suspicionInc = 0;
 	}
 
-	public Guard(int x, int y, Patrol patrol, int type) {
-		this(x, y, patrol);
+	public Guard(int x, int y, int type) {
+		this(x, y);
 		
 		switch(type){
 		case 1: 
@@ -46,18 +44,18 @@ public class Guard extends GameEntity {
 	{
 		if(random.nextBoolean()) {
 			isSuspicious = !isSuspicious;
-			switch(direction) {
+			switch(lastDirection) {
 			case UP: 
-				direction = Game.Direction.DOWN;
+				lastDirection = Game.Direction.DOWN;
 				break;
 			case DOWN: 
-				direction = Game.Direction.UP;
+				lastDirection = Game.Direction.UP;
 				break;
 			case LEFT: 
-				direction = Game.Direction.RIGHT;
+				lastDirection = Game.Direction.RIGHT;
 				break;
 			case RIGHT: 
-				direction = Game.Direction.LEFT;
+				lastDirection = Game.Direction.LEFT;
 				break;
 			case NONE:
 				break;
@@ -65,33 +63,11 @@ public class Guard extends GameEntity {
 		}
 	}
 	
-	// Override the default move, to prevent accidentally using it
 	public int move(Game.Direction dir) {
-		move();
-		return 0;
-	}
-
-	public void move() {
-		Game.Direction patrolDirection = patrolMovement();
-		
 		// TODO Change movement depending on Personality	
 		
 		// use GameEntity move() to move as usual
-		super.move(patrolDirection);
-	}
-
-	
-	private Game.Direction patrolMovement() {
-		// Get Direction from its patrol if there's any change in direction (if it is not on node, it returns NONE)
-		Game.Direction patrolDirection = patrol.nodeDirection(xPos, yPos);
-		
-		if (patrolDirection == Game.Direction.NONE)
-			// guard is not on node, use last direction
-			patrolDirection = direction;
-		else
-			// otherwise save the new direction
-			direction = patrolDirection;
-		return patrolDirection;
+		return super.move(dir);
 	}
 	
 	/*

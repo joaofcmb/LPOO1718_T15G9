@@ -3,19 +3,21 @@ package dkeep.logic;
 import java.util.ArrayList;
 
 public class Map {
-	protected char[][] blueprint; // static layout of map itself
+	protected char[][] blueprint; 	// static layout of map itself (Walls and doors and stuff)
+	protected char[][] tacticalMap; // layout of map with the patrol layout, and other related stuff
 	
 	protected Player hero;
-	protected ArrayList<GameEntity> enemyList = new ArrayList<GameEntity>();
-	protected ArrayList<MapEntity>  propList =  new ArrayList<MapEntity>();
+	protected ArrayList<GameEntity> enemyList;
+	protected ArrayList<MapEntity>  propList;
 	
 	
 	public Map() {
-		enemyList.clear();
-		propList.clear();
+		enemyList = new ArrayList<GameEntity>();
+		propList = new ArrayList<MapEntity>();
 	}
 	
 	public String toString() {
+		// make copy of blueprint
 		String str = "";
 		char[][] map = new char[blueprint.length][];
 		
@@ -25,6 +27,7 @@ public class Map {
 
 		// TODO Add entities to map matrix
 		
+		// Assemble string from matrix
 		for(char[] line: map) {
 			for(char symbol: line) {
 				str += symbol + " "; 
