@@ -1,8 +1,8 @@
 package dkeep.logic;
 
 public class GameEntity extends MapEntity {
-	private int nextXPos;
-	private int nextYPos;
+	protected int nextXPos;
+	protected int nextYPos;
 	
 	protected GameEntity(int x, int y, char symbol) {
 		super(x, y, symbol);
@@ -16,11 +16,11 @@ public class GameEntity extends MapEntity {
 	 * 						whose movement logic is implemented in nextPosition();
 	 */
 	
-	protected void move() {
+	protected void move() {	
 		xPos = nextXPos;
 		yPos = nextYPos;
 	}
-	
+
 	protected void nextPosition(Game.Direction dir) {
 		nextXPos = xPos;
 		nextYPos = yPos;

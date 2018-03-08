@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 
 public class Map {
+	protected Game.GameState state = Game.GameState.DEFAULT;
+	
 	protected char[][] blueprint; 	// static layout of map itself (Walls and doors and stuff)
 	
 	protected Player hero; 
@@ -16,7 +18,7 @@ public class Map {
 	 * Returns true if valid, false otherwise.
 	 */
 	
-	private boolean validTile(int x, int y) {
+	public boolean validTile(int x, int y) {
 		switch(blueprint[x][y]) {
 		case ' ':
 			return true;
@@ -43,16 +45,26 @@ public class Map {
 	
 	public Game.GameState update(Game.Direction heroDirection) {
 		if (!playerMove(heroDirection))
-			return Game.GameState.DEFAULT;
+			return state;
 		
+		// move enemies and check hero triggers with them
 		for(GameEntity enemy : enemyList) {
 			enemy.move();
 			
 			if (hero.entityTrigger(enemy))
 				return Game.GameState.GAME_OVER; // enemy trigger with hero signifies hero death (game over)
 		}
-		return Game.GameState.DEFAULT;
+		
+		// check player trigger with props and deal with them
+		for (MapEntity prop : propList) {
+			if (hero.propTrigger(prop)) {
+				// Do map changes, accordingly
+			}
+		}
+		
+		return state;
 	}
+	
 	
 	public String toString() {
 		// make copy of blueprint
@@ -63,6 +75,7 @@ public class Map {
 			map[i] = blueprint[i].clone();
 		}
 
+		
 		// Add entities to map matrix
 		map[hero.getX()][hero.getY()] = hero.getSymbol();
 		
@@ -72,6 +85,7 @@ public class Map {
 		for (MapEntity prop : propList) {
 			map[prop.getX()][prop.getY()] = prop.getSymbol();
 		}
+		
 		
 		// Assemble string from matrix
 		for(char[] line: map) {

@@ -1,48 +1,25 @@
 package dkeep.logic;
 
-import java.util.ArrayList;
+public class CrazyOgreLevel extends Map {
+	//private Key key = new Key(1,7,'k');
 
-public class CrazyOgreLevel extends Map{
-	private int row=0, column=0;
+	public CrazyOgreLevel() {
+		super();
 
-	private Player hero = new Player(7,1);
-
-	//private Ogre ogre = new Ogre(1,8,'G');
-
-	private Key key = new Key(1,7,'k');
-
-	private ArrayList<Door> doors = new ArrayList<Door>();
-
-	private char[][] map = {
+		blueprint =  new char[][] {
 			{'X','X','X','X','X','X','X','X','X'},
 			{'I',' ',' ',' ',' ',' ',' ',' ','X'},
 			{'X',' ',' ',' ',' ',' ',' ',' ','X'},
 			{'X',' ',' ',' ',' ',' ',' ',' ','X'},
 			{'X',' ',' ',' ',' ',' ',' ',' ','X'},
-			{'I',' ',' ',' ',' ',' ',' ',' ','X'},
-			{'I',' ',' ',' ',' ',' ',' ',' ','X'},
+			{'X',' ',' ',' ',' ',' ',' ',' ','X'},
+			{'X',' ',' ',' ',' ',' ',' ',' ','X'},
 			{'X',' ',' ',' ',' ',' ',' ',' ','X'},
 			{'X',' ',' ',' ',' ',' ',' ',' ','X'},
 			{'X','X','X','X','X','X','X','X','X'}
-	};
-
-	public CrazyOgreLevel() {
-		doors.add(new Door(1,0,'I'));
-		row = map.length;
-		column = map[0].length;
-	}
-
-	public Player getHero() {return this.hero;}
-
-	public ArrayList<Door> getDoors(){return this.doors;}
-
-	public boolean isValidPosition(int x, int y)
-	{
-		switch(map[x][y]) {
-		case 'X':
-		case 'I':
-			return false;
-		}
-		return true;
+		};
+		
+		//private Ogre ogre = new Ogre(1,8,'G');
+		hero = new Player(7, 1);
 	}
 }

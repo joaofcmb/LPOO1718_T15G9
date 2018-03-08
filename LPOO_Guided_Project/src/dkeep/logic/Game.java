@@ -1,7 +1,7 @@
 package dkeep.logic;
 
 public class Game {
-	public enum GameState {DEFAULT, GAME_OVER, VICTORY}
+	public enum GameState {DEFAULT, NEXT_LEVEL, GAME_OVER, VICTORY}
 	public enum Direction {UP, LEFT, DOWN, RIGHT}
 	private GameState state = GameState.DEFAULT;
 	
@@ -19,12 +19,17 @@ public class Game {
 			map = new PrisonLevel();
 			break;
 		case 1:
-			// Call Map Constructor
+			map = new CrazyOgreLevel();
 			break;
 		}
 	}
 	
-	// TODO Add function to go to next level (using changeLevel)
+	private void nextLevel() {
+		if (map instanceof PrisonLevel)
+			changeLevel(1);
+		else if (map instanceof CrazyOgreLevel)
+			state = GameState.VICTORY;
+	}
 	
 	
 	
@@ -49,9 +54,12 @@ public class Game {
 		// tell map to process its entities
 		state = map.update(heroDirection);
 		
+		if (state == GameState.NEXT_LEVEL)
+			nextLevel();
+		
 		return 0;
 	}
-	
+
 	public String toString() {
 		return map.toString();
 	}
