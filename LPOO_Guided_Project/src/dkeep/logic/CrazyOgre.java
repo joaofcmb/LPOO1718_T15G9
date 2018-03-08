@@ -3,10 +3,14 @@ package dkeep.logic;
 import java.util.Random;
 
 public class CrazyOgre extends GameEntity {
-	Random random = new Random();
+	public MapEntity club;
+	
+	private Random random = new Random();
 
 	public CrazyOgre(int x, int y) {
 		super(x, y, 'O');
+		
+		club = new MapEntity(x, y, '*');
 	}
 
 	

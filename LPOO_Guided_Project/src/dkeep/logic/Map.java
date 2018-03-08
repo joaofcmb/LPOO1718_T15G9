@@ -87,6 +87,8 @@ public class Map {
 		map[hero.getX()][hero.getY()] = hero.getSymbol();
 		
 		for (GameEntity enemy : enemyList) {
+			if (enemy instanceof CrazyOgre)
+				map[((CrazyOgre)enemy).club.getX()][((CrazyOgre)enemy).club.getY()] = ((CrazyOgre)enemy).club.getSymbol();
 			map[enemy.getX()][enemy.getY()] = enemy.getSymbol();
 		}
 		for (MapEntity prop : propList) {
