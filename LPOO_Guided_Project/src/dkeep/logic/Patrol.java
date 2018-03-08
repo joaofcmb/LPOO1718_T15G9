@@ -1,11 +1,11 @@
 package dkeep.logic;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Patrol {
-	private HashMap<Integer[],  Game.Direction> nodes;
+	private ArrayList<String> nodeList = new ArrayList<String>();
+	private ArrayList<Game.Direction> directionList = new ArrayList<Game.Direction>();
 	
 	/*
 	 * Patrol syntax: "x, y, Dir,..." // each 3 elems is a node, must be ordered (to infer the suspicion direction too)
@@ -17,18 +17,13 @@ public class Patrol {
 		Scanner patrolConfig = new Scanner(config);
 		patrolConfig.useDelimiter(", ");
 		
-		Integer[] pos = new Integer[2];
-		nodes = new LinkedHashMap<Integer[], Game.Direction>();
-		
 		// Iterate each node and add it to the Map
 		while (patrolConfig.hasNextInt()) {
 			int x = patrolConfig.nextInt();
 			int y = patrolConfig.nextInt();
-			pos[0] = x; 	pos[1] = y;
 			
-			Game.Direction direction = directionConfig(patrolConfig.next());
-		
-			nodes.put(pos, direction);
+			nodeList.add(x + "," + y);
+			directionList.add(directionConfig(patrolConfig.next()));
 		}
 		
 		patrolConfig.close();
@@ -36,35 +31,34 @@ public class Patrol {
 	
 	private Game.Direction directionConfig(String s) {
 		switch(s.charAt(0)) {
-		case 'U':
+		case 'u':
 			return Game.Direction.UP;
-		case 'L':
+		case 'l':
 			return Game.Direction.LEFT;
-		case 'D':
+		case 'd':
 			return Game.Direction.DOWN;
-		case 'R':
+		case 'r':
 			return Game.Direction.RIGHT;
 		default:
-			return Game.Direction.NONE;	
+			return null;	
 		}
 	}
 	
 	public Game.Direction nodeDirection(int x, int y, boolean guardIsSuspicious) {
-		Integer[] pos = new Integer[2];
-		pos[0] = x;
-		pos[1] = y;
+		int i;
 		
-		if (nodes.containsKey(pos)) {
-			if (guardIsSuspicious)
-				return nodes.get(pos);
+		String pos = x + "," + y;
+		
+		if ((i = nodeList.indexOf(pos)) != -1) {
+			if (!guardIsSuspicious)
+				return directionList.get(i);
 			else {
-				// use API to get a Set of positions to get to the node before this one 
-				// which contains the reverse direction for a suspicious guard
+				return directionList.get(i > 0 ? i - 1 : directionList.size() - 1);
 			}
 		}
 			
 		
 		// no node found, return no direction
-		return Game.Direction.NONE;
+		return null;
 	}
 }

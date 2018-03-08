@@ -21,23 +21,11 @@ public class PrisonLevel extends Map {
 			{'X',' ','I',' ','I',' ','X',' ',' ','X'},
 			{'X','X','X','X','X','X','X','X','X','X'}
 		};
-
-		tacticalMap =  new char[][] {
-			{'X','X','X','X','X','X','X','X','X','X'},
-			{'X',' ',' ',' ','I',' ','X','d','l','X'},
-			{'X','X','X',' ','X','X','X','d','u','X'},
-			{'X',' ','I',' ','I',' ','X','d','u','X'},
-			{'X','X','X',' ','X','X','X','d','u','X'},
-			{'I','d','l','l','l','l','l','l','u','X'},
-			{'I','r','r','r','r','r','r','r','u','X'},
-			{'X','X','X',' ','X','X','X','X',' ','X'},
-			{'X',' ','I',' ','I',' ','X',' ',' ','X'},
-			{'X','X','X','X','X','X','X','X','X','X'}
-		};
-
+		
 		hero = new Player(1, 1);
-		enemyList.add(new Guard(1, 8));
-
-		// Add props (levers, etc...)
+		enemyList.add(new Guard(1, 8, "1, 8, l, " + "1, 7, d, "
+									+ "5, 7, l, " + "5, 1, d, "
+									+ "6, 1, r, " + "6, 8, u"));
+		
 	}
 }

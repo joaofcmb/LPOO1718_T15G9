@@ -32,7 +32,7 @@ public class DungeonKeep {
 
 	private static Game.Direction playerInput() {
 		String input = inputScanner.nextLine();
-
+		
 		switch(input.charAt(0)) {
 		case 'w':
 			return Game.Direction.UP;
@@ -43,7 +43,7 @@ public class DungeonKeep {
 		case 'd':
 			return Game.Direction.RIGHT;
 		default:
-			return Game.Direction.NONE;
+			return null;
 		}
 	}
 }

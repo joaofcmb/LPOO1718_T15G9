@@ -8,21 +8,23 @@ public class Guard extends GameEntity {
 	private enum Personality {ROOKIE, DRUNK, SUSPICIOUS} // TODO Make enum public and use it to refer to a personality (constructor arg, etc)
 	private static final int MIN_STEPS_SUSPICION = 3; // Steps until suspicious might trigger his patrol reversion
 
-	private boolean isSuspicious;
+	private boolean isSuspicious = false;
 	private Personality personality;
 	private int suspicionInc;
 
+	private Patrol patrol;
 	private Game.Direction lastDirection;
 
 
-	public Guard(int x, int y) {
+	public Guard(int x, int y, String patrolConfig) {
 		super(x, y, 'G');
 		personality = Personality.ROOKIE;
 		suspicionInc = 0;
+		patrol = new Patrol(patrolConfig);
 	}
 
-	public Guard(int x, int y, int type) {
-		this(x, y);
+	public Guard(int x, int y, int type, String patrolConfig) {
+		this(x, y, patrolConfig);
 
 		switch(type){
 		case 1: 
@@ -39,46 +41,22 @@ public class Guard extends GameEntity {
 			break;
 		}
 	}
+	
 
-	private void triggerSuspicion()
-	{
-		if(random.nextBoolean()) {
-			isSuspicious = !isSuspicious;
-			switch(lastDirection) {
-			case UP: 
-				lastDirection = Game.Direction.DOWN;
-				break;
-			case DOWN: 
-				lastDirection = Game.Direction.UP;
-				break;
-			case LEFT: 
-				lastDirection = Game.Direction.RIGHT;
-				break;
-			case RIGHT: 
-				lastDirection = Game.Direction.LEFT;
-				break;
-			case NONE:
-				break;
-			}
-		}
-	}
-
-	public void move(Game.Direction dir) {
+	public void move() {
+		Game.Direction dir = patrol.nodeDirection(xPos, yPos, isSuspicious);
+		
+		if (dir == null)		dir = lastDirection;
+		else					lastDirection = dir;
+			
+		
 		// TODO Change movement depending on Personality	
 
 		// use GameEntity nextPosition() and move() to move as usual
 		nextPosition(dir);
 		super.move();
 	}
-
-	protected boolean entityTrigger(MapEntity entity) {
-		if (entity instanceof Player) {
-			if (Math.abs(this.xPos - entity.xPos) + Math.abs(this.yPos - entity.yPos) < 2)
-				return true;
-		}
-		
-		return false;
-	}
+	
 
 	/*
 	if(this.xPos == 1)

@@ -2,7 +2,7 @@ package dkeep.logic;
 
 public class Game {
 	public enum GameState {DEFAULT, GAME_OVER, VICTORY}
-	public enum Direction {NONE, UP, LEFT, DOWN, RIGHT}
+	public enum Direction {UP, LEFT, DOWN, RIGHT}
 	private GameState state = GameState.DEFAULT;
 	
 	// private ArrayList<Door> doors =  new ArrayList<Door>();
@@ -43,12 +43,11 @@ public class Game {
 	}
 	
 	public int update(Direction heroDirection) {
-		if (heroDirection == Direction.NONE)
+		if (heroDirection == null)
 			return -1;
 		
 		// tell map to process its entities
-		if (map.update(heroDirection) == -1)
-			state = GameState.GAME_OVER;
+		state = map.update(heroDirection);
 		
 		return 0;
 	}

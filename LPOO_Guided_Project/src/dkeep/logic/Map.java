@@ -2,9 +2,9 @@ package dkeep.logic;
 
 import java.util.ArrayList;
 
+
 public class Map {
 	protected char[][] blueprint; 	// static layout of map itself (Walls and doors and stuff)
-	protected char[][] tacticalMap; // layout of map with the patrol layout, and other related stuff
 	
 	protected Player hero; 
 	protected ArrayList<GameEntity> enemyList;
@@ -36,45 +36,22 @@ public class Map {
 	}
 	
 	
-	protected boolean guardMove(Guard guard) {
-		// check for patrol tile to see in which direction to go
-		switch(tacticalMap[guard.getX()][guard.getY()]) {
-		case 'u':
-			guard.move(Game.Direction.UP);
-			break;
-		case 'l':
-			guard.move(Game.Direction.LEFT);
-			break;
-		case 'd':
-			guard.move(Game.Direction.DOWN);
-			break;
-		case 'r':
-			guard.move(Game.Direction.RIGHT);
-			break;
-		default:
-			return false;
-		}
-		return true;
-	}
-	
 	public Map() {
 		enemyList = new ArrayList<GameEntity>();
 		propList = new ArrayList<MapEntity>();
 	}
 	
-	public int update(Game.Direction heroDirection) {
+	public Game.GameState update(Game.Direction heroDirection) {
 		if (!playerMove(heroDirection))
-			return 1;
+			return Game.GameState.DEFAULT;
 		
 		for(GameEntity enemy : enemyList) {
-			if (enemy instanceof Guard)
-				guardMove((Guard) enemy);
+			enemy.move();
 			
-			if (enemy.entityTrigger(hero))
-				return -1; // enemy trigger with hero signifies hero death (game over)
+			if (hero.entityTrigger(enemy))
+				return Game.GameState.GAME_OVER; // enemy trigger with hero signifies hero death (game over)
 		}
-		
-		return 0;
+		return Game.GameState.DEFAULT;
 	}
 	
 	public String toString() {

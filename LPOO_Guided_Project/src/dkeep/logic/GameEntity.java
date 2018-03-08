@@ -47,10 +47,6 @@ public class GameEntity extends MapEntity {
 	 * Checks for triggers with others entities and changes these accordingly (or none if it's merely a boolean trigger)
 	 */
 	
-	protected boolean entityTrigger(MapEntity entity) {
-		return false;
-	}
-	
 	protected int getNextX() {
 		return nextXPos;
 	}
