@@ -13,6 +13,12 @@ public class Map {
 	protected ArrayList<MapEntity>  propList;
 	
 	
+	public Map() {
+		enemyList = new ArrayList<GameEntity>();
+		propList = new ArrayList<MapEntity>();
+	}
+	
+	
 	/*
 	 * FUNCTION: validTile - checks if a give tile at the current map is valid for movement (X, Y coordinates)
 	 * Returns true if valid, false otherwise.
@@ -37,11 +43,16 @@ public class Map {
 		return false;
 	}
 	
-	
-	public Map() {
-		enemyList = new ArrayList<GameEntity>();
-		propList = new ArrayList<MapEntity>();
+	protected void ogreMove(CrazyOgre ogre) {
+		do {
+			ogre.nextPosition(); // calculate next Position
+		} while (!validTile(ogre.getNextX(), ogre.getNextY()));
+		
+		// TODO Detect on key
+			
+		ogre.move();
 	}
+	
 	
 	public Game.GameState update(Game.Direction heroDirection) {
 		if (!playerMove(heroDirection))
@@ -49,17 +60,13 @@ public class Map {
 		
 		// move enemies and check hero triggers with them
 		for(GameEntity enemy : enemyList) {
-			enemy.move();
+			if (enemy instanceof Guard)
+				enemy.move();
+			else if (enemy instanceof CrazyOgre)
+				ogreMove((CrazyOgre)enemy);
 			
 			if (hero.entityTrigger(enemy))
 				return Game.GameState.GAME_OVER; // enemy trigger with hero signifies hero death (game over)
-		}
-		
-		// check player trigger with props and deal with them
-		for (MapEntity prop : propList) {
-			if (hero.propTrigger(prop)) {
-				// Do map changes, accordingly
-			}
 		}
 		
 		return state;

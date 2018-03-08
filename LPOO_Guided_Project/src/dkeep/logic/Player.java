@@ -14,24 +14,12 @@ public class Player extends GameEntity {
 		return false;
 	}
 
-	protected boolean propTrigger(MapEntity prop) {
-		switch(prop.mapSymbol) {
-		case 'k': // Lever or Key
-			if (prop instanceof Lever) {
-				if (this.nextXPos == prop.xPos && this.nextYPos == prop.yPos)
-					return true;
-			}
-			else {
-				// change player icon to symbolize it has a key
-				prop.mapSymbol = ' ';
-				return true;
-			}
-		case 'I': // Closed door
-			if (this.nextXPos == prop.xPos && this.nextYPos == prop.yPos)
-				return true;
-		case 'S': // Open door
-			return true;
-		}
-		return false;
+	
+	public void pickKey() {
+		mapSymbol = 'K';
+	}
+
+	public boolean hasKey() {
+		return (mapSymbol == 'K');
 	}
 }

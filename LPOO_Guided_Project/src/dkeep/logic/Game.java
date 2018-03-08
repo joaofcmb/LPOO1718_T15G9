@@ -9,8 +9,12 @@ public class Game {
 	private Map map;
 	
 	
+	public Game(int i) {
+		changeLevel(i);
+	}
+	
 	public Game() {
-		changeLevel(0);
+		this(0);
 	}
 	
 	private void changeLevel(int index) {

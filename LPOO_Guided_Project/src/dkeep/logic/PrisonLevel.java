@@ -28,7 +28,7 @@ public class PrisonLevel extends Map {
 		case 'k':
 			blueprint[5][0] = 'S';
 			blueprint[6][0] = 'S';
-			break;
+			return false;
 		case 'S':
 			state = Game.GameState.NEXT_LEVEL;
 			return true;
