@@ -3,35 +3,39 @@ package dkeep.logic;
 import java.util.Random;
 
 public class CrazyOgre extends GameEntity {
-	public MapEntity club;
+	public GameEntity club;
 	
 	private Random random = new Random();
 
 	public CrazyOgre(int x, int y) {
 		super(x, y, 'O');
 		
-		club = new MapEntity(x, y, '*');
+		club = new GameEntity(x, y, '*');
 	}
-
 	
-	public void nextPosition() {
-		Game.Direction dir = null;
+	public void nextOgrePos() {
+		nextPosition(randomDirection());
+	}
+	
+	public void nextClubPos() {
+		club.xPos = xPos;
+		club.yPos = yPos;
 		
+		club.nextPosition(randomDirection());
+	}
+	
+	private Game.Direction randomDirection() {
 		switch(random.nextInt(4)) {
 		case 0:
-			dir = Game.Direction.UP; 
-			break;
+			return Game.Direction.UP; 
 		case 1:
-			dir = Game.Direction.LEFT;
-			break;
+			return Game.Direction.LEFT;
 		case 2:
-			dir = Game.Direction.DOWN;
-			break;
+			return Game.Direction.DOWN;
 		case 3:
-			dir = Game.Direction.RIGHT;
-			break;
+			return Game.Direction.RIGHT;
+		default:
+			return null;
 		}
-		
-		nextPosition(dir);
 	}
 }

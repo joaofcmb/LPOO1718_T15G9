@@ -44,13 +44,21 @@ public class Map {
 	}
 	
 	protected void ogreMove(CrazyOgre ogre) {
+		// move ogre
 		do {
-			ogre.nextPosition(); // calculate next Position
+			ogre.nextOgrePos(); // calculate next Position
 		} while (!validTile(ogre.getNextX(), ogre.getNextY()));
 		
 		// TODO Detect on key
 			
 		ogre.move();
+		
+		// move club
+		do {
+			ogre.nextClubPos();
+		} while (!validTile(ogre.club.getNextX(), ogre.getNextY()));
+		
+		ogre.club.move();
 	}
 	
 	

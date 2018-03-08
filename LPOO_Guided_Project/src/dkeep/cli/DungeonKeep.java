@@ -10,7 +10,7 @@ public class DungeonKeep {
 	public static void main(String[] args) {
 		// Game Startup
 		inputScanner = new Scanner(System.in);
-		Game game = new Game();
+		Game game = new Game(1);
 
 		// Game Loop
 		
