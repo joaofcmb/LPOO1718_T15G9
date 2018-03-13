@@ -3,7 +3,7 @@ package dkeep.logic;
 import java.util.Random;
 
 public class CrazyOgre extends GameEntity {
-	public GameEntity club;
+	private GameEntity club;
 	
 	private Random random = new Random();
 
@@ -11,6 +11,8 @@ public class CrazyOgre extends GameEntity {
 		super(x, y, 'O');
 		
 		club = new GameEntity(x, y, '*');
+		club.nextPosition(randomDirection());
+		club.move();
 	}
 	
 	public void nextOgrePos() {
@@ -37,5 +39,31 @@ public class CrazyOgre extends GameEntity {
 		default:
 			return null;
 		}
+	}
+	
+	public void moveClub() {
+		club.move();
+	}
+
+	// club getters
+	
+	public int getClubX() {
+		return club.xPos;
+	}
+	
+	public int getClubY() {
+		return club.yPos;
+	}
+	
+	public char getClubSymbol() {
+		return club.mapSymbol;
+	}
+
+	public int getNextClubX() {
+		return club.nextXPos;
+	}
+	
+	public int getNextClubY() {
+		return club.nextYPos;
 	}
 }
