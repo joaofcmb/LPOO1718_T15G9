@@ -27,6 +27,7 @@ public class Map {
 	public boolean validTile(int x, int y) {
 		switch(blueprint[x][y]) {
 		case ' ':
+		case 'k':
 			return true;
 		default:
 			return false;

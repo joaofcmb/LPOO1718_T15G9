@@ -26,6 +26,9 @@ public class CrazyOgreLevel extends Map {
 		// Add all dem Ogres
 		for (int i = 0; i < ogreNum; i++)	
 			enemyList.add(new CrazyOgre(2, 4));
+		
+		// add key
+		propList.add(new Key(1, 7));
 	}
 
 	public CrazyOgreLevel() {
@@ -63,6 +66,9 @@ public class CrazyOgreLevel extends Map {
 	public GameState update(Direction heroDirection) {
 		GameState ret = super.update(heroDirection);
 		
+		if (!propList.isEmpty())
+			((Key) propList.get(0)).uncover();
+		
 		for(GameEntity enemy : enemyList) {
 			if (enemy instanceof CrazyOgre)
 				ogreMove((CrazyOgre)enemy);
@@ -73,12 +79,14 @@ public class CrazyOgreLevel extends Map {
 		
 		return ret;
 	}
-	
 
+	// TODO check key collisions independantly from the blueprint
+	
 	private boolean validTileHero(int x, int y) {
 		switch(blueprint[x][y]) {
 		case 'k': // key
 			hero.pickKey();
+			propList.remove(0);
 			blueprint[x][y] = ' ';
 			return true;
 		case 'I': // closed door
@@ -93,11 +101,10 @@ public class CrazyOgreLevel extends Map {
 		return super.validTile(x, y);
 	}
 
-	private boolean validTileOgre(int x, int y) {
-		// TODO change key back to default
-		
-		if (blueprint[x][y] == 'k') // Ogre on key
-			blueprint[x][y] = '$';
+	private boolean validTileOgre(int x, int y) {		
+		if (blueprint[x][y] == 'k') { // Ogre on key
+			((Key) propList.get(0)).hide();
+		}
 		
 		
 		return super.validTile(x, y);
