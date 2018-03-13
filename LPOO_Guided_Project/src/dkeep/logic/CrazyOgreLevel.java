@@ -21,7 +21,7 @@ public class CrazyOgreLevel extends Map {
 		};
 
 		hero = new Player(7, 1);
-		//TODO arm the hero
+		hero.arm();
 
 		// Add all dem Ogres
 		for (int i = 0; i < ogreNum; i++)	

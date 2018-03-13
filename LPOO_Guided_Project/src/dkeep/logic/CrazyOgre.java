@@ -5,6 +5,9 @@ import java.util.Random;
 public class CrazyOgre extends GameEntity {
 	private GameEntity club;
 	
+	private boolean isStunned = false;
+	private int stunTurns = 0;
+	
 	private Random random = new Random();
 
 	public CrazyOgre(int x, int y) {
@@ -15,8 +18,30 @@ public class CrazyOgre extends GameEntity {
 		club.move();
 	}
 	
+	// STUN MECHANICS
+	
+	public void stun() {
+		isStunned = true;
+		stunTurns = 2;
+		mapSymbol = '8';
+	}
+	
+	public void stunModifier() {
+		stunTurns--;
+		if (stunTurns <= 0) {
+			isStunned = false;
+			mapSymbol = 'O';
+		}
+	}
+	
+	
 	public void nextOgrePos() {
-		nextPosition(randomDirection());
+		if (isStunned) {
+			stunModifier();
+			nextPosition(null); // nextPos stays the same, so doesnt move
+		}
+		else			
+			nextPosition(randomDirection());
 	}
 	
 	public void nextClubPos() {
@@ -40,6 +65,7 @@ public class CrazyOgre extends GameEntity {
 			return null;
 		}
 	}
+	
 	
 	public void moveClub() {
 		club.move();

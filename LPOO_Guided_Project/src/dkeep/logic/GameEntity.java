@@ -25,6 +25,8 @@ public class GameEntity extends MapEntity {
 		nextXPos = xPos;
 		nextYPos = yPos;
 		
+		if (dir == null) 	return;
+		
 		switch(dir) {
 		case UP: 
 			nextXPos--;
