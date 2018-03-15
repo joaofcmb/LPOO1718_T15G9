@@ -23,6 +23,7 @@ public class DungeonWindow {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		Game game = new Game(1);
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -83,7 +84,7 @@ public class DungeonWindow {
 		exitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.exit(0);				
+				System.exit(0);	
 			}
 
 		});
@@ -96,7 +97,9 @@ public class DungeonWindow {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				/*ACTION ON CLICK*/
+				game.update(Game.Direction.UP);
+				String s = game.toString();
+				txtGame.replaceRange(s, 0, s.length);
 			}
 
 		});
@@ -110,7 +113,9 @@ public class DungeonWindow {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				/*ACTION ON CLICK*/
+				game.update(Game.Direction.LEFT);
+				String s = game.toString();
+				txtGame.replaceRange(s, 0, s.length);
 			}
 
 		});
@@ -124,7 +129,9 @@ public class DungeonWindow {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				/*ACTION ON CLICK*/
+				game.update(Game.Direction.DOWN);
+				String s = game.toString();
+				txtGame.replaceRange(s, 0, s.length);
 			}
 
 		});
@@ -138,7 +145,9 @@ public class DungeonWindow {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				/*ACTION ON CLICK*/
+				game.update(Game.Direction.RIGHT);
+				String s = game.toString();
+				txtGame.replaceRange(s, 0, s.length);
 			}
 
 		});
@@ -172,6 +181,8 @@ public class DungeonWindow {
 				leftButton.setEnabled(true);
 				downButton.setEnabled(true);
 				rightButton.setEnabled(true);
+				
+				startButton.setEnabled(false);
 				/**/
 				return;
 				/* TODO
