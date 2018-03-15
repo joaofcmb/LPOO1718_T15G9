@@ -27,23 +27,18 @@ public class PrisonLevel extends Map {
 		this(Guard.Personality.ROOKIE);
 	}
 
-	// Constructor for testing purposes
+	// Constructor for testing purposes (other maps with same logic)
 	public PrisonLevel(char[][] blueprint, Player hero, Guard guard) {
 		this.blueprint = blueprint;
 		this.hero = hero;
 		enemyList.add(guard);
 	}
 	
-	
 	public boolean validTile(int x, int y) {
 		switch(blueprint[x][y]) {
 		case 'k':
-			blueprint[5][0] = 'S';
-			blueprint[6][0] = 'S';
-			return false;
-		case 'S':
-			state = Game.GameState.NEXT_LEVEL;
-			return true;
+			openDoors();
+			break;
 		}
 		
 		return super.validTile(x, y);

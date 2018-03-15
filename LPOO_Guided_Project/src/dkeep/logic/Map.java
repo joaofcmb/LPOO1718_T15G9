@@ -2,6 +2,7 @@ package dkeep.logic;
 
 import java.util.ArrayList;
 
+// TODO Maybe remove subclass (makes things messy)
 
 public class Map {
 	protected Game.GameState state = Game.GameState.DEFAULT;
@@ -26,6 +27,8 @@ public class Map {
 	
 	public boolean validTile(int x, int y) {
 		switch(blueprint[x][y]) {
+		case 'I':
+			// TODO Add player on open door trigger
 		case ' ':
 		case 'k':
 			return true;
@@ -94,6 +97,12 @@ public class Map {
 		}
 
 		return str;
+	}
+	
+	public void openDoors() {
+		for (MapEntity prop : propList) {
+			if (prop instanceof Door)	((Door) prop).unlock();
+		}
 	}
 	
 	public Player getHero() {
