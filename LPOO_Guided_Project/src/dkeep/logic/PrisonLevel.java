@@ -1,7 +1,7 @@
 package dkeep.logic;
 
 public class PrisonLevel extends Map {
-	public PrisonLevel() {
+	public PrisonLevel(Guard.Personality personality) {
 		super();
 
 		blueprint =  new char[][] {
@@ -18,9 +18,13 @@ public class PrisonLevel extends Map {
 		};
 		
 		hero = new Player(1, 1);
-		enemyList.add(new Guard(1, 8, Guard.Personality.DRUNK, "1, 8, l, " + "1, 7, d, "
-															 + "5, 7, l, " + "5, 1, d, "
-															 + "6, 1, r, " + "6, 8, u"));
+		enemyList.add(new Guard(1, 8, personality, "1, 8, l, " + "1, 7, d, "
+										 		 + "5, 7, l, " + "5, 1, d, "
+										 		 + "6, 1, r, " + "6, 8, u"));
+	}
+	
+	public PrisonLevel() {
+		this(Guard.Personality.SUSPICIOUS);
 	}
 	
 	public boolean validTile(int x, int y) {

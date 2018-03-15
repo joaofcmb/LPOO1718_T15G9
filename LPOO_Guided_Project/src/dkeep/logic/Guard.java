@@ -6,12 +6,12 @@ public class Guard extends GameEntity {
 	private Random random = new Random();
 
 	public enum Personality {ROOKIE, DRUNK, SUSPICIOUS} // TODO Make enum public and use it to refer to a personality (constructor arg, etc)
+	
 	private static final int MIN_STEPS_SUSPICION = 3; // Steps until suspicious might trigger his patrol reversion
-
+	private int suspicionStep; // Counter of steps
+	
 	private Personality personality;
 	private boolean inverseDirection = false;
-	
-	private int suspicionInc;
 
 	private Patrol patrol;
 	private Game.Direction lastDirection;
@@ -20,7 +20,6 @@ public class Guard extends GameEntity {
 	public Guard(int x, int y, String patrolConfig) {
 		super(x, y, 'G');
 		personality = Personality.ROOKIE;
-		suspicionInc = 0;
 		patrol = new Patrol(patrolConfig);
 	}
 
@@ -51,6 +50,13 @@ public class Guard extends GameEntity {
 			}
 			break;
 		case SUSPICIOUS:
+			if (suspicionStep >= MIN_STEPS_SUSPICION) {
+				if (random.nextBoolean()) {
+					inverseDirection = !inverseDirection;
+					suspicionStep = 0;
+				}
+			}
+			else suspicionStep++;
 			break;
 		default:
 			break;
