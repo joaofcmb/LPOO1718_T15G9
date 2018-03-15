@@ -3,13 +3,14 @@ package dkeep.logic;
 import java.util.Random;
 
 public class Guard extends GameEntity {
-	private Random random;
+	private Random random = new Random();
 
-	private enum Personality {ROOKIE, DRUNK, SUSPICIOUS} // TODO Make enum public and use it to refer to a personality (constructor arg, etc)
+	public enum Personality {ROOKIE, DRUNK, SUSPICIOUS} // TODO Make enum public and use it to refer to a personality (constructor arg, etc)
 	private static final int MIN_STEPS_SUSPICION = 3; // Steps until suspicious might trigger his patrol reversion
 
-	private boolean isSuspicious = false;
 	private Personality personality;
+	private boolean inverseDirection = false;
+	
 	private int suspicionInc;
 
 	private Patrol patrol;
@@ -23,49 +24,35 @@ public class Guard extends GameEntity {
 		patrol = new Patrol(patrolConfig);
 	}
 
-	public Guard(int x, int y, int type, String patrolConfig) {
+	public Guard(int x, int y, Personality type, String patrolConfig) {
 		this(x, y, patrolConfig);
 
-		switch(type){
-		case 1: 
-			personality = Personality.DRUNK;
-			// System.out.println("The Guard is Drunk");
-			break;
-		case 2: 
-			personality = Personality.SUSPICIOUS;
-			// System.out.println("The Guard is Suspicious");
-			break;
-		default: 
-			personality = Personality.ROOKIE;
-			// System.out.println("The Guard is a Rookie");
-			break;
-		}
+		personality = type;
 	}
 	
 
 	public void move() {
-		Game.Direction dir = patrol.nodeDirection(xPos, yPos, isSuspicious);
+		Game.Direction dir = nextDirection(xPos, yPos, inverseDirection);
 		
-		if (dir == null)		dir = lastDirection;
-		else					lastDirection = dir;
-			
-		
-		// TODO Change movement depending on Personality
-		switch(personality ) {
+		// TODO Figure out rare bug of inverting position while not asleep
+		switch(personality) {
 		case DRUNK:
 			if (random.nextBoolean()) // Guard fall asleep?
 				this.mapSymbol = 'g';
 			
 			if (this.mapSymbol == 'g') { // Guard is sleeping
 				if (random.nextBoolean()) { // guard wake up?
+					this.mapSymbol = 'G';
+					inverseDirection = random.nextBoolean();
 					
+					dir = nextDirection(xPos, yPos, inverseDirection);
 				}
-				else	dir = null;
+				else 	dir = null;
 			}
 			break;
 		case SUSPICIOUS:
 			break;
-		case ROOKIE:
+		default:
 			break;
 		}
 
@@ -73,56 +60,32 @@ public class Guard extends GameEntity {
 		nextPosition(dir);
 		super.move();
 	}
-	
 
-	/*
-	if(this.xPos == 1)
-		{
-			if( this.yPos == 8)
-			{
-				if(isSuspicious)
-					direction = Direction.DOWN;
-				else 
-					direction = Direction.LEFT;	
-			}
-			else if ( this.yPos == 7)
-			{
-				if(isSuspicious) 
-					direction = Direction.RIGHT;	
-				else
-					direction = Direction.DOWN;	
-			}
+	private Game.Direction nextDirection(int xPos, int yPos, boolean inverseDirection) {
+		Game.Direction dir = patrol.nodeDirection(xPos, yPos, inverseDirection);
+		
+		if (dir == null) 	dir = lastDirection;
+		else 				lastDirection = dir;
+		
+		if (inverseDirection)	dir = invert(dir); // invert direction to go the other way
+		
+		return dir;
+	}
+
+	private Game.Direction invert(Game.Direction dir) {
+		if (dir == null)	return null;
+		
+		switch(dir) {
+		case DOWN:
+			return Game.Direction.UP;
+		case LEFT:
+			return Game.Direction.RIGHT;
+		case RIGHT:
+			return Game.Direction.LEFT;
+		case UP:
+			return Game.Direction.DOWN;
+		default:
+			return null;
 		}
-		else if(this.xPos == 5)
-		{
-			if(this.yPos == 1)
-			{
-				if(isSuspicious) 
-					direction = Direction.RIGHT;	
-				else
-					direction = Direction.DOWN;	
-			}
-			else if(this .yPos == 7)
-			{
-				if(isSuspicious) 
-					direction = Direction.UP;	
-				else
-					direction = Direction.LEFT;
-			}
-		}
-		else if (this.xPos == 6 && this.yPos == 1)
-		{
-			if(isSuspicious) 
-				direction = Direction.UP;	
-			else
-				direction = Direction.RIGHT;
-		}
-		else if(this.xPos == 6 && this.yPos == 8)
-		{
-			if(isSuspicious) 
-				direction = Direction.LEFT;	
-			else
-				direction = Direction.UP;
-		}
-	 */
+	}
 }

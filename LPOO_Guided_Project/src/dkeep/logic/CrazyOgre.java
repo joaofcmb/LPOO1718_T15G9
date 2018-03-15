@@ -19,7 +19,6 @@ public class CrazyOgre extends GameEntity {
 	}
 	
 	// STUN MECHANICS
-	
 	public void stun() {
 		isStunned = true;
 		stunTurns = 2;

@@ -18,9 +18,9 @@ public class PrisonLevel extends Map {
 		};
 		
 		hero = new Player(1, 1);
-		enemyList.add(new Guard(1, 8, "1, 8, l, " + "1, 7, d, "
-									+ "5, 7, l, " + "5, 1, d, "
-									+ "6, 1, r, " + "6, 8, u"));
+		enemyList.add(new Guard(1, 8, Guard.Personality.DRUNK, "1, 8, l, " + "1, 7, d, "
+															 + "5, 7, l, " + "5, 1, d, "
+															 + "6, 1, r, " + "6, 8, u"));
 	}
 	
 	public boolean validTile(int x, int y) {

@@ -9,7 +9,7 @@ public class Player extends GameEntity {
 	
 	protected boolean entityTrigger(MapEntity entity) {
 		if (entity instanceof Guard) {
-			return isAdjacent(entity);
+			return (isAdjacent(entity) && entity.mapSymbol == 'G');
 		}
 		else if (entity instanceof CrazyOgre) { // must check adjacency with club aswell
 			if (isAdjacent(new MapEntity(((CrazyOgre) entity).getClubX(), ((CrazyOgre) entity).getClubY(), '*'))) {

@@ -9,7 +9,7 @@ public class Patrol {
 	
 	/*
 	 * Patrol syntax: "x, y, Dir,..." // each 3 elems is a node, must be ordered (to infer the suspicion direction too)
-	 * Spacing of elements must be exactly ", ".  Dir = U, L, D, R (initials of direction)
+	 * Spacing of elements must be exactly ", ".  Dir = u, l, d, r (initials of direction)
 	 */
 	
 	Patrol(String config) {
@@ -44,13 +44,12 @@ public class Patrol {
 		}
 	}
 	
-	public Game.Direction nodeDirection(int x, int y, boolean guardIsSuspicious) {
+	public Game.Direction nodeDirection(int x, int y, boolean inverseDirection) {
 		int i;
-		
 		String pos = x + "," + y;
 		
 		if ((i = nodeList.indexOf(pos)) != -1) {
-			if (!guardIsSuspicious)
+			if (!inverseDirection)
 				return directionList.get(i);
 			else {
 				return directionList.get(i > 0 ? i - 1 : directionList.size() - 1);
