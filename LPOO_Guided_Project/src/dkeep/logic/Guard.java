@@ -50,7 +50,24 @@ public class Guard extends GameEntity {
 		else					lastDirection = dir;
 			
 		
-		// TODO Change movement depending on Personality	
+		// TODO Change movement depending on Personality
+		switch(personality ) {
+		case DRUNK:
+			if (random.nextBoolean()) // Guard fall asleep?
+				this.mapSymbol = 'g';
+			
+			if (this.mapSymbol == 'g') { // Guard is sleeping
+				if (random.nextBoolean()) { // guard wake up?
+					
+				}
+				else	dir = null;
+			}
+			break;
+		case SUSPICIOUS:
+			break;
+		case ROOKIE:
+			break;
+		}
 
 		// use GameEntity nextPosition() and move() to move as usual
 		nextPosition(dir);

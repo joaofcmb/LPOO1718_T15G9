@@ -25,7 +25,7 @@ public class CrazyOgreLevel extends Map {
 
 		// Add all dem Ogres
 		for (int i = 0; i < ogreNum; i++)	
-			enemyList.add(new CrazyOgre(2, 4));
+			enemyList.add(new CrazyOgre(2, 4)); // TODO make spawn random (or let them all spawn in the same place)
 		
 		// add key
 		propList.add(new Key(1, 7));
