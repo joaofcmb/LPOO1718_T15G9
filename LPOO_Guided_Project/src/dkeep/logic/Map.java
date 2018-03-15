@@ -95,4 +95,8 @@ public class Map {
 
 		return str;
 	}
+	
+	public Player getHero() {
+		return hero;
+	}
 }

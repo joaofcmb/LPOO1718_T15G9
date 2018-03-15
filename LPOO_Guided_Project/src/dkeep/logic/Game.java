@@ -5,50 +5,41 @@ public class Game {
 	public enum Direction {UP, LEFT, DOWN, RIGHT}
 	private GameState state = GameState.DEFAULT;
 	
-	// private ArrayList<Door> doors =  new ArrayList<Door>();
 	private Map map;
 	
-	
-	public Game(int i) {
-		changeLevel(i);
+	public Game(Map map) {
+		this.map = map;
 	}
 	
 	public Game() {
-		this(0);
-	}
-	
-	private void changeLevel(int index) {
-		switch(index) {
-		case 0:
-			map = new PrisonLevel();
-			break;
-		case 1:
-			map = new CrazyOgreLevel();
-			break;
-		}
+		this(new PrisonLevel());
 	}
 	
 	private void nextLevel() {
 		if (map instanceof PrisonLevel)
-			changeLevel(1);
+			map = new CrazyOgreLevel();
 		else if (map instanceof CrazyOgreLevel)
 			state = GameState.VICTORY;
 	}
 	
 	
-	
 	/*
 	 * Functions interacting with CLI (notOver, update and toString)
 	 * 
-	 * notOver - returns true if game has ended, otherwise returns false
+	 * gameLost - returns true if game has ended (Game Over), otherwise returns false
+	 * gameWon - returns true if game has ended (Victory), otherwise returns false
 	 * 
 	 * update - updates the game to the next turn, considering the player input (playerDirection)
 	 * 
 	 * toString - returns a string with a ASCII art representation of the game
 	 */
 	
-	public boolean notOver() {
-		return (state != GameState.GAME_OVER && state != GameState.VICTORY);
+	public boolean gameLost() {
+		return (state == GameState.GAME_OVER);
+	}
+	
+	public boolean gameWon() {
+		return (state == GameState.VICTORY);
 	}
 	
 	public int update(Direction heroDirection) {

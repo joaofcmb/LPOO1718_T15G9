@@ -17,7 +17,7 @@ public class DungeonKeep {
 		// Process output
 		System.out.println(game);
 		
-		while (game.notOver()) {
+		while (!game.gameLost() || !game.gameWon()) {
 			// Process input and game logic
 			System.out.println("Move Player(P) in a direction (W|A|S|D). End input with RET, first letter processed");
 			game.update(playerInput());

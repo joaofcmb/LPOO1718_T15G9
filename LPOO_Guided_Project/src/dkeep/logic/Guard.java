@@ -5,7 +5,7 @@ import java.util.Random;
 public class Guard extends GameEntity {
 	private Random random = new Random();
 
-	public enum Personality {ROOKIE, DRUNK, SUSPICIOUS} // TODO Make enum public and use it to refer to a personality (constructor arg, etc)
+	public enum Personality {ROOKIE, DRUNK, SUSPICIOUS, STATIC} // TODO Make enum public and use it to refer to a personality (constructor arg, etc)
 	
 	private static final int MIN_STEPS_SUSPICION = 3; // Steps until suspicious might trigger his patrol reversion
 	private int suspicionStep; // Counter of steps
@@ -31,6 +31,8 @@ public class Guard extends GameEntity {
 	
 
 	public void move() {
+		if (personality == Personality.STATIC)	return;
+		
 		Game.Direction dir = nextDirection(xPos, yPos, inverseDirection);
 		
 		// TODO Figure out rare bug of inverting position while not asleep

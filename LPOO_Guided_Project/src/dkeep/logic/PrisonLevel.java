@@ -24,8 +24,16 @@ public class PrisonLevel extends Map {
 	}
 	
 	public PrisonLevel() {
-		this(Guard.Personality.SUSPICIOUS);
+		this(Guard.Personality.ROOKIE);
 	}
+
+	// Constructor for testing purposes
+	public PrisonLevel(char[][] blueprint, Player hero, Guard guard) {
+		this.blueprint = blueprint;
+		this.hero = hero;
+		enemyList.add(guard);
+	}
+	
 	
 	public boolean validTile(int x, int y) {
 		switch(blueprint[x][y]) {

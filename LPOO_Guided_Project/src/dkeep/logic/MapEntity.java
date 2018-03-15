@@ -12,15 +12,15 @@ public class MapEntity { // Key, Levers, etc..
 		mapSymbol = symbol;
 	}
 
-	protected int getX() {
+	public int getX() {
 		return xPos;
 	}
 
-	protected int getY() {
+	public int getY() {
 		return yPos;
 	}
 	
-	protected char getSymbol() {
+	public char getSymbol() {
 		return mapSymbol;
 	}
 }
