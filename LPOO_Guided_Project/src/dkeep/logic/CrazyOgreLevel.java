@@ -1,5 +1,8 @@
 package dkeep.logic;
 
+import dkeep.logic.Game.Direction;
+import dkeep.logic.Game.GameState;
+
 public class CrazyOgreLevel extends Map {
 	public CrazyOgreLevel(int ogreNum) {
 		super();
@@ -16,23 +19,74 @@ public class CrazyOgreLevel extends Map {
 			{'X',' ',' ',' ',' ',' ',' ',' ','X'},
 			{'X','X','X','X','X','X','X','X','X'}
 		};
-		
+
 		hero = new Player(7, 1);
-		// arm the hero
-		
+		hero.arm();
+
 		// Add all dem Ogres
 		for (int i = 0; i < ogreNum; i++)	
 			enemyList.add(new CrazyOgre(2, 4));
+		
+		// add key
+		propList.add(new Key(1, 7));
 	}
-	
+
 	public CrazyOgreLevel() {
 		this(1);
 	}
 	
-	public boolean validTile(int x, int y) {
+	protected boolean playerMove(Game.Direction direction) {
+		hero.nextPosition(direction); // calculate next Position
+		
+		if (validTileHero(hero.getNextX(), hero.getNextY())) {
+			hero.move();
+			return true;
+		}
+		return false;
+	}
+	
+	protected void ogreMove(CrazyOgre ogre) {
+		// move ogre
+		do {
+			ogre.nextOgrePos(); // calculate next Position
+		} while (!validTileOgre(ogre.getNextX(), ogre.getNextY()));
+					
+		ogre.move();
+		
+		// move club
+		do {
+			ogre.nextClubPos();
+		} while (!validTileOgre(ogre.getNextClubX(), ogre.getNextClubY()));
+		
+		ogre.moveClub();
+	}
+	
+
+	@Override
+	public GameState update(Direction heroDirection) {
+		GameState ret = super.update(heroDirection);
+		
+		if (!propList.isEmpty())
+			((Key) propList.get(0)).uncover();
+		
+		for(GameEntity enemy : enemyList) {
+			if (enemy instanceof CrazyOgre)
+				ogreMove((CrazyOgre)enemy);
+			
+			if (hero.entityTrigger(enemy))
+				return Game.GameState.GAME_OVER; // enemy trigger with hero signifies hero death (game over)
+		}
+		
+		return ret;
+	}
+
+	// TODO check key collisions independantly from the blueprint
+	
+	private boolean validTileHero(int x, int y) {
 		switch(blueprint[x][y]) {
 		case 'k': // key
 			hero.pickKey();
+			propList.remove(0);
 			blueprint[x][y] = ' ';
 			return true;
 		case 'I': // closed door
@@ -43,6 +97,15 @@ public class CrazyOgreLevel extends Map {
 			state = Game.GameState.NEXT_LEVEL;
 			return true;
 		}
+
+		return super.validTile(x, y);
+	}
+
+	private boolean validTileOgre(int x, int y) {		
+		if (blueprint[x][y] == 'k') { // Ogre on key
+			((Key) propList.get(0)).hide();
+		}
+		
 		
 		return super.validTile(x, y);
 	}

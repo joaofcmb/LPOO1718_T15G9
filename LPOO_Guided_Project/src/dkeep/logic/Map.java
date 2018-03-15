@@ -27,6 +27,7 @@ public class Map {
 	public boolean validTile(int x, int y) {
 		switch(blueprint[x][y]) {
 		case ' ':
+		case 'k':
 			return true;
 		default:
 			return false;
@@ -43,24 +44,6 @@ public class Map {
 		return false;
 	}
 	
-	protected void ogreMove(CrazyOgre ogre) {
-		// move ogre
-		do {
-			ogre.nextOgrePos(); // calculate next Position
-		} while (!validTile(ogre.getNextX(), ogre.getNextY()));
-		
-		// TODO Detect on key
-			
-		ogre.move();
-		
-		// move club
-		do {
-			ogre.nextClubPos();
-		} while (!validTile(ogre.club.getNextX(), ogre.getNextY()));
-		
-		ogre.club.move();
-	}
-	
 	
 	public Game.GameState update(Game.Direction heroDirection) {
 		if (!playerMove(heroDirection))
@@ -70,8 +53,6 @@ public class Map {
 		for(GameEntity enemy : enemyList) {
 			if (enemy instanceof Guard)
 				enemy.move();
-			else if (enemy instanceof CrazyOgre)
-				ogreMove((CrazyOgre)enemy);
 			
 			if (hero.entityTrigger(enemy))
 				return Game.GameState.GAME_OVER; // enemy trigger with hero signifies hero death (game over)
@@ -96,7 +77,7 @@ public class Map {
 		
 		for (GameEntity enemy : enemyList) {
 			if (enemy instanceof CrazyOgre)
-				map[((CrazyOgre)enemy).club.getX()][((CrazyOgre)enemy).club.getY()] = ((CrazyOgre)enemy).club.getSymbol();
+				map[((CrazyOgre)enemy).getClubX()][((CrazyOgre)enemy).getClubY()] = ((CrazyOgre)enemy).getClubSymbol();
 			map[enemy.getX()][enemy.getY()] = enemy.getSymbol();
 		}
 		for (MapEntity prop : propList) {

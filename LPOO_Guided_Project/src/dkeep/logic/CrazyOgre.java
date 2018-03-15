@@ -3,7 +3,10 @@ package dkeep.logic;
 import java.util.Random;
 
 public class CrazyOgre extends GameEntity {
-	public GameEntity club;
+	private GameEntity club;
+	
+	private boolean isStunned = false;
+	private int stunTurns = 0;
 	
 	private Random random = new Random();
 
@@ -11,10 +14,34 @@ public class CrazyOgre extends GameEntity {
 		super(x, y, 'O');
 		
 		club = new GameEntity(x, y, '*');
+		club.nextPosition(randomDirection());
+		club.move();
 	}
 	
+	// STUN MECHANICS
+	
+	public void stun() {
+		isStunned = true;
+		stunTurns = 2;
+		mapSymbol = '8';
+	}
+	
+	public void stunModifier() {
+		stunTurns--;
+		if (stunTurns <= 0) {
+			isStunned = false;
+			mapSymbol = 'O';
+		}
+	}
+	
+	
 	public void nextOgrePos() {
-		nextPosition(randomDirection());
+		if (isStunned) {
+			stunModifier();
+			nextPosition(null); // nextPos stays the same, so doesnt move
+		}
+		else			
+			nextPosition(randomDirection());
 	}
 	
 	public void nextClubPos() {
@@ -37,5 +64,32 @@ public class CrazyOgre extends GameEntity {
 		default:
 			return null;
 		}
+	}
+	
+	
+	public void moveClub() {
+		club.move();
+	}
+
+	// club getters
+	
+	public int getClubX() {
+		return club.xPos;
+	}
+	
+	public int getClubY() {
+		return club.yPos;
+	}
+	
+	public char getClubSymbol() {
+		return club.mapSymbol;
+	}
+
+	public int getNextClubX() {
+		return club.nextXPos;
+	}
+	
+	public int getNextClubY() {
+		return club.nextYPos;
 	}
 }
