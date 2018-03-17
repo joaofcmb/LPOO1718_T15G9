@@ -16,6 +16,8 @@ public class PrisonLevel extends Map {
 			{'X',' ','I',' ','I',' ','X','k',' ','X'},
 			{'X','X','X','X','X','X','X','X','X','X'}
 		};
+		propList.add(new Door(5, 0));
+		propList.add(new Door(6, 0));
 		
 		hero = new Player(1, 1);
 		enemyList.add(new Guard(1, 8, personality, "1, 8, l, " + "1, 7, d, "
@@ -27,9 +29,14 @@ public class PrisonLevel extends Map {
 		this(Guard.Personality.ROOKIE);
 	}
 
+	// TODO use blueprint to infer these objects
 	// Constructor for testing purposes (other maps with same logic)
-	public PrisonLevel(char[][] blueprint, Player hero, Guard guard) {
+	public PrisonLevel(char[][] blueprint, Player hero, Guard guard, Door door1, Door door2) {
 		this.blueprint = blueprint;
+		
+		propList.add(door1);
+		propList.add(door2);
+		
 		this.hero = hero;
 		enemyList.add(guard);
 	}
@@ -38,7 +45,7 @@ public class PrisonLevel extends Map {
 		switch(blueprint[x][y]) {
 		case 'k':
 			openDoors();
-			break;
+			return false;
 		}
 		
 		return super.validTile(x, y);

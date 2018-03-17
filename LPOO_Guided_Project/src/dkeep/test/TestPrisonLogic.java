@@ -16,7 +16,10 @@ public class TestPrisonLogic { // assures the Prison Level logic is valid
 			{'X','X','X','X','X'}
 	};
 	
-	PrisonLevel testLevel = new PrisonLevel(blueprint, new Player(1, 1), new Guard(1, 3, Guard.Personality.STATIC, ""));
+	Door door1 = new Door(1, 0);
+	Door door2 = new Door(2, 0);
+	
+	PrisonLevel testLevel = new PrisonLevel(blueprint, new Player(1, 1), new Guard(1, 3, Guard.Personality.STATIC, ""), door1, door2);
 	
 	@Test
 	public void testMoveHeroFree() {
@@ -79,11 +82,11 @@ public class TestPrisonLogic { // assures the Prison Level logic is valid
 		testGame.update(Game.Direction.DOWN);
 		testGame.update(Game.Direction.DOWN);
 		
-		// TODO test open doors
+		assertEquals(true, (door1.isUnlocked() && door2.isUnlocked()));		
 	}
 	
 	@Test
-	public void testMoveHeroOpenDoor() {
+	public void testMoveHeroOpenDoor() { // also tests player not going through lever
 		Game testGame = new Game(testLevel);
 		
 		assertEquals(1, testLevel.getHero().getX());
@@ -91,5 +94,9 @@ public class TestPrisonLogic { // assures the Prison Level logic is valid
 		
 		testGame.update(Game.Direction.DOWN);
 		testGame.update(Game.Direction.DOWN);
+		
+		testGame.update(Game.Direction.LEFT);
+		
+		assertEquals(Game.GameState.NEXT_LEVEL, testGame.getState());
 	}
 }

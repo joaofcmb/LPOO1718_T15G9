@@ -10,4 +10,8 @@ public class Door extends MapEntity {
 	public void unlock() {
 		mapSymbol = 'S';
 	}
+	
+	public boolean isUnlocked() {
+		return (mapSymbol == 'S');
+	}
 }

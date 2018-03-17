@@ -27,8 +27,8 @@ public class Map {
 	
 	public boolean validTile(int x, int y) {
 		switch(blueprint[x][y]) {
-		case 'I':
-			// TODO Add player on open door trigger
+		case 'S':
+			state = Game.GameState.NEXT_LEVEL;
 		case ' ':
 		case 'k':
 			return true;
@@ -101,7 +101,10 @@ public class Map {
 	
 	public void openDoors() {
 		for (MapEntity prop : propList) {
+			// TODO remove redundancy of both blueprint and door
 			if (prop instanceof Door)	((Door) prop).unlock();
+			
+			blueprint[prop.getX()][prop.getY()] = 'S';
 		}
 	}
 	
