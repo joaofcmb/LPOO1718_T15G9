@@ -10,16 +10,13 @@ import dkeep.logic.*;
 public class TestPrisonLogic { // assures the Prison Level logic is valid
 	char[][] blueprint = {
 			{'X','X','X','X','X'},
-			{'I',' ',' ',' ','X'},
+			{'I','P',' ','G','X'},
 			{'I',' ',' ',' ','X'},
 			{'X','k',' ',' ','X'},
 			{'X','X','X','X','X'}
 	};
 	
-	Door door1 = new Door(1, 0);
-	Door door2 = new Door(2, 0);
-	
-	PrisonLevel testLevel = new PrisonLevel(blueprint, new Player(1, 1), new Guard(1, 3, Guard.Personality.STATIC, ""), door1, door2);
+	PrisonLevel testLevel = new PrisonLevel(blueprint);
 	
 	@Test
 	public void testMoveHeroFree() {
@@ -82,7 +79,10 @@ public class TestPrisonLogic { // assures the Prison Level logic is valid
 		testGame.update(Game.Direction.DOWN);
 		testGame.update(Game.Direction.DOWN);
 		
-		assertEquals(true, (door1.isUnlocked() && door2.isUnlocked()));		
+		assertEquals(2, testLevel.getHero().getX());
+		assertEquals(1, testLevel.getHero().getY());
+		
+		assertEquals(true, testLevel.isUnlocked());		
 	}
 	
 	@Test
