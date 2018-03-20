@@ -3,7 +3,7 @@ package dkeep.logic;
 import java.util.Random;
 
 public class CrazyOgre extends GameEntity {
-	private GameEntity club;
+	private GameEntity club = null;
 	
 	private boolean isStunned = false;
 	private int stunTurns = 0;

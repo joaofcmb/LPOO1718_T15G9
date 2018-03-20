@@ -1,30 +1,18 @@
 package dkeep.logic;
 
-import java.util.ArrayList;
-
-// TODO Maybe remove subclass (makes things messy)
-
-public class Map {
+public abstract class Map {
 	protected Game.GameState state = Game.GameState.DEFAULT;
 	
-	protected char[][] blueprint; 	// static layout of map itself (Walls and doors and stuff)
+	protected char[][] blueprint = { {'X','X','X'}, {'X',' ','X'}, {'X','X','X'} }; // static layout of map itself (Walls and doors and stuff)
 	
-	protected Player hero; 
-	protected ArrayList<GameEntity> enemyList;
-	protected ArrayList<MapEntity>  propList;
-	
-	
-	public Map() {
-		enemyList = new ArrayList<GameEntity>();
-		propList = new ArrayList<MapEntity>();
-	}
-	
+	protected Player hero = new Player(1, 1); 
 	
 	/*
 	 * FUNCTION: validTile - checks if a give tile at the current map is valid for movement (X, Y coordinates)
 	 * Returns true if valid, false otherwise.
 	 */
 	
+	/*
 	public boolean validTile(int x, int y) {
 		switch(blueprint[x][y]) {
 		case 'S':
@@ -36,7 +24,9 @@ public class Map {
 			return false;
 		}
 	}
+	*/
 	
+	/*
 	protected boolean playerMove(Game.Direction direction) {
 		hero.nextPosition(direction); // calculate next Position
 		
@@ -46,9 +36,10 @@ public class Map {
 		}
 		return false;
 	}
+	*/
 	
-	
-	public Game.GameState update(Game.Direction heroDirection) {
+	public abstract Game.GameState update(Game.Direction heroDirection);
+	/*
 		if (!playerMove(heroDirection))
 			return state;
 		
@@ -63,9 +54,10 @@ public class Map {
 		
 		return state;
 	}
-	
-	
-	public String toString() {
+	*/
+	public abstract String toString();
+	/*
+	{
 		// make copy of blueprint
 		String str = "";
 		char[][] map = new char[blueprint.length][];
@@ -98,7 +90,9 @@ public class Map {
 
 		return str;
 	}
+	*/
 	
+	/*
 	public void openDoors() {
 		for (MapEntity prop : propList) {
 			// TODO remove redundancy of both blueprint and door
@@ -107,6 +101,7 @@ public class Map {
 			blueprint[prop.getX()][prop.getY()] = 'S';
 		}
 	}
+	*/
 	
 	public Player getHero() {
 		return hero;

@@ -1,7 +1,6 @@
 package dkeep.logic;
 
-import dkeep.logic.Game.Direction;
-import dkeep.logic.Game.GameState;
+import dkeep.logic.Game;
 
 public class CrazyOgreLevel extends Map {
 	public CrazyOgreLevel(int ogreNum) {
@@ -63,8 +62,8 @@ public class CrazyOgreLevel extends Map {
 	
 
 	@Override
-	public GameState update(Direction heroDirection) {
-		GameState ret = super.update(heroDirection);
+	public Game.GameState update(Game.Direction heroDirection) {
+		Game.GameState ret = super.update(heroDirection);
 		
 		if (!propList.isEmpty())
 			((Key) propList.get(0)).uncover();
