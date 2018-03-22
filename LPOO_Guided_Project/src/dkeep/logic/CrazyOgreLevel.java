@@ -86,7 +86,7 @@ public class CrazyOgreLevel extends Map {
 					ogreList.add(new CrazyOgre(i, j));
 					blueprint[i][j] = ' ';
 					break;
-				case 'G':
+				case 'k':
 					key = new Key(i, j);
 					break;
 				}
@@ -131,11 +131,10 @@ public class CrazyOgreLevel extends Map {
 		
 		if (key != null)	key.uncover();
 		
-		for(GameEntity enemy : ogreList) {
-			if (enemy instanceof CrazyOgre)
-				ogreMove((CrazyOgre)enemy);
+		for(CrazyOgre ogre : ogreList) {
+			ogreMove(ogre);
 			
-			if (hero.entityTrigger(enemy))
+			if (hero.entityTrigger(ogre))
 				return Game.GameState.GAME_OVER; // enemy trigger with hero signifies hero death (game over)
 		}
 		

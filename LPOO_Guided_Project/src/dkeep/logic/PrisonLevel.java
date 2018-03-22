@@ -81,6 +81,11 @@ public class PrisonLevel extends Map {
 		
 		this.blueprint = blueprint;
 	}
+	
+	public PrisonLevel(char[][] blueprint, Guard guard) {
+		this(blueprint);
+		guardList.add(guard);
+	}
 
 	
 	private boolean playerMove(Game.Direction direction) {
