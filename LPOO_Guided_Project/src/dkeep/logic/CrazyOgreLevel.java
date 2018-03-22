@@ -1,11 +1,30 @@
 package dkeep.logic;
 
+import java.util.LinkedList;
+
 import dkeep.logic.Game;
 
 public class CrazyOgreLevel extends Map {
+	/*
+	 * Type of map that supports:
+	 * 
+	 * A Door triggered by a player with key "K" adjacent to it
+	 * 
+	 * A Key "k" which can be picked up by a player "K"
+	 * 
+	 * Multiple ogres procedurally created from custom blueprint constructor 
+	 * (clubs added automatically depending on Ogre symbol)
+	 * 
+	 */
+	
+	LinkedList<CrazyOgre> ogreList = new LinkedList<CrazyOgre>();
+	Key key;
+	
+	// Default constructors
+	public CrazyOgreLevel() {
+		this(1); // Single ogre in level
+	}
 	public CrazyOgreLevel(int ogreNum) {
-		super();
-
 		blueprint =  new char[][] {
 			{'X','X','X','X','X','X','X','X','X'},
 			{'I',' ',' ',' ',' ',' ',' ','k','X'},
@@ -24,17 +43,61 @@ public class CrazyOgreLevel extends Map {
 
 		// Add all dem Ogres
 		for (int i = 0; i < ogreNum; i++)	
-			enemyList.add(new CrazyOgre(2, 4)); // TODO make spawn random (or let them all spawn in the same place)
+			ogreList.add(new CrazyOgre(2, 4, true));
 		
 		// add key
-		propList.add(new Key(1, 7));
-	}
-
-	public CrazyOgreLevel() {
-		this(1);
+		key = new Key(1, 7);
 	}
 	
-	protected boolean playerMove(Game.Direction direction) {
+	/* 
+	 * Constructor for testing purposes (other maps with same logic)
+	 * 
+	 * Uses the given matrix to determine entities in map
+	 * 
+	 * Player(P): If more than one, last one iterated (up to down, left to right) will be the added one
+	 * 
+	 * Ogre(O):  Ogre with club
+	 * Ogre(o):  Ogre without club
+	 * Ogre(T):  Ogre for testing purposes (no club, no movement)
+	 * 
+	 * Key(k):   If more than one, last one iterated (up to down, left to right) will be the added one
+	 * 
+	 * NOTICE: The isUnlocked boolean assumes there is only one door in the level, therefore
+	 * it'll trigger when any door is opened (This does not affect gameplay, it's just for testing purposes)
+	 */
+	public CrazyOgreLevel(char[][] blueprint) {
+		// iterate blueprint to look for entities (doors, guards and player) and add them
+		for (int i = 0; i < blueprint.length; i++) {
+			for (int j = 0; j < blueprint[i].length; j++) {
+				switch(blueprint[i][j]) {
+				case 'P':
+					hero = new Player(i, j);
+					blueprint[i][j] = ' ';
+					break;
+				case 'O':
+					ogreList.add(new CrazyOgre(i, j, true));
+					blueprint[i][j] = ' ';
+					break;
+				case 'o':
+					ogreList.add(new CrazyOgre(i, j, false));
+					blueprint[i][j] = ' ';
+					break;
+				case 'T':
+					ogreList.add(new CrazyOgre(i, j));
+					blueprint[i][j] = ' ';
+					break;
+				case 'G':
+					key = new Key(i, j);
+					break;
+				}
+			}
+		}
+		
+		this.blueprint = blueprint;
+	}
+
+
+	private boolean playerMove(Game.Direction direction) {
 		hero.nextPosition(direction); // calculate next Position
 		
 		if (validTileHero(hero.getNextX(), hero.getNextY())) {
@@ -44,7 +107,7 @@ public class CrazyOgreLevel extends Map {
 		return false;
 	}
 	
-	protected void ogreMove(CrazyOgre ogre) {
+	private void ogreMove(CrazyOgre ogre) {
 		// move ogre
 		do {
 			ogre.nextOgrePos(); // calculate next Position
@@ -63,12 +126,12 @@ public class CrazyOgreLevel extends Map {
 
 	@Override
 	public Game.GameState update(Game.Direction heroDirection) {
-		Game.GameState ret = super.update(heroDirection);
+		if (!playerMove(heroDirection)) // cancel turn if player movement isn't to a valid position
+			return state;
 		
-		if (!propList.isEmpty())
-			((Key) propList.get(0)).uncover();
+		if (key != null)	key.uncover();
 		
-		for(GameEntity enemy : enemyList) {
+		for(GameEntity enemy : ogreList) {
 			if (enemy instanceof CrazyOgre)
 				ogreMove((CrazyOgre)enemy);
 			
@@ -76,36 +139,72 @@ public class CrazyOgreLevel extends Map {
 				return Game.GameState.GAME_OVER; // enemy trigger with hero signifies hero death (game over)
 		}
 		
-		return ret;
+		return state;
 	}
 
-	// TODO check key collisions independantly from the blueprint
-	
 	private boolean validTileHero(int x, int y) {
 		switch(blueprint[x][y]) {
 		case 'k': // key
 			hero.pickKey();
-			propList.remove(0);
+			key = null;
 			blueprint[x][y] = ' ';
 			return true;
-		case 'I': // closed door
-			if (hero.hasKey())
-				blueprint[x][y] = 'S';
-			return false;
 		case 'S':
 			state = Game.GameState.NEXT_LEVEL;
+		case ' ':
 			return true;
+		case 'I':
+			if (hero.hasKey()) {
+				isUnlocked = true;
+				blueprint[x][y] = 'S';
+			}
+		default:
+			return false;
 		}
-
-		return super.validTile(x, y);
 	}
 
 	private boolean validTileOgre(int x, int y) {		
-		if (blueprint[x][y] == 'k') { // Ogre on key
-			((Key) propList.get(0)).hide();
+		switch(blueprint[x][y]) {
+		case 'k':
+			key.hide();
+		case ' ':
+			return true;
+		default:
+			return false;
 		}
-		
-		
-		return super.validTile(x, y);
 	}
+	
+	// TODO Make class to encapsulate the operations to add entities to matrixes and avoid repeating code with other levels, etc..
+		public String toString() {
+			// make copy of blueprint
+			char[][] map = new char[blueprint.length][];
+
+			for (int i = 0;i < blueprint.length; i++) {
+				map[i] = blueprint[i].clone();
+			}
+
+
+			// Add entities to map matrix
+			map[hero.getX()][hero.getY()] = hero.getSymbol();
+
+			for (CrazyOgre ogre : ogreList) {
+				map[ogre.getX()][ogre.getY()] = ogre.getSymbol();
+				map[ogre.getClubX()][ogre.getClubY()] = ogre.getClubSymbol();
+			}
+			
+			if (key != null)
+				map[key.getX()][key.getY()] = key.getSymbol();
+			
+			// Assemble string from matrix
+			String str = "";
+			
+			for(char[] line: map) {
+				for(char symbol: line) {
+					str += symbol + " "; 
+				}
+				str += "\n";
+			}
+			
+			return str;
+		}
 }

@@ -4,18 +4,26 @@ import java.util.Random;
 
 public class CrazyOgre extends GameEntity {
 	private GameEntity club = null;
+	private boolean isStatic = false;
 	
 	private boolean isStunned = false;
 	private int stunTurns = 0;
 	
 	private Random random = new Random();
-
+	
 	public CrazyOgre(int x, int y) {
+		this(x, y, false);
+		isStatic = true;
+	}
+
+	public CrazyOgre(int x, int y, boolean hasClub) {
 		super(x, y, 'O');
 		
-		club = new GameEntity(x, y, '*');
-		club.nextPosition(randomDirection());
-		club.move();
+		if (hasClub) {
+			club = new GameEntity(x, y, '*');
+			club.nextPosition(randomDirection());
+			club.move();
+		}
 	}
 	
 	// STUN MECHANICS
@@ -39,11 +47,15 @@ public class CrazyOgre extends GameEntity {
 			stunModifier();
 			nextPosition(null); // nextPos stays the same, so doesnt move
 		}
-		else			
+		else if (isStatic)
+			nextPosition(null);
+		else
 			nextPosition(randomDirection());
 	}
 	
 	public void nextClubPos() {
+		if (club == null)	return;
+		
 		club.xPos = xPos;
 		club.yPos = yPos;
 		
@@ -67,28 +79,29 @@ public class CrazyOgre extends GameEntity {
 	
 	
 	public void moveClub() {
-		club.move();
+		if (club != null)
+			club.move();
 	}
 
 	// club getters
 	
 	public int getClubX() {
-		return club.xPos;
+		return club != null ? club.xPos : xPos;
 	}
 	
 	public int getClubY() {
-		return club.yPos;
+		return club != null ? club.yPos : yPos;
 	}
 	
 	public char getClubSymbol() {
-		return club.mapSymbol;
+		return club != null ? club.mapSymbol : mapSymbol;
 	}
 
 	public int getNextClubX() {
-		return club.nextXPos;
+		return club != null ? club.nextXPos : nextXPos;
 	}
 	
 	public int getNextClubY() {
-		return club.nextYPos;
+		return club != null ? club.nextYPos : nextYPos;
 	}
 }

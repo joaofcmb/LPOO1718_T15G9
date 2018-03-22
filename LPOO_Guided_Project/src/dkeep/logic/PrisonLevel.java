@@ -17,7 +17,6 @@ public class PrisonLevel extends Map {
 	 * 
 	 */
 	
-	boolean isUnlocked = false;
 	LinkedList<Door> doorList = new LinkedList<Door>();
 	LinkedList<Guard> guardList = new LinkedList<Guard>();
 	
@@ -121,7 +120,7 @@ public class PrisonLevel extends Map {
 		return state;
 	}
 
-	// TODO Make class called Layout or something to encapsulate the operations to add entities to matrixes and avoid repeating code
+	// TODO Make class to encapsulate the operations to add entities to matrixes and avoid repeating code with other levels, etc..
 	public String toString() {
 		// make copy of blueprint
 		char[][] map = new char[blueprint.length][];
@@ -150,9 +149,5 @@ public class PrisonLevel extends Map {
 		}
 		
 		return str;
-	}
-	
-	public boolean isUnlocked() {
-		return isUnlocked;
 	}
 }

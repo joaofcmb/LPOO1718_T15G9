@@ -3,6 +3,8 @@ package dkeep.logic;
 public abstract class Map {
 	protected Game.GameState state = Game.GameState.DEFAULT;
 	
+	boolean isUnlocked = false;
+	
 	protected char[][] blueprint = { {'X','X','X'}, {'X',' ','X'}, {'X','X','X'} }; // static layout of map itself (Walls and doors and stuff)
 	
 	protected Player hero = new Player(1, 1); 
@@ -105,5 +107,10 @@ public abstract class Map {
 	
 	public Player getHero() {
 		return hero;
+	}
+	
+	
+	public boolean isUnlocked() {
+		return isUnlocked;
 	}
 }

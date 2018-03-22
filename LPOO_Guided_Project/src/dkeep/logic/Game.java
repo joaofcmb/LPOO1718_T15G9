@@ -16,10 +16,10 @@ public class Game {
 	}
 	
 	private void nextLevel() {
-		//if (map instanceof PrisonLevel)
-			//map = new CrazyOgreLevel();
-		//else if (map instanceof CrazyOgreLevel)
-			//state = GameState.VICTORY;
+		if (map instanceof PrisonLevel)
+			map = new CrazyOgreLevel();
+		else if (map instanceof CrazyOgreLevel)
+			state = GameState.VICTORY;
 	}
 	
 	

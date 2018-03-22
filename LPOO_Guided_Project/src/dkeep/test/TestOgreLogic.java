@@ -1,11 +1,9 @@
 package dkeep.test;
 
-import static org.junit.Assert
+import static org.junit.Assert.*;
 
 import org.junit.jupiter.api.Test;
 
-import dkeep.logic.Door;
-import dkeep.logic.Player;
 import dkeep.logic.CrazyOgreLevel;
 import dkeep.logic.Game;
 
@@ -13,18 +11,90 @@ class TestOgreLogic {
 
 	char[][] blueprint = {
 			{'X','X','X','X','X'},
-			{'I',' ',' ',' ','X'},
+			{'X','P',' ','T','X'},
 			{'I',' ',' ',' ','X'},
 			{'X','k',' ',' ','X'},
 			{'X','X','X','X','X'}
 	};
 	
-	Door door1 = new Door(1, 0);
-	Door door2 = new Door(2, 0);
-	
-	CrazyOgreLevel testLevel = new CrazyOgreLevel(blueprint, new Player(1, 1), new Guard(1, 3, Guard.Personality.STATIC, ""), door1, door2);
+	CrazyOgreLevel testLevel = new CrazyOgreLevel(blueprint);
 	
 	@Test
-	public void testMoveHeroFree() {
-
+	public void testMoveHeroOgre() {
+		Game testGame = new Game(testLevel);
+		
+		assertEquals(1, testLevel.getHero().getX());
+		assertEquals(1, testLevel.getHero().getY());
+		
+		testGame.update(Game.Direction.RIGHT);
+		
+		assertEquals(true, testGame.gameLost());
+	}
+	
+	@Test
+	public void testMoveHeroKey() {
+		Game testGame = new Game(testLevel);
+		
+		assertEquals(1, testLevel.getHero().getX());
+		assertEquals(1, testLevel.getHero().getY());
+		
+		testGame.update(Game.Direction.DOWN);
+		testGame.update(Game.Direction.DOWN);
+		
+		assertEquals(3, testLevel.getHero().getX());
+		assertEquals(1, testLevel.getHero().getY());
+		
+		assertEquals('K', testLevel.getHero().getSymbol());
+	}
+	
+	@Test
+	public void testMoveHeroClosedDoor() {
+		Game testGame = new Game(testLevel);
+		
+		assertEquals(1, testLevel.getHero().getX());
+		assertEquals(1, testLevel.getHero().getY());
+		
+		testGame.update(Game.Direction.DOWN);
+		testGame.update(Game.Direction.LEFT);
+		
+		assertEquals(2, testLevel.getHero().getX());
+		assertEquals(1, testLevel.getHero().getY());
+	}
+	
+	@Test
+	public void testHeroUnlockDoor() {
+		Game testGame = new Game(testLevel);
+		
+		assertEquals(1, testLevel.getHero().getX());
+		assertEquals(1, testLevel.getHero().getY());
+		
+		testGame.update(Game.Direction.DOWN);
+		testGame.update(Game.Direction.DOWN);
+		
+		testGame.update(Game.Direction.UP);
+		testGame.update(Game.Direction.LEFT);
+		
+		assertEquals(2, testLevel.getHero().getX());
+		assertEquals(1, testLevel.getHero().getY());
+		
+		testGame.update(Game.Direction.LEFT);
+		assertEquals(true, testLevel.isUnlocked());
+	}
+	
+	@Test
+	public void testHeroOpenDoor() {
+		Game testGame = new Game(testLevel);
+		
+		assertEquals(1, testLevel.getHero().getX());
+		assertEquals(1, testLevel.getHero().getY());
+		
+		testGame.update(Game.Direction.DOWN);
+		testGame.update(Game.Direction.DOWN);
+		
+		testGame.update(Game.Direction.UP);
+		testGame.update(Game.Direction.LEFT);
+		testGame.update(Game.Direction.LEFT);
+		
+		assertEquals(Game.GameState.VICTORY, testGame.getState());
+	}
 }
