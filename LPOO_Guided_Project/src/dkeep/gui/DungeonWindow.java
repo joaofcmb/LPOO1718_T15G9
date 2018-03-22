@@ -19,19 +19,21 @@ import java.awt.event.ActionEvent;
 
 public class DungeonWindow {
 	private Game game = new Game();
-	private JFrame frame;
+	private static JFrame frame;
 	private JTextField ogreTextField;
 	private JLabel gameStatuslbl;
-
+	private JComboBox<String> guardComboBox;
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		frame = new JFrame("Dungeon Keep");
+
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					DungeonWindow window = new DungeonWindow();
-					window.frame.setVisible(true);
+					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -50,7 +52,6 @@ public class DungeonWindow {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
 		frame.setBounds(100, 100, 591, 495);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
@@ -67,7 +68,7 @@ public class DungeonWindow {
 		guardLabel.setFont(new Font("Times New Roman", Font.PLAIN, 12));
 		guardLabel.setBounds(328, 41, 98, 22);
 
-		JComboBox<String> guardComboBox = new JComboBox<String>();
+		guardComboBox = new JComboBox<String>();
 		guardComboBox.setFont(new Font("Times New Roman", Font.PLAIN, 12));
 		guardComboBox.addItem("Rookie");
 		guardComboBox.addItem("Suspicious");
@@ -125,95 +126,39 @@ public class DungeonWindow {
 		btnStart.addActionListener(
 				new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						int n = 0;
-						try {
-							n = Integer.parseUnsignedInt(ogreTextField.getText());
-						}
-						catch(NumberFormatException ex) {
-							JOptionPane.showMessageDialog(ogreTextField, "Introduza um inteiro positivo");
-							return;
-						}
-						if(n == 0) {
-							JOptionPane.showMessageDialog(ogreTextField, "Introduza um inteiro positivo.");
-							return;
-						}
-						if(n >= 2) { //FOR TESTING
-							JOptionPane.showMessageDialog(ogreTextField, "Use this to choose the level for now");
-							return;
-						}
-
-						btnUp.setEnabled(true);
-						btnLeft.setEnabled(true);
-						btnRight.setEnabled(true);
-						btnDown.setEnabled(true);
-						btnStart.setEnabled(false);
-						game = new Game();
-						gameArea.setText(game.toString());
-						gameStatuslbl.setText("You must escape!!. Good Luck!");
+						startGame(gameArea, btnUp, btnLeft, btnDown, btnRight, btnStart);
 					}
 				});
 
 		/*
 		 * DIRECTIONAL BUTTONS
 		 */
-		
+
 		btnUp.addActionListener(
 				new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						game.update(Game.Direction.UP);
-						gameArea.setText(game.toString());
-						if(game.gameLost() || game.gameWon()) {
-							btnUp.setEnabled(false);
-							btnLeft.setEnabled(false);
-							btnRight.setEnabled(false);
-							btnDown.setEnabled(false);
-							gameStatuslbl.setText("Game Over");
-						}
+						pressedKey(Game.Direction.UP, gameArea,btnUp,btnLeft,btnDown,btnRight, btnStart);
 					}
 				});
 
 		btnDown.addActionListener(
 				new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						game.update(Game.Direction.DOWN);
-						gameArea.setText(game.toString());
-						if(game.gameLost() || game.gameWon()) {
-							btnUp.setEnabled(false);
-							btnLeft.setEnabled(false);
-							btnRight.setEnabled(false);
-							btnDown.setEnabled(false);
-							gameStatuslbl.setText("Game Over");
-						}
+						pressedKey(Game.Direction.DOWN, gameArea,btnUp,btnLeft,btnDown,btnRight, btnStart);
 					}
 				});
 
 		btnLeft.addActionListener(
 				new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						game.update(Game.Direction.LEFT);
-						gameArea.setText(game.toString());
-						if(game.gameLost() || game.gameWon()) {
-							btnUp.setEnabled(false);
-							btnLeft.setEnabled(false);
-							btnRight.setEnabled(false);
-							btnDown.setEnabled(false);
-							gameStatuslbl.setText("Game Over");
-						}
+						pressedKey(Game.Direction.LEFT, gameArea,btnUp,btnLeft,btnDown,btnRight, btnStart);
 					}
 				});
 
 		btnRight.addActionListener(
 				new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						game.update(Game.Direction.RIGHT);
-						gameArea.setText(game.toString());
-						if(game.gameLost() || game.gameWon()) {
-							btnUp.setEnabled(false);
-							btnLeft.setEnabled(false);
-							btnRight.setEnabled(false);
-							btnDown.setEnabled(false);
-							gameStatuslbl.setText("Game Over");
-						}
+						pressedKey(Game.Direction.RIGHT, gameArea,btnUp,btnLeft,btnDown,btnRight, btnStart);
 					}
 				});
 
@@ -232,9 +177,67 @@ public class DungeonWindow {
 		frame.getContentPane().add(btnDown);
 		frame.getContentPane().add(btnUp);
 		frame.getContentPane().add(gameStatuslbl);
+	}
 
+	private int checkState(JButton up, JButton left, JButton down, JButton right, JButton start) {
+		if(game.gameLost()) {
+			up.setEnabled(false);
+			left.setEnabled(false);
+			down.setEnabled(false);
+			right.setEnabled(false);
+			start.setEnabled(true);
+			ogreTextField.setEnabled(true);
+			guardComboBox.setEnabled(true);
+			gameStatuslbl.setText("You were caught!");
+			return -1;
+		}
+	
+		else if(game.gameWon()) {
+			up.setEnabled(false);
+			left.setEnabled(false);
+			down.setEnabled(false);
+			right.setEnabled(false);
+			start.setEnabled(true);
+			ogreTextField.setEnabled(true);
+			guardComboBox.setEnabled(true);
+			gameStatuslbl.setText("You Escaped!!");
 
+			return 1;
+		}
+		else 
+			return 0;
+	}
 
+	private void pressedKey(Game.Direction dir, JTextArea gameArea,JButton up, JButton left, JButton down, JButton right, JButton start ) {
+		game.update(dir);
+		gameArea.setText(game.toString());
+		checkState(up,left,down,right, start);
+		
+	}
 
+	private void startGame(JTextArea gameArea,JButton btnUp, JButton btnLeft, JButton btnDown, JButton btnRight, JButton btnStart) {
+		int n = 0;
+		try {
+			n = Integer.parseUnsignedInt(ogreTextField.getText());
+		}
+		catch(NumberFormatException ex) {
+			JOptionPane.showMessageDialog(ogreTextField, "Introduza um inteiro positivo");
+			return;
+		}
+		if(n == 0) {
+			JOptionPane.showMessageDialog(ogreTextField, "Introduza um inteiro positivo.");
+			return;
+		}
+		//TODO make arguments affect game
+		btnUp.setEnabled(true);
+		btnLeft.setEnabled(true);
+		btnRight.setEnabled(true);
+		btnDown.setEnabled(true);
+		btnStart.setEnabled(false);
+		ogreTextField.setEnabled(false);
+		guardComboBox.setEnabled(false);
+		game = new Game();
+		gameArea.setText(game.toString());
+		gameStatuslbl.setText("You must escape!!. Good Luck!");
 	}
 }
