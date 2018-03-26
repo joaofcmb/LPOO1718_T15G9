@@ -127,32 +127,13 @@ public class PrisonLevel extends Map {
 
 	// TODO Make class to encapsulate the operations to add entities to matrixes and avoid repeating code with other levels, etc..
 	public String toString() {
-		// make copy of blueprint
-		char[][] map = new char[blueprint.length][];
+		char[][] map = copyBlueprint();
 
-		for (int i = 0;i < blueprint.length; i++) {
-			map[i] = blueprint[i].clone();
-		}
-
-
-		// Add entities to map matrix
-		map[hero.getX()][hero.getY()] = hero.getSymbol();
-
+		addEntity(map, hero);
 		for (Guard guard : guardList) {
-			map[guard.getX()][guard.getY()] = guard.getSymbol();
+			addEntity(map, guard);
 		}
 
-		
-		// Assemble string from matrix
-		String str = "";
-		
-		for(char[] line: map) {
-			for(char symbol: line) {
-				str += symbol + " "; 
-			}
-			str += "\n";
-		}
-		
-		return str;
+		return matrixToString(map);
 	}
 }

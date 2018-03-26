@@ -180,35 +180,14 @@ public class CrazyOgreLevel extends Map {
 	
 	// TODO Make class to encapsulate the operations to add entities to matrixes and avoid repeating code with other levels, etc..
 		public String toString() {
-			// make copy of blueprint
-			char[][] map = new char[blueprint.length][];
+			char[][] map = copyBlueprint();
 
-			for (int i = 0;i < blueprint.length; i++) {
-				map[i] = blueprint[i].clone();
-			}
-
-
-			// Add entities to map matrix
-			map[hero.getX()][hero.getY()] = hero.getSymbol();
-
+			addEntity(map, hero);
 			for (CrazyOgre ogre : ogreList) {
-				map[ogre.getX()][ogre.getY()] = ogre.getSymbol();
-				map[ogre.getClubX()][ogre.getClubY()] = ogre.getClubSymbol();
+				addEntity(map, ogre);
 			}
+			addEntity(map, key);
 			
-			if (key != null)
-				map[key.getX()][key.getY()] = key.getSymbol();
-			
-			// Assemble string from matrix
-			String str = "";
-			
-			for(char[] line: map) {
-				for(char symbol: line) {
-					str += symbol + " "; 
-				}
-				str += "\n";
-			}
-			
-			return str;
+			return matrixToString(map);
 		}
 }

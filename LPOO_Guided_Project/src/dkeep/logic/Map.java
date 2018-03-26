@@ -9,80 +9,30 @@ public abstract class Map {
 	
 	protected Player hero = new Player(1, 1); 
 	
-	/*
-	 * FUNCTION: validTile - checks if a give tile at the current map is valid for movement (X, Y coordinates)
-	 * Returns true if valid, false otherwise.
-	 */
-	
-	/*
-	public boolean validTile(int x, int y) {
-		switch(blueprint[x][y]) {
-		case 'S':
-			state = Game.GameState.NEXT_LEVEL;
-		case ' ':
-		case 'k':
-			return true;
-		default:
-			return false;
-		}
-	}
-	*/
-	
-	/*
-	protected boolean playerMove(Game.Direction direction) {
-		hero.nextPosition(direction); // calculate next Position
-		
-		if (validTile(hero.getNextX(), hero.getNextY())) {
-			hero.move();
-			return true;
-		}
-		return false;
-	}
-	*/
-	
 	public abstract Game.GameState update(Game.Direction heroDirection);
-	/*
-		if (!playerMove(heroDirection))
-			return state;
-		
-		// move enemies and check hero triggers with them
-		for(GameEntity enemy : enemyList) {
-			if (enemy instanceof Guard)
-				enemy.move();
-			
-			if (hero.entityTrigger(enemy))
-				return Game.GameState.GAME_OVER; // enemy trigger with hero signifies hero death (game over)
-		}
-		
-		return state;
-	}
-	*/
 	public abstract String toString();
-	/*
-	{
-		// make copy of blueprint
-		String str = "";
+	
+	protected char[][] copyBlueprint() {
 		char[][] map = new char[blueprint.length][];
-		
+
 		for (int i = 0;i < blueprint.length; i++) {
 			map[i] = blueprint[i].clone();
 		}
+		
+		return map;
+	}
+	
+	protected void addEntity(char[][] map, MapEntity entity) {
+		if (entity == null)	return;
+		
+		map[entity.getX()][entity.getY()] = entity.getSymbol();
+		if (entity instanceof CrazyOgre)
+			map[((CrazyOgre) entity).getClubX()][((CrazyOgre) entity).getClubY()] = ((CrazyOgre) entity).getClubSymbol();
+	}
+	
+	protected String matrixToString(char[][] map) {
+		String str = "";
 
-		
-		// Add entities to map matrix
-		map[hero.getX()][hero.getY()] = hero.getSymbol();
-		
-		for (GameEntity enemy : enemyList) {
-			if (enemy instanceof CrazyOgre)
-				map[((CrazyOgre)enemy).getClubX()][((CrazyOgre)enemy).getClubY()] = ((CrazyOgre)enemy).getClubSymbol();
-			map[enemy.getX()][enemy.getY()] = enemy.getSymbol();
-		}
-		for (MapEntity prop : propList) {
-			map[prop.getX()][prop.getY()] = prop.getSymbol();
-		}
-		
-		
-		// Assemble string from matrix
 		for(char[] line: map) {
 			for(char symbol: line) {
 				str += symbol + " "; 
@@ -92,23 +42,10 @@ public abstract class Map {
 
 		return str;
 	}
-	*/
-	
-	/*
-	public void openDoors() {
-		for (MapEntity prop : propList) {
-			// TODO remove redundancy of both blueprint and door
-			if (prop instanceof Door)	((Door) prop).unlock();
-			
-			blueprint[prop.getX()][prop.getY()] = 'S';
-		}
-	}
-	*/
 	
 	public Player getHero() {
 		return hero;
 	}
-	
 	
 	public boolean isUnlocked() {
 		return isUnlocked;
