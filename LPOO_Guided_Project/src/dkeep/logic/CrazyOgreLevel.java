@@ -95,6 +95,10 @@ public class CrazyOgreLevel extends Map {
 		
 		this.blueprint = blueprint;
 	}
+	public CrazyOgreLevel(char[][] blueprint, CrazyOgre ogre) {
+		this(blueprint);
+		ogreList.add(ogre);
+	}
 
 
 	private boolean playerMove(Game.Direction direction) {
@@ -114,6 +118,7 @@ public class CrazyOgreLevel extends Map {
 		} while (!validTileOgre(ogre.getNextX(), ogre.getNextY()));
 					
 		ogre.move();
+		if (!ogre.hasClub())	return;
 		
 		// move club
 		do {

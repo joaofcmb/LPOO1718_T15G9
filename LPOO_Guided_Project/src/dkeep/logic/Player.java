@@ -12,7 +12,8 @@ public class Player extends GameEntity {
 			return (isAdjacent(entity) && entity.mapSymbol == 'G');
 		}
 		else if (entity instanceof CrazyOgre) { // must check adjacency with club aswell
-			if (isAdjacent(new MapEntity(((CrazyOgre) entity).getClubX(), ((CrazyOgre) entity).getClubY(), '*'))) {
+			if (((CrazyOgre) entity).hasClub() &&
+				isAdjacent(new MapEntity(((CrazyOgre) entity).getClubX(), ((CrazyOgre) entity).getClubY(), '*'))) {
 				return true;
 			}
 			else if (isAdjacent(entity)) {

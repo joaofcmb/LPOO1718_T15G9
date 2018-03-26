@@ -41,6 +41,11 @@ public class CrazyOgre extends GameEntity {
 		}
 	}
 	
+	public boolean isStunned() {
+		return isStunned;
+	}
+
+	
 	
 	public void nextOgrePos() {
 		if (isStunned) {
@@ -84,13 +89,16 @@ public class CrazyOgre extends GameEntity {
 	}
 
 	// club getters
+	public boolean hasClub() {
+		return (club != null);
+	}
 	
 	public int getClubX() {
-		return club != null ? club.xPos : xPos;
+		return club != null ? club.xPos : -5;
 	}
 	
 	public int getClubY() {
-		return club != null ? club.yPos : yPos;
+		return club != null ? club.yPos : -5;
 	}
 	
 	public char getClubSymbol() {
@@ -98,10 +106,10 @@ public class CrazyOgre extends GameEntity {
 	}
 
 	public int getNextClubX() {
-		return club != null ? club.nextXPos : nextXPos;
+		return club != null ? club.nextXPos : 0;
 	}
 	
 	public int getNextClubY() {
-		return club != null ? club.nextYPos : nextYPos;
+		return club != null ? club.nextYPos : 0;
 	}
 }
