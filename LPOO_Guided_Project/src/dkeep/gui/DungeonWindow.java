@@ -1,5 +1,6 @@
 package dkeep.gui;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -23,6 +24,16 @@ public class DungeonWindow {
 	private JTextField ogreTextField;
 	private JLabel gameStatuslbl;
 	private JComboBox<String> guardComboBox;
+	private JTextArea gameArea = new JTextArea();
+
+	private JButton btnStart = new JButton("Start Game");
+	private JButton btnExit = new JButton("Exit");
+	private JButton btnLeft = new JButton("Left");
+	private JButton btnRight = new JButton("Right");
+	private JButton btnDown = new JButton("Down");
+	private JButton btnUp = new JButton("Up");
+
+	
 	/**
 	 * Launch the application.
 	 */
@@ -52,9 +63,12 @@ public class DungeonWindow {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		frame.setResizable(false);
 		frame.setBounds(100, 100, 591, 495);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+
+		initButtons();
 
 		JLabel ogreLabel = new JLabel("Number of Ogres");
 		ogreLabel.setFont(new Font("Times New Roman", Font.PLAIN, 12));
@@ -75,35 +89,28 @@ public class DungeonWindow {
 		guardComboBox.addItem("Drunk");
 		guardComboBox.setBounds(436, 41, 130, 22);
 
-		JButton btnStart = new JButton("Start Game");
 		btnStart.setFont(new Font("Times New Roman", Font.PLAIN, 12));
 		btnStart.setBounds(302, 406, 96, 41);
 
-		JButton btnExit = new JButton("Exit");
 		btnExit.setFont(new Font("Times New Roman", Font.PLAIN, 12));
 		btnExit.setBounds(10, 406, 108, 41);
-
-		JTextArea gameArea = new JTextArea();
+		
 		gameArea.setFont(new Font("Courier New", Font.PLAIN, 13));
 		gameArea.setEditable(false);
 		gameArea.setBounds(10, 87, 327, 302);
 
-		JButton btnLeft = new JButton("Left");
 		btnLeft.setFont(new Font("Times New Roman", Font.PLAIN, 12));
 		btnLeft.setEnabled(false);
 		btnLeft.setBounds(347, 202, 98, 47);
 
-		JButton btnRight = new JButton("Right");
 		btnRight.setFont(new Font("Times New Roman", Font.PLAIN, 12));
 		btnRight.setEnabled(false);
 		btnRight.setBounds(468, 202, 98, 47);
 
-		JButton btnDown = new JButton("Down");
 		btnDown.setFont(new Font("Times New Roman", Font.PLAIN, 12));
 		btnDown.setEnabled(false);
 		btnDown.setBounds(407, 259, 98, 47);
 
-		JButton btnUp = new JButton("Up");
 		btnUp.setFont(new Font("Times New Roman", Font.PLAIN, 12));
 		btnUp.setEnabled(false);
 		btnUp.setBounds(407, 145, 98, 47);
@@ -114,25 +121,45 @@ public class DungeonWindow {
 		gameStatuslbl.setFont(new Font("Times New Roman", Font.PLAIN, 15));
 		gameStatuslbl.setBounds(10, 15, 308, 65);
 
+//	  	Panel panel = new Panel(game);
+//		panel.setBackground(Color.LIGHT_GRAY);
+//		panel.setBounds(0, 0, 600, 600);
+		
+		/*
+		 * ADD TO CONTENT PANE
+		 */
+		//frame.getContentPane().add(panel);
+		
+		frame.getContentPane().add(ogreLabel);
+		frame.getContentPane().add(ogreTextField);
+		frame.getContentPane().add(guardLabel);
+		frame.getContentPane().add(guardComboBox);
+		frame.getContentPane().add(btnStart);
+		frame.getContentPane().add(btnExit);
+		frame.getContentPane().add(gameArea);
+		frame.getContentPane().add(btnLeft);
+		frame.getContentPane().add(btnRight);
+		frame.getContentPane().add(btnDown);
+		frame.getContentPane().add(btnUp);
+		frame.getContentPane().add(gameStatuslbl);
+	}
+
+	private void initButtons() {
+		/*EXIT BUTTON*/
 		btnExit.addActionListener(
 				new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						System.exit(0);
 					}
 				});
-		/*
-		 * START BUTTON
-		 */
+		/* START BUTTON*/
 		btnStart.addActionListener(
 				new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						startGame(gameArea, btnUp, btnLeft, btnDown, btnRight, btnStart);
 					}
 				});
-
-		/*
-		 * DIRECTIONAL BUTTONS
-		 */
+		/* DIRECTIONAL BUTTONS*/
 
 		btnUp.addActionListener(
 				new ActionListener() {
@@ -162,21 +189,6 @@ public class DungeonWindow {
 					}
 				});
 
-		/*
-		 * ADD TO CONTENT PANE
-		 */
-		frame.getContentPane().add(ogreLabel);
-		frame.getContentPane().add(ogreTextField);
-		frame.getContentPane().add(guardLabel);
-		frame.getContentPane().add(guardComboBox);
-		frame.getContentPane().add(btnStart);
-		frame.getContentPane().add(btnExit);
-		frame.getContentPane().add(gameArea);
-		frame.getContentPane().add(btnLeft);
-		frame.getContentPane().add(btnRight);
-		frame.getContentPane().add(btnDown);
-		frame.getContentPane().add(btnUp);
-		frame.getContentPane().add(gameStatuslbl);
 	}
 
 	private int checkState(JButton up, JButton left, JButton down, JButton right, JButton start) {
@@ -191,7 +203,7 @@ public class DungeonWindow {
 			gameStatuslbl.setText("You were caught!");
 			return -1;
 		}
-	
+
 		else if(game.gameWon()) {
 			up.setEnabled(false);
 			left.setEnabled(false);
@@ -212,7 +224,7 @@ public class DungeonWindow {
 		game.update(dir);
 		gameArea.setText(game.toString());
 		checkState(up,left,down,right, start);
-		
+
 	}
 
 	private void startGame(JTextArea gameArea,JButton btnUp, JButton btnLeft, JButton btnDown, JButton btnRight, JButton btnStart) {

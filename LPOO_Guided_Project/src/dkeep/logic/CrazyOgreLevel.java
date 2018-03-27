@@ -16,10 +16,10 @@ public class CrazyOgreLevel extends Map {
 	 * (clubs added automatically depending on Ogre symbol)
 	 * 
 	 */
-	
+
 	LinkedList<CrazyOgre> ogreList = new LinkedList<CrazyOgre>();
 	Key key;
-	
+
 	// Default constructors
 	public CrazyOgreLevel() {
 		this(1); // Single ogre in level
@@ -44,11 +44,11 @@ public class CrazyOgreLevel extends Map {
 		// Add all dem Ogres
 		for (int i = 0; i < ogreNum; i++)	
 			ogreList.add(new CrazyOgre(2, 4, true));
-		
+
 		// add key
 		key = new Key(1, 7);
 	}
-	
+
 	/* 
 	 * Constructor for testing purposes (other maps with same logic)
 	 * 
@@ -92,7 +92,7 @@ public class CrazyOgreLevel extends Map {
 				}
 			}
 		}
-		
+
 		this.blueprint = blueprint;
 	}
 	public CrazyOgreLevel(char[][] blueprint, CrazyOgre ogre) {
@@ -103,46 +103,46 @@ public class CrazyOgreLevel extends Map {
 
 	private boolean playerMove(Game.Direction direction) {
 		hero.nextPosition(direction); // calculate next Position
-		
+
 		if (validTileHero(hero.getNextX(), hero.getNextY())) {
 			hero.move();
 			return true;
 		}
 		return false;
 	}
-	
+
 	private void ogreMove(CrazyOgre ogre) {
 		// move ogre
 		do {
 			ogre.nextOgrePos(); // calculate next Position
 		} while (!validTileOgre(ogre.getNextX(), ogre.getNextY()));
-					
+
 		ogre.move();
 		if (!ogre.hasClub())	return;
-		
+
 		// move club
 		do {
 			ogre.nextClubPos();
 		} while (!validTileOgre(ogre.getNextClubX(), ogre.getNextClubY()));
-		
+
 		ogre.moveClub();
 	}
-	
+
 
 	@Override
 	public Game.GameState update(Game.Direction heroDirection) {
 		if (!playerMove(heroDirection)) // cancel turn if player movement isn't to a valid position
 			return state;
-		
+
 		if (key != null)	key.uncover();
-		
+
 		for(CrazyOgre ogre : ogreList) {
 			ogreMove(ogre);
-			
+
 			if (hero.entityTrigger(ogre))
 				return Game.GameState.GAME_OVER; // enemy trigger with hero signifies hero death (game over)
 		}
-		
+
 		return state;
 	}
 
@@ -177,17 +177,22 @@ public class CrazyOgreLevel extends Map {
 			return false;
 		}
 	}
-	
-	// TODO Make class to encapsulate the operations to add entities to matrixes and avoid repeating code with other levels, etc..
-		public String toString() {
-			char[][] map = copyBlueprint();
 
-			addEntity(map, hero);
-			for (CrazyOgre ogre : ogreList) {
-				addEntity(map, ogre);
-			}
-			addEntity(map, key);
-			
-			return matrixToString(map);
+	// TODO Make class to encapsulate the operations to add entities to matrixes and avoid repeating code with other levels, etc..
+	public String toString() {
+
+		return matrixToString(charMap());
+	}
+	
+	@Override
+	public char[][] charMap() {
+		char[][] map = copyBlueprint();
+
+		addEntity(map, hero);
+		for (CrazyOgre ogre : ogreList) {
+			addEntity(map, ogre);
 		}
+		addEntity(map, key);
+		return map;
+	}
 }

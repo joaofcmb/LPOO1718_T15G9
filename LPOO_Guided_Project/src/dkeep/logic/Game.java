@@ -59,8 +59,7 @@ public class Game {
 		return map.toString();
 	}
 
-	public GameState getState() {
-		// TODO Auto-generated method stub
-		return state;
-	}
+	public GameState getState() {return state;}
+	
+	public Map getMap() {return map;}
 }

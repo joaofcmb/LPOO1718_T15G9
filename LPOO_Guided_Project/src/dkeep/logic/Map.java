@@ -50,4 +50,6 @@ public abstract class Map {
 	public boolean isUnlocked() {
 		return isUnlocked;
 	}
+	
+	public abstract char[][] charMap();
 }

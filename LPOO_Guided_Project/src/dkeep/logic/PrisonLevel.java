@@ -127,13 +127,17 @@ public class PrisonLevel extends Map {
 
 	// TODO Make class to encapsulate the operations to add entities to matrixes and avoid repeating code with other levels, etc..
 	public String toString() {
+		return matrixToString(charMap());
+	}
+	
+	@Override	//need char[][] for GUI
+	public char[][] charMap() {
 		char[][] map = copyBlueprint();
 
 		addEntity(map, hero);
 		for (Guard guard : guardList) {
 			addEntity(map, guard);
 		}
-
-		return matrixToString(map);
+		return map;
 	}
 }
