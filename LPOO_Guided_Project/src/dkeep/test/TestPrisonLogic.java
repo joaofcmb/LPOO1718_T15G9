@@ -99,4 +99,25 @@ public class TestPrisonLogic { // assures the Prison Level logic is valid
 		
 		assertEquals(Game.GameState.NEXT_LEVEL, testGame.getState());
 	}
+	
+	@Test
+	public void testToString() {
+		Game testGame = new Game(testLevel);
+		
+		String mapString =	"X X X X X \n" +
+						  	"I P   G X \n" +
+						  	"I       X \n" +
+						  	"X k     X \n" +
+						  	"X X X X X \n";
+		assertEquals(mapString, testGame.toString());
+		
+		testGame.update(Game.Direction.DOWN);
+		
+		mapString =			"X X X X X \n" +
+			  				"I     G X \n" +
+			  				"I P     X \n" +
+			  				"X k     X \n" +
+			  				"X X X X X \n";
+		assertEquals(mapString, testGame.toString());
+	}
 }

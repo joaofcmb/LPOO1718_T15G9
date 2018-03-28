@@ -97,4 +97,25 @@ class TestOgreLogic {
 		
 		assertEquals(Game.GameState.VICTORY, testGame.getState());
 	}
+	
+	@Test
+	public void testToString() {
+		Game testGame = new Game(testLevel);
+		
+		String mapString =	"X X X X X \n" +
+						  	"X P   O X \n" +
+						  	"I       X \n" +
+						  	"X k     X \n" +
+						  	"X X X X X \n";
+		assertEquals(mapString, testGame.toString());
+		
+		testGame.update(Game.Direction.DOWN);
+		
+		mapString =			"X X X X X \n" +
+			  				"X     O X \n" +
+			  				"I P     X \n" +
+			  				"X k     X \n" +
+			  				"X X X X X \n";
+		assertEquals(mapString, testGame.toString());
+	}
 }

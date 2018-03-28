@@ -26,7 +26,7 @@ public abstract class Map {
 		if (entity == null)	return;
 		
 		map[entity.getX()][entity.getY()] = entity.getSymbol();
-		if (entity instanceof CrazyOgre)
+		if (entity instanceof CrazyOgre && ((CrazyOgre) entity).hasClub())
 			map[((CrazyOgre) entity).getClubX()][((CrazyOgre) entity).getClubY()] = ((CrazyOgre) entity).getClubSymbol();
 	}
 	

@@ -15,12 +15,10 @@ public class TestGuardPatrol {
 			{'X','X','X','X','X'}
 	};
 	
-	Guard guard = new Guard(1, 1, Guard.Personality.ROOKIE,	  "1, 1, r, " + "1, 3, l");
-	
-	PrisonLevel testLevel = new PrisonLevel(blueprint, guard);
-	
 	@Test
 	public void testBeforeNode() {
+		Guard guard = new Guard(1, 1, Guard.Personality.ROOKIE,	  "1, 1, r, " + "1, 3, l");
+		PrisonLevel testLevel = new PrisonLevel(blueprint, guard);
 		Game testGame = new Game(testLevel);
 		
 		assertEquals(3, testLevel.getHero().getX());
@@ -33,6 +31,8 @@ public class TestGuardPatrol {
 	
 	@Test
 	public void testAfterNode() {
+		Guard guard = new Guard(1, 1, Guard.Personality.ROOKIE,	  "1, 1, r, " + "1, 3, l");
+		PrisonLevel testLevel = new PrisonLevel(blueprint, guard);
 		Game testGame = new Game(testLevel);
 		
 		assertEquals(3, testLevel.getHero().getX());
