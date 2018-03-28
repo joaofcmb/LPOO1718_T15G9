@@ -17,7 +17,7 @@ public class TestGuardPatrol {
 	
 	@Test
 	public void testBeforeNode() {
-		Guard guard = new Guard(1, 1, Guard.Personality.ROOKIE,	  "1, 1, r, " + "1, 3, l");
+		Guard guard = new Guard(1, 1, Game.Personality.ROOKIE,	  "1, 1, r, " + "1, 3, l");
 		PrisonLevel testLevel = new PrisonLevel(blueprint, guard);
 		Game testGame = new Game(testLevel);
 		
@@ -31,7 +31,7 @@ public class TestGuardPatrol {
 	
 	@Test
 	public void testAfterNode() {
-		Guard guard = new Guard(1, 1, Guard.Personality.ROOKIE,	  "1, 1, r, " + "1, 3, l");
+		Guard guard = new Guard(1, 1, Game.Personality.ROOKIE,	  "1, 1, r, " + "1, 3, l");
 		PrisonLevel testLevel = new PrisonLevel(blueprint, guard);
 		Game testGame = new Game(testLevel);
 		

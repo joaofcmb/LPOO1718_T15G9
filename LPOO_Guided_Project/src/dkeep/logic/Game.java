@@ -1,7 +1,7 @@
 package dkeep.logic;
 
 public class Game {
-	public enum Personality {ROOKIE, DRUNK, SUSPICIOUS, STATIC} //What's static for?
+	public enum Personality {ROOKIE, DRUNK, SUSPICIOUS, STATIC}
 	public enum GameState {DEFAULT, NEXT_LEVEL, GAME_OVER, VICTORY}
 	public enum Direction {UP, LEFT, DOWN, RIGHT}
 	private GameState state = GameState.DEFAULT;
