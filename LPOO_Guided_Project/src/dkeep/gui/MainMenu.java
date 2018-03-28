@@ -12,9 +12,8 @@ import java.awt.event.FocusEvent;
 
 public class MainMenu {
 
-	private JFrame frame = new JFrame("Main Menu");
-	private JButton btnNewGame = new JButton("New Game");
-	private JButton btnExit = new JButton("Exit");
+	private JFrame frame;
+	private JButton btnNewGame, btnExit;
 
 
 	/**
@@ -38,35 +37,36 @@ public class MainMenu {
 	}
 
 	private void initialize() {
-		frame.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent arg0) {
-				
-			}
-		});
+		initFrame();
+
+		initButtons();
+
+		addToContentPane();
+	}
+
+	private void initFrame() 
+	{
+		frame = new JFrame("Main Menu");
 		frame.setResizable(false);
 		frame.setBounds(100, 100, 800, 650);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		
-		initButtons();
-		
-		addToContentPane();
 	}
 
 	private void initButtons()
 	{
+		btnNewGame = new JButton("New Game");
 		btnNewGame.setFont(new Font("Courier New", Font.PLAIN, 15));
 		btnNewGame.setBounds(300, 64, 120, 50);
-		
+
+		btnExit = new JButton("Exit");
 		btnExit.setFont(new Font("Courier New", Font.PLAIN, 15));
 		btnExit.setBounds(300, 521, 120, 50);
-		
+
 		btnNewGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
-				frame.setVisible(true); // hide this window
-				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				NewGameConfig ng = new NewGameConfig(frame);
 				ng.getFrame().setVisible(true);
 
@@ -79,12 +79,12 @@ public class MainMenu {
 			}
 		});
 	}
-	
+
 	private void addToContentPane()
 	{
 		frame.getContentPane().add(btnNewGame);
 		frame.getContentPane().add(btnExit);
 	}
-	
+
 	public JFrame getFrame() {return this.frame;}
 }

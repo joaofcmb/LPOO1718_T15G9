@@ -2,10 +2,10 @@ package dkeep.logic;
 
 import java.util.Random;
 
+import dkeep.logic.Game.Personality;
+
 public class Guard extends GameEntity {
 	private Random random = new Random();
-
-	public enum Personality {ROOKIE, DRUNK, SUSPICIOUS, STATIC} // TODO Make enum public and use it to refer to a personality (constructor arg, etc)
 	
 	private static final int MIN_STEPS_SUSPICION = 3; // Steps until suspicious might trigger his patrol reversion
 	private int suspicionStep; // Counter of steps

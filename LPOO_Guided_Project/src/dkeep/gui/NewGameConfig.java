@@ -1,125 +1,132 @@
 package dkeep.gui;
 
 import java.awt.Color;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
 import dkeep.logic.Game;
+import dkeep.logic.Game.Personality;
+
 import java.awt.BorderLayout;
 import java.awt.Font;
+import java.awt.Window;
 
 public class NewGameConfig {
 	private JDialog frame;
-	private JLabel ogreLabel = new JLabel("Number of Ogres");
-	private JTextField ogreTextField = new JTextField();
-	private JLabel guardLabel = new JLabel("Guard's Personality");
-	private JComboBox<String> guardComboBox = new JComboBox<String>();
-	private JButton btnStart = new JButton("Start Game");
-	private JButton btnBack = new JButton("Back");
-	private JLabel GameStatus = new JLabel(" ");
-	protected Game g;
+	private JLabel ogreLabel, guardLabel;
+	private JTextField ogreTextField;
+	private JComboBox<String> guardComboBox;
+	private JButton btnStart, btnBack;
+	protected Game game;
 
-	public NewGameConfig(JFrame mainFrame) {
+	public NewGameConfig(JFrame mainFrame)
+	{
 		frame = new JDialog(mainFrame, "New Game Configuration", true);
-		initialise();
+		initialise(mainFrame);
 	}
 
-	public void initialise(){	
+	public void initialise(JFrame mainFrame)
+	{	
+		initFrame();
+		initButtons(mainFrame);
+		initOtherObjects();
 
-		windowConf();
-		fldOgresConf();	
-		buttonStart();
-		initButtons();
-
-		addContent();
+		addToContentPane();
 	}
-	
-	public void windowConf(){
 
+
+
+	public void initFrame()
+	{
 		frame.setResizable(false);
-		frame.setBounds(100, 100, 350, 220);
-		frame.getContentPane().setLayout(null);	
+		frame.setBounds(300, 300, 350, 220);
+		frame.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
-		ogreLabel.setBounds(22, 84, 98, 16);	
-		ogreLabel.setHorizontalAlignment(SwingConstants.LEFT);
-
+		frame.getContentPane().setLayout(null);
+		frame.getContentPane().setLayout(null);
 	}
 
-	public void fldOgresConf(){
+	private void initButtons(JFrame mainFrame)
+	{
+		btnStart = new JButton("Start Game");
+		btnStart.setBounds(191, 128, 135, 33);
+		btnStart.setFont(new Font("Courier New", Font.PLAIN, 15));
+		btnStart.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int nOgres;
+				try {
+					nOgres = Integer.parseUnsignedInt(ogreTextField.getText());
+				} catch(NumberFormatException n) { 
+					JOptionPane.showMessageDialog(frame, "Enter a positive integer number.");
+					return;
+				}
+				Personality guardType;
+				switch(guardComboBox.getItemAt(guardComboBox.getSelectedIndex()))
+				{
+				case "Rookie": guardType = Personality.ROOKIE;break;
+				case "Suspicious": guardType = Personality.SUSPICIOUS;break;
+				case "Drunk": guardType = Personality.DRUNK;break;
+				default: guardType = Personality.STATIC;break;
+				}
+				game = new Game(nOgres, guardType);
+				GameWindow gameWindow = new GameWindow(game);
+				gameWindow.getFrame().setVisible(true);
+				gameWindow.getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+				frame.dispose();
+				mainFrame.dispose();
+			}
+		});
+
+		btnBack = new JButton("Back");
+		btnBack.setBounds(10, 130, 135, 29);
+		btnBack.setFont(new Font("Courier New", Font.PLAIN, 15));
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
+			}
+		});
+	}
+
+	private void initOtherObjects()
+	{
+		guardLabel = new JLabel("Guard's Personality");
+		guardLabel.setBounds(10, 20, 178, 29);
+		guardLabel.setFont(new Font("Courier New", Font.PLAIN, 15));
+
+		ogreLabel = new JLabel("Number of Ogres");
+		ogreLabel.setFont(new Font("Courier New", Font.PLAIN, 15));
+		ogreLabel.setBounds(10, 59, 141, 21);
+
+		ogreTextField = new JTextField("1");
+		ogreTextField.setBounds(191, 58, 135, 22);
 		ogreTextField.setFont(new Font("Courier New", Font.PLAIN, 15));
-		ogreTextField.setBounds(210, 23, 88, 22);
 		ogreTextField.setBackground(Color.WHITE);
-		ogreTextField.setColumns(5);
+		ogreTextField.setColumns(1);
 
+		guardComboBox = new JComboBox<String>();
+		guardComboBox.setBounds(191, 23, 135, 22);
 		guardComboBox.setFont(new Font("Courier New", Font.PLAIN, 15));
-		guardComboBox.setBounds(210, 63, 89, 22);
-
-		guardComboBox.setFont(new Font("Times New Roman", Font.PLAIN, 12));
 		guardComboBox.addItem("Rookie");
 		guardComboBox.addItem("Suspicious");
 		guardComboBox.addItem("Drunk");
 		guardComboBox.setEditable(false);
 	}
 
-	public void buttonStart(){
-		//		ButtonStart.addActionListener(new ActionListener() {
-		//			public void actionPerformed(ActionEvent e) {
-		//				if(fldOgres.getText().charAt(0) < 49 || fldOgres.getText().charAt(0) > 53){
-		//					GameStatus.setText("Invalid number of Ogres");
-		//					return;
-		//				}
-		//
-		//				g = new Game(Integer.parseInt(fldOgres.getText()));
-		//				Guard G = g.getGuard();
-		//				g.setGuard( new Guard(G.getCoordenateI(),G.getCoordenateJ(),G.getSprite(),fldBehaviour.getSelectedIndex()));
-		//
-		//				frame.setVisible(false);				
-		//				StartGame sg = new StartGame(g);	
-		//				sg.getGameWindow().setVisible(true);				
-		//				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		//			}
-		//
-		//		});
-	}
-
-	private void initButtons()
-	{
-		frame.requestFocus();
-		btnStart.setFont(new Font("Courier New", Font.PLAIN, 15));
-		btnStart.setBounds(179, 128, 135, 33);
-
-		btnBack.setFont(new Font("Courier New", Font.PLAIN, 15));
-		btnBack.setBounds(22, 130, 135, 29);
-		btnBack.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				frame.dispose();
-			}
-		});
-	}
-
-	public void addContent(){
-		frame.getContentPane().setLayout(null);
+	public void addToContentPane(){
 
 		frame.getContentPane().add(btnBack);
 		frame.getContentPane().add(btnStart);
+
 		frame.getContentPane().add(guardComboBox);
-
-		guardLabel.setFont(new Font("Courier New", Font.PLAIN, 15));
-		guardLabel.setBounds(42, 60, 178, 29);
-
 		frame.getContentPane().add(guardLabel);
+
 		frame.getContentPane().add(ogreTextField);
-
-		ogreLabel.setFont(new Font("Courier New", Font.PLAIN, 15));
-		ogreLabel.setBounds(22, 23, 141, 21);
-
 		frame.getContentPane().add(ogreLabel);
 	}
 
 	public JDialog getFrame() {return frame;}
-
 }
-

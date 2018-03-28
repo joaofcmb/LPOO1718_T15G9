@@ -2,6 +2,7 @@ package dkeep.logic;
 
 import dkeep.logic.Game.Direction;
 import dkeep.logic.Game.GameState;
+import dkeep.logic.Game.Personality;
 
 import java.util.LinkedList;
 
@@ -22,9 +23,9 @@ public class PrisonLevel extends Map {
 	
 	// Default Constructors
 	public PrisonLevel() {
-		this(Guard.Personality.ROOKIE);
+		this(Personality.ROOKIE);
 	}
-	public PrisonLevel(Guard.Personality personality) {
+	public PrisonLevel(Personality personality) {
 		blueprint =  new char[][] {
 			{'X','X','X','X','X','X','X','X','X','X'},
 			{'X',' ',' ',' ','I',' ','X',' ',' ','X'},
@@ -72,7 +73,7 @@ public class PrisonLevel extends Map {
 					doorList.add(new Door(i, j));
 					break;
 				case 'G':
-					guardList.add(new Guard(i, j, Guard.Personality.STATIC, ""));
+					guardList.add(new Guard(i, j, Personality.STATIC, ""));
 					blueprint[i][j] = ' ';
 					break;
 				}
