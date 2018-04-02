@@ -1,6 +1,5 @@
 package dkeep.gui;
 
-import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -43,6 +42,7 @@ public class DungeonWindow {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					@SuppressWarnings("unused")
 					DungeonWindow window = new DungeonWindow();
 					frame.setVisible(true);
 				} catch (Exception e) {

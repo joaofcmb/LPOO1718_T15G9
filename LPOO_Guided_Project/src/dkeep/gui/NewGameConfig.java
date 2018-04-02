@@ -10,9 +10,7 @@ import javax.swing.*;
 import dkeep.logic.Game;
 import dkeep.logic.Game.Personality;
 
-import java.awt.BorderLayout;
 import java.awt.Font;
-import java.awt.Window;
 
 public class NewGameConfig {
 	private JDialog frame;

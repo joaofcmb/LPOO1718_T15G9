@@ -13,13 +13,14 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 public class GameWindow {
 	private Game game;
 
-	private GameGraphics graphics;
-	private JFrame frame;
+	private JFrame frame = new JFrame("Dungeon Keep");
+	protected JPanel graphics;
 	private JLabel lblGameState;
 	private JButton btnUp, btnDown, btnLeft, btnRight, btnQuit;
 
@@ -36,12 +37,25 @@ public class GameWindow {
 	}
 
 	private void initFrame() {
-		frame = new JFrame("Dungeon Keep");
 		frame.setResizable(false);
 		frame.setBounds(100, 100, 837, 754);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		frame.getContentPane().setLayout(null);
+	}
+
+
+	private void initOtherObjects() {
+		graphics = new GameGraphics(game);
+		graphics.setLayout(null);
+		graphics.setBounds(10, 10, 600, 700);
+		graphics.setBackground(Color.LIGHT_GRAY);
+		
+		lblGameState = new JLabel("Try to Escape!");
+		lblGameState.setHorizontalAlignment(SwingConstants.CENTER);
+		lblGameState.setFont(new Font("Courier New", Font.PLAIN, 17));
+		lblGameState.setBounds(622, 10, 192, 95);
+
+		initKeys();
 	}
 
 	private void initButtons() {
@@ -102,24 +116,10 @@ public class GameWindow {
 				});
 	}
 
-	private void initOtherObjects() {
-		graphics = new GameGraphics(game);
-		graphics.setBackground(Color.LIGHT_GRAY);
-		graphics.setBounds(10, 10, 600, 700);
-
-		lblGameState = new JLabel("Try to Escape!");
-		lblGameState.setHorizontalAlignment(SwingConstants.CENTER);
-		lblGameState.setFont(new Font("Courier New", Font.PLAIN, 17));
-		lblGameState.setBounds(622, 10, 192, 95);
-
-		initKeys();
-	}
-
 	private void initKeys()
 	{
 		graphics.addKeyListener(
 				new KeyListener() {
-
 					@Override
 					public void keyReleased(KeyEvent k) {
 						switch(k.getKeyCode())
@@ -140,8 +140,8 @@ public class GameWindow {
 							pressedKey(Game.Direction.RIGHT);
 							break;
 						}
+						default:
 						}
-						checkGameState();
 					}
 
 					@Override
@@ -168,7 +168,6 @@ public class GameWindow {
 	private void pressedKey(Game.Direction direction)
 	{
 		game.update(direction);
-		graphics.update();
 		checkGameState();
 	}
 
