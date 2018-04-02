@@ -12,14 +12,12 @@ import javax.swing.JPanel;
 import dkeep.logic.Game;
 
 public class GameGraphics extends JPanel {
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 7707825193902717088L;
 
 	private static final int SIZE = 50; //Image size for drawImage
 	private Game game;
 
-	private BufferedImage hero, wall, lDoor, uDoor, key, ogre, guard, ogreClub; //TODO add others later
-
-	private char[][] map;
+	private BufferedImage hero, wall, lDoor, uDoor, armedHero, akHero, key, ogre, guard, ogreClub; //TODO add others later
 
 	public GameGraphics(Game g) 
 	{
@@ -35,7 +33,6 @@ public class GameGraphics extends JPanel {
 
 	private void updateGame() 
 	{
-		map = game.getMap().charMap();
 		this.repaint();
 		this.requestFocusInWindow();
 	}
@@ -49,6 +46,8 @@ public class GameGraphics extends JPanel {
 			wall = ImageIO.read(new File("src/Images/Wall.png"));
 			lDoor = ImageIO.read(new File("src/Images/LockedDoor.png"));
 			uDoor = ImageIO.read(new File("src/Images/UnlockedDoor.png"));
+			armedHero = ImageIO.read(new File("src/Images/ArmedHero.png"));
+			akHero = ImageIO.read(new File("src/Images/ArmedKeyHero.png"));
 			key = ImageIO.read(new File("src/Images/Key.png"));
 			guard = ImageIO.read(new File("src/Images/Guard.png"));
 			ogre = ImageIO.read(new File("src/Images/Ogre.png"));
@@ -66,8 +65,9 @@ public class GameGraphics extends JPanel {
 	protected void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);
-		for(int i = 0; i < map.length; i++) {
-			for(int j = 0; j < map[i].length; j++)
+		char[][] map = game.getMap().charMap();
+		for(int j = 0; j < map.length; j++) {
+			for(int i = 0; i < map[j].length; i++)
 			{
 				switch(map[j][i])
 				{
@@ -87,9 +87,12 @@ public class GameGraphics extends JPanel {
 					g.drawImage(uDoor, i*SIZE, j*SIZE, SIZE, SIZE, null);
 					break;
 				}
-
 				case 'A':{//Armed Hero
-					
+					g.drawImage(armedHero, i*SIZE, j*SIZE, SIZE, SIZE, null);	
+					break;
+				}
+				case 'K':{//Armed Hero
+					g.drawImage(akHero, i*SIZE, j*SIZE, SIZE, SIZE, null);	
 					break;
 				}
 				case 'G':{//Guard

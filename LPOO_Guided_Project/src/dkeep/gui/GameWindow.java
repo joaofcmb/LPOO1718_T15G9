@@ -49,7 +49,7 @@ public class GameWindow {
 		graphics.setLayout(null);
 		graphics.setBounds(10, 10, 600, 700);
 		graphics.setBackground(Color.LIGHT_GRAY);
-		
+
 		lblGameState = new JLabel("Try to Escape!");
 		lblGameState.setHorizontalAlignment(SwingConstants.CENTER);
 		lblGameState.setFont(new Font("Courier New", Font.PLAIN, 17));
@@ -174,20 +174,28 @@ public class GameWindow {
 	private void checkGameState()
 	{
 		if(game.gameLost()) {
-			btnUp.setEnabled(false);
-			btnLeft.setEnabled(false);
-			btnDown.setEnabled(false);
-			btnRight.setEnabled(false);
+			deactivateButtons();
+			disablePanel();
 			lblGameState.setText("You were caught!");
 		}
 		else if(game.gameWon()) {
-			btnUp.setEnabled(false);
-			btnLeft.setEnabled(false);
-			btnDown.setEnabled(false);
-			btnRight.setEnabled(false);
+			deactivateButtons();
+			disablePanel();
 			lblGameState.setText("You Escaped!!");
 		}
 	}
 
+	private void deactivateButtons()
+	{
+		btnUp.setEnabled(false);
+		btnLeft.setEnabled(false);
+		btnDown.setEnabled(false);
+		btnRight.setEnabled(false);
+	}
+
+	private void disablePanel()
+	{
+		graphics.setEnabled(false);
+	}
 	public JFrame getFrame() {return frame;}
 }
