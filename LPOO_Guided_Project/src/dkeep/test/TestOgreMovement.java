@@ -1,10 +1,10 @@
 package dkeep.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.Random;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import dkeep.logic.*;
 
