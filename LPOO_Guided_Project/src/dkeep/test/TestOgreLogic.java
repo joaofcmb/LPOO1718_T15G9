@@ -7,7 +7,7 @@ import org.junit.Test;
 import dkeep.logic.CrazyOgreLevel;
 import dkeep.logic.Game;
 
-class TestOgreLogic {
+public class TestOgreLogic {
 
 	char[][] blueprint = {
 			{'X','X','X','X','X'},
@@ -18,6 +18,19 @@ class TestOgreLogic {
 	};
 	
 	CrazyOgreLevel testLevel = new CrazyOgreLevel(blueprint);
+	
+	@Test
+	public void testMoveHeroWall() {
+		Game testGame = new Game(testLevel);
+		
+		assertEquals(1, testLevel.getHero().getX());
+		assertEquals(1, testLevel.getHero().getY());
+		
+		testGame.update(Game.Direction.LEFT);
+		
+		assertEquals(1, testLevel.getHero().getX());
+		assertEquals(1, testLevel.getHero().getY());
+	}
 	
 	@Test
 	public void testMoveHeroOgre() {

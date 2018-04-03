@@ -1,6 +1,7 @@
 package dkeep.test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import java.util.Random;
 
@@ -40,6 +41,9 @@ public class TestOgreMovement {
 		boolean adjacentOgre = false, adjacentClub = false;
 		
 		while (!adjacentOgre && !adjacentClub) {
+			int oldHeroX = -5; int oldHeroY = -5;
+			int oldOgreX = -5; int oldOgreY = -5;
+			
 			testGame.update(randomDirection());
 			
 			int hX = testLevel.getHero().getX();	int hY = testLevel.getHero().getY();
@@ -47,6 +51,8 @@ public class TestOgreMovement {
 			int cX = testOgre.getClubX();			int cY = testOgre.getClubY();
 			if (heroIsArmed) 	cX = cY = -5; // override cX and cY since behavior is undefined when no club is created
 			
+			if ((hX == oldHeroX && hY == oldHeroY) || (oX == oldOgreX && oY == oldOgreY))
+				fail(); // hero didn't move or ogre didn't move (random movement mustn't return null)
 			
 			if (Math.abs(hX - cX) + Math.abs(hY - cY) < 2) {
 				adjacentClub = true;
@@ -60,6 +66,8 @@ public class TestOgreMovement {
 			}
 			else if (testGame.gameWon())
 				return;
+			
+			oldHeroX = hX;	oldHeroY = hY;	oldOgreX = oX;	oldOgreY = oY;
 		}
 	}
 
