@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
@@ -17,7 +18,7 @@ public class GameGraphics extends JPanel {
 	private static final int SIZE = 50; //Image size for drawImage
 	private Game game;
 
-	private BufferedImage hero, wall, lDoor, uDoor, armedHero, akHero, key, ogre, guard, ogreClub; //TODO add others later
+	private HashMap<String, BufferedImage> imageMap;
 
 	public GameGraphics(Game g) 
 	{
@@ -39,22 +40,20 @@ public class GameGraphics extends JPanel {
 
 	private void loadImages()
 	{
+		imageMap = new HashMap<String, BufferedImage>();
 		System.out.println("Loading Images...");
-		try{
-
-			hero = ImageIO.read(new File("src/Images/Hero.png"));
-			wall = ImageIO.read(new File("src/Images/Wall.png"));
-			lDoor = ImageIO.read(new File("src/Images/LockedDoor.png"));
-			uDoor = ImageIO.read(new File("src/Images/UnlockedDoor.png"));
-			armedHero = ImageIO.read(new File("src/Images/ArmedHero.png"));
-			akHero = ImageIO.read(new File("src/Images/ArmedKeyHero.png"));
-			key = ImageIO.read(new File("src/Images/Key.png"));
-			guard = ImageIO.read(new File("src/Images/Guard.png"));
-			ogre = ImageIO.read(new File("src/Images/Ogre.png"));
-			ogreClub = ImageIO.read(new File("src/Images/OgreClub.png"));
-
-
-		}catch(IOException e)
+		try {
+			imageMap.put("P", ImageIO.read(new File("src/Images/Hero.png")));
+			imageMap.put("X", ImageIO.read(new File("src/Images/Wall.png")));
+			imageMap.put("I", ImageIO.read(new File("src/Images/LockedDoor.png")));
+			imageMap.put("S", ImageIO.read(new File("src/Images/UnlockedDoor.png")));
+			imageMap.put("A", ImageIO.read(new File("src/Images/ArmedHero.png")));
+			imageMap.put("K", ImageIO.read(new File("src/Images/ArmedKeyHero.png")));
+			imageMap.put("k", ImageIO.read(new File("src/Images/Key.png")));
+			imageMap.put("G", ImageIO.read(new File("src/Images/Guard.png")));
+			imageMap.put("O", ImageIO.read(new File("src/Images/Ogre.png")));
+			imageMap.put("*", ImageIO.read(new File("src/Images/OgreClub.png")));
+		} catch(IOException e)
 		{
 			System.out.println("An error occured while loading Images.");
 			e.printStackTrace();
@@ -65,56 +64,13 @@ public class GameGraphics extends JPanel {
 	protected void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);
+		g.setColor(Color.BLACK);
 		char[][] map = game.getMap().charMap();
 		for(int j = 0; j < map.length; j++) {
 			for(int i = 0; i < map[j].length; i++)
 			{
-				switch(map[j][i])
-				{
-				case 'P':{//Hero
-					g.drawImage(hero, i*SIZE, j*SIZE, SIZE, SIZE, null);	
-					break;
-				}
-				case 'X':{//Wall
-					g.drawImage(wall, i*SIZE, j*SIZE, SIZE, SIZE, null);
-					break;
-				}
-				case 'I':{//Locked Door
-					g.drawImage(lDoor, i*SIZE, j*SIZE, SIZE, SIZE, null);
-					break;
-				}
-				case 'S':{//Unlocked Door
-					g.drawImage(uDoor, i*SIZE, j*SIZE, SIZE, SIZE, null);
-					break;
-				}
-				case 'A':{//Armed Hero
-					g.drawImage(armedHero, i*SIZE, j*SIZE, SIZE, SIZE, null);	
-					break;
-				}
-				case 'K':{//Armed Hero
-					g.drawImage(akHero, i*SIZE, j*SIZE, SIZE, SIZE, null);	
-					break;
-				}
-				case 'G':{//Guard
-					g.drawImage(guard, i*SIZE, j*SIZE, SIZE, SIZE, null);
-					break;
-				}
-				case 'O':{//Ogre
-					g.drawImage(ogre, i*SIZE, j*SIZE, SIZE, SIZE, null);
-					break;
-				}
-				case '*':{//Ogre Club
-					g.drawImage(ogreClub, i*SIZE, j*SIZE, SIZE, SIZE, null);
-					break;
-				}
-				case 'k':{//key/lever
-					g.drawImage(key, i*SIZE, j*SIZE, SIZE, SIZE, null);
-					break;
-				}
-				default:{//White Space
-					g.setColor(Color.BLACK);
-				}
-				}
+				g.fillRect(i*SIZE, j*SIZE, SIZE, SIZE);
+				g.drawImage(imageMap.get(Character.toString(map[j][i])), i*SIZE, j*SIZE, SIZE, SIZE, null);
 			}
 		}
 		updateGame();

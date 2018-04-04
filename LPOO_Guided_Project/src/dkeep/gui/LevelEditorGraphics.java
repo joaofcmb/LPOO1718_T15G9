@@ -18,7 +18,6 @@ public class LevelEditorGraphics extends JPanel {
 	static final int SIZE = 50; //Image size for drawImage
 	private LevelEditor lvlEditor;
 
-	private BufferedImage hero, wall, lDoor, uDoor, armedHero, akHero, key, ogre, guard, ogreClub;
 	private HashMap<String, BufferedImage> imageMap;
 
 	private int width, height;
@@ -47,14 +46,13 @@ public class LevelEditorGraphics extends JPanel {
 	{
 		imageMap = new HashMap<String, BufferedImage>();
 		System.out.println("Loading Images...");
-		try{
+		try {
 			imageMap.put("X", ImageIO.read(new File("src/Images/Wall.png")));
 			imageMap.put("I", ImageIO.read(new File("src/Images/LockedDoor.png")));
 			imageMap.put("A", ImageIO.read(new File("src/Images/ArmedHero.png")));
 			imageMap.put("k", ImageIO.read(new File("src/Images/Key.png")));
 			imageMap.put("O", ImageIO.read(new File("src/Images/Ogre.png")));
-
-		}catch(IOException e)
+		} catch(IOException e)
 		{
 			System.out.println("An error occured while loading Images.");
 			e.printStackTrace();
@@ -65,9 +63,11 @@ public class LevelEditorGraphics extends JPanel {
 	protected void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);
+		g.setColor(Color.BLACK);
 		for(int j = 0; j < lvlEditor.getMap().length; j++) { 
 			for(int i = 0; i < lvlEditor.getMap()[j].length; i++) 
 			{
+				g.fillRect(i*SIZE, j*SIZE, SIZE, SIZE);
 				g.drawImage(imageMap.get(Character.toString(lvlEditor.getMap()[j][i])), i*SIZE, j*SIZE, SIZE, SIZE, null);
 			}
 		}
@@ -88,23 +88,7 @@ public class LevelEditorGraphics extends JPanel {
 							for (int j = 1 ; j <= height; j++){
 								if (xCoord >= (i-1) && xCoord < i && yCoord >=(j-1) && yCoord < j)
 								{
-									if (lvlEditor.getMap()[i-1][j-1] == ' ' && lvlEditor.getSelection() != ' ') //if cell is empty
-									{
-										lvlEditor.getMap()[i-1][j-1] = lvlEditor.getSelection();
-										lvlEditor.checkElement(i-1,j-1, 1);
-									}
-									else if (lvlEditor.getMap()[i-1][j-1]  == lvlEditor.getSelection()) // if you select the wrong cell
-									{
-										lvlEditor.checkElement(i-1,j-1, -1);
-										lvlEditor.getMap()[i-1][j-1] = ' ';
-
-									}
-									else if (lvlEditor.getMap()[i-1][j-1]  != ' ') //if you want to replace a cell
-									{
-										lvlEditor.checkElement(i-1,j-1, -1);
-										lvlEditor.getMap()[i-1][j-1] = lvlEditor.getSelection();	
-										lvlEditor.checkElement(i-1,j-1,1);
-									}
+									lvlEditor.mouseHandler(i, j);
 								}
 							}
 					}

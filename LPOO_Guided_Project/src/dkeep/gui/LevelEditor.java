@@ -229,6 +229,26 @@ public class LevelEditor {
 		frame.getContentPane().add(lblInstruction);
 	}
 	
+	public void mouseHandler(int i, int j) {
+		if (customMap[i-1][j-1] == ' ' && selection != ' ') //if cell is empty
+		{
+			customMap[i-1][j-1] = selection;
+			checkElement(i-1,j-1, 1);
+		}
+		else if (customMap[i-1][j-1]  == selection) // if you select the wrong cell
+		{
+			checkElement(i-1,j-1, -1);
+			customMap[i-1][j-1] = ' ';
+
+		}
+		else if (customMap[i-1][j-1]  != ' ') //if you want to replace a cell
+		{
+			checkElement(i-1,j-1, -1);
+			customMap[i-1][j-1] = selection;	
+			checkElement(i-1,j-1,1);
+		}
+	}
+	
 	public boolean checkElements(){
 
 		if ( !checkDynamic() || nDoorsPlaced == 0 || nWallsPlaced == 0 || nKeysPlaced == 0){
