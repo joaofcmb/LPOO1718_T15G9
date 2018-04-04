@@ -156,7 +156,7 @@ public class DungeonWindow {
 		btnStart.addActionListener(
 				new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						startGame(gameArea, btnUp, btnLeft, btnDown, btnRight, btnStart);
+						startGame();
 					}
 				});
 		/* DIRECTIONAL BUTTONS*/
@@ -164,70 +164,63 @@ public class DungeonWindow {
 		btnUp.addActionListener(
 				new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						pressedKey(Game.Direction.UP, gameArea,btnUp,btnLeft,btnDown,btnRight, btnStart);
+						pressedKey(Game.Direction.UP);
 					}
 				});
 
 		btnDown.addActionListener(
 				new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						pressedKey(Game.Direction.DOWN, gameArea,btnUp,btnLeft,btnDown,btnRight, btnStart);
+						pressedKey(Game.Direction.DOWN);
 					}
 				});
 
 		btnLeft.addActionListener(
 				new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						pressedKey(Game.Direction.LEFT, gameArea,btnUp,btnLeft,btnDown,btnRight, btnStart);
+						pressedKey(Game.Direction.LEFT);
 					}
 				});
 
 		btnRight.addActionListener(
 				new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						pressedKey(Game.Direction.RIGHT, gameArea,btnUp,btnLeft,btnDown,btnRight, btnStart);
+						pressedKey(Game.Direction.RIGHT);
 					}
 				});
 
 	}
 
-	private int checkState(JButton up, JButton left, JButton down, JButton right, JButton start) {
-		if(game.gameLost()) {
-			up.setEnabled(false);
-			left.setEnabled(false);
-			down.setEnabled(false);
-			right.setEnabled(false);
-			start.setEnabled(true);
+	private int checkState() {
+		if (game.gameLost() || game.gameWon()) {
+			btnUp.setEnabled(false);
+			btnLeft.setEnabled(false);
+			btnDown.setEnabled(false);
+			btnRight.setEnabled(false);
+			btnStart.setEnabled(true);
 			ogreTextField.setEnabled(true);
 			guardComboBox.setEnabled(true);
-			gameStatuslbl.setText("You were caught!");
-			return -1;
+			
+			if (game.gameLost()) {
+				gameStatuslbl.setText("You were caught!");
+				return -1;
+			}
+			else {
+				gameStatuslbl.setText("You Escaped!!");
+				return 1;
+			}
 		}
-
-		else if(game.gameWon()) {
-			up.setEnabled(false);
-			left.setEnabled(false);
-			down.setEnabled(false);
-			right.setEnabled(false);
-			start.setEnabled(true);
-			ogreTextField.setEnabled(true);
-			guardComboBox.setEnabled(true);
-			gameStatuslbl.setText("You Escaped!!");
-
-			return 1;
-		}
-		else 
-			return 0;
+		return 0;
 	}
 
-	private void pressedKey(Game.Direction dir, JTextArea gameArea,JButton up, JButton left, JButton down, JButton right, JButton start ) {
+	private void pressedKey(Game.Direction dir) {
 		game.update(dir);
 		gameArea.setText(game.toString());
-		checkState(up,left,down,right, start);
+		checkState();
 
 	}
 
-	private void startGame(JTextArea gameArea,JButton btnUp, JButton btnLeft, JButton btnDown, JButton btnRight, JButton btnStart) {
+	private void startGame() {
 		int n = 0;
 		try {
 			n = Integer.parseUnsignedInt(ogreTextField.getText());
