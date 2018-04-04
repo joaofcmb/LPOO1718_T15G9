@@ -26,7 +26,7 @@ public class NewGameConfig {
 		initialise(mainFrame);
 	}
 
-	public void initialise(JFrame mainFrame)
+	private  void initialise(JFrame mainFrame)
 	{	
 		initFrame();
 		initButtons(mainFrame);
@@ -37,7 +37,7 @@ public class NewGameConfig {
 
 
 
-	public void initFrame()
+	private void initFrame()
 	{
 		frame.setResizable(false);
 		frame.setBounds(300, 300, 350, 220);
@@ -52,13 +52,21 @@ public class NewGameConfig {
 		btnStart = new JButton("Start Game");
 		btnStart.setBounds(191, 128, 135, 33);
 		btnStart.setFont(new Font("Courier New", Font.PLAIN, 15));
+
+		btnBack = new JButton("Back");
+		btnBack.setBounds(10, 130, 135, 29);
+		btnBack.setFont(new Font("Courier New", Font.PLAIN, 15));
+
 		btnStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int nOgres;
 				try {
 					nOgres = Integer.parseUnsignedInt(ogreTextField.getText());
+					if(nOgres > 5) {
+						throw new NumberFormatException();
+					}
 				} catch(NumberFormatException n) { 
-					JOptionPane.showMessageDialog(frame, "Enter a positive integer number.");
+					JOptionPane.showMessageDialog(frame, "Enter a positive integer number below 6.");
 					return;
 				}
 				Personality guardType;
@@ -79,9 +87,6 @@ public class NewGameConfig {
 			}
 		});
 
-		btnBack = new JButton("Back");
-		btnBack.setBounds(10, 130, 135, 29);
-		btnBack.setFont(new Font("Courier New", Font.PLAIN, 15));
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.dispose();
@@ -114,7 +119,7 @@ public class NewGameConfig {
 		guardComboBox.setEditable(false);
 	}
 
-	public void addToContentPane(){
+	private void addToContentPane(){
 
 		frame.getContentPane().add(btnBack);
 		frame.getContentPane().add(btnStart);

@@ -19,7 +19,7 @@ import javax.swing.SwingConstants;
 public class GameWindow {
 	private Game game;
 
-	private JFrame frame = new JFrame("Dungeon Keep");
+	private JFrame frame;
 	protected JPanel graphics;
 	private JLabel lblGameState;
 	private JButton btnUp, btnDown, btnLeft, btnRight, btnQuit;
@@ -37,6 +37,7 @@ public class GameWindow {
 	}
 
 	private void initFrame() {
+		frame = new JFrame("Dungeon Keep");
 		frame.setResizable(false);
 		frame.setBounds(100, 100, 837, 754);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -48,7 +49,7 @@ public class GameWindow {
 		graphics = new GameGraphics(game);
 		graphics.setLayout(null);
 		graphics.setBounds(10, 10, 600, 700);
-		graphics.setBackground(Color.LIGHT_GRAY);
+		graphics.setBackground(Color.GRAY);
 
 		lblGameState = new JLabel("Try to Escape!");
 		lblGameState.setHorizontalAlignment(SwingConstants.CENTER);
@@ -107,11 +108,7 @@ public class GameWindow {
 		btnQuit.addActionListener(
 				new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						MainMenu menu = new MainMenu();
-						menu.getFrame().setVisible(true);
-						menu.getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-						frame.dispose();
+						quitToMainMenu();
 					}
 				});
 	}
@@ -138,6 +135,10 @@ public class GameWindow {
 						}
 						case KeyEvent.VK_D: {
 							pressedKey(Game.Direction.RIGHT);
+							break;
+						}
+						case KeyEvent.VK_ESCAPE: {
+							quitToMainMenu();
 							break;
 						}
 						default:
@@ -171,6 +172,15 @@ public class GameWindow {
 		checkGameState();
 	}
 
+	private void quitToMainMenu() 
+	{
+		MainMenu menu = new MainMenu();
+		menu.getFrame().setVisible(true);
+		menu.getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		frame.dispose();
+	}
+
 	private void checkGameState()
 	{
 		if(game.gameLost()) {
@@ -197,5 +207,6 @@ public class GameWindow {
 	{
 		graphics.setEnabled(false);
 	}
+
 	public JFrame getFrame() {return frame;}
 }

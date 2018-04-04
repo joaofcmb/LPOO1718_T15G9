@@ -1,5 +1,6 @@
 package dkeep.gui;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -7,11 +8,11 @@ import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+//TODO  Add Background Images
 public class MainMenu {
 
 	private JFrame frame;
-	private JButton btnNewGame, btnExit;
+	private JButton btnNewGame, btnExit, btnLevelEditor;
 
 
 	/**
@@ -48,6 +49,7 @@ public class MainMenu {
 		frame.setResizable(false);
 		frame.setBounds(100, 100, 800, 650);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setBackground(Color.LIGHT_GRAY);
 		frame.getContentPane().setLayout(null);
 	}
 
@@ -55,11 +57,15 @@ public class MainMenu {
 	{
 		btnNewGame = new JButton("New Game");
 		btnNewGame.setFont(new Font("Courier New", Font.PLAIN, 15));
-		btnNewGame.setBounds(300, 64, 120, 50);
+		btnNewGame.setBounds(10, 433, 150, 50);
+
+		btnLevelEditor = new JButton("Level Editor");
+		btnLevelEditor.setFont(new Font("Courier New", Font.PLAIN, 15));
+		btnLevelEditor.setBounds(10, 493, 150, 50);
 
 		btnExit = new JButton("Exit");
 		btnExit.setFont(new Font("Courier New", Font.PLAIN, 15));
-		btnExit.setBounds(300, 521, 120, 50);
+		btnExit.setBounds(10, 553, 150, 50);
 
 		btnNewGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
@@ -67,6 +73,16 @@ public class MainMenu {
 				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				NewGameConfig ng = new NewGameConfig(frame);
 				ng.getFrame().setVisible(true);
+
+			}
+		});
+
+		btnLevelEditor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e)
+			{
+				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				LevelEditorConfig le = new LevelEditorConfig(frame);
+				le.getFrame().setVisible(true);
 
 			}
 		});
@@ -82,6 +98,7 @@ public class MainMenu {
 	{
 		frame.getContentPane().add(btnNewGame);
 		frame.getContentPane().add(btnExit);
+		frame.getContentPane().add(btnLevelEditor);
 	}
 
 	public JFrame getFrame() {return this.frame;}
