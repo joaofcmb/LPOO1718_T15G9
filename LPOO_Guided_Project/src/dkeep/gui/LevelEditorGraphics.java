@@ -7,6 +7,7 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
@@ -18,6 +19,7 @@ public class LevelEditorGraphics extends JPanel {
 	private LevelEditor lvlEditor;
 
 	private BufferedImage hero, wall, lDoor, uDoor, armedHero, akHero, key, ogre, guard, ogreClub;
+	private HashMap<String, BufferedImage> imageMap;
 
 	private int width, height;
 	public LevelEditorGraphics(int w, int h, LevelEditor le) 
@@ -43,14 +45,14 @@ public class LevelEditorGraphics extends JPanel {
 
 	private void loadImages()
 	{
+		imageMap = new HashMap<String, BufferedImage>();
 		System.out.println("Loading Images...");
 		try{
-
-			wall = ImageIO.read(new File("src/Images/Wall.png"));
-			lDoor = ImageIO.read(new File("src/Images/LockedDoor.png"));
-			armedHero = ImageIO.read(new File("src/Images/ArmedHero.png"));
-			key = ImageIO.read(new File("src/Images/Key.png"));
-			ogre = ImageIO.read(new File("src/Images/Ogre.png"));
+			imageMap.put("X", ImageIO.read(new File("src/Images/Wall.png")));
+			imageMap.put("I", ImageIO.read(new File("src/Images/LockedDoor.png")));
+			imageMap.put("A", ImageIO.read(new File("src/Images/ArmedHero.png")));
+			imageMap.put("k", ImageIO.read(new File("src/Images/Key.png")));
+			imageMap.put("O", ImageIO.read(new File("src/Images/Ogre.png")));
 
 		}catch(IOException e)
 		{
@@ -63,59 +65,15 @@ public class LevelEditorGraphics extends JPanel {
 	protected void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);
-		for(int j = 0; j < lvlEditor.getMap().length; j++) {
-			for(int i = 0; i < lvlEditor.getMap()[j].length; i++)
+		for(int j = 0; j < lvlEditor.getMap().length; j++) { 
+			for(int i = 0; i < lvlEditor.getMap()[j].length; i++) 
 			{
-				switch(lvlEditor.getMap()[j][i])
-				{
-				case 'P':{//Hero
-					g.drawImage(hero, i*SIZE, j*SIZE, SIZE, SIZE, null);	
-					break;
-				}
-				case 'X':{//Wall
-					g.drawImage(wall, i*SIZE, j*SIZE, SIZE, SIZE, null);
-					break;
-				}
-				case 'I':{//Locked Door
-					g.drawImage(lDoor, i*SIZE, j*SIZE, SIZE, SIZE, null);
-					break;
-				}
-				case 'S':{//Unlocked Door
-					g.drawImage(uDoor, i*SIZE, j*SIZE, SIZE, SIZE, null);
-					break;
-				}
-				case 'A':{//Armed Hero
-					g.drawImage(armedHero, i*SIZE, j*SIZE, SIZE, SIZE, null);	
-					break;
-				}
-				case 'K':{//Armed Hero
-					g.drawImage(akHero, i*SIZE, j*SIZE, SIZE, SIZE, null);	
-					break;
-				}
-				case 'G':{//Guard
-					g.drawImage(guard, i*SIZE, j*SIZE, SIZE, SIZE, null);
-					break;
-				}
-				case 'O':{//Ogre
-					g.drawImage(ogre, i*SIZE, j*SIZE, SIZE, SIZE, null);
-					break;
-				}
-				case '*':{//Ogre Club
-					g.drawImage(ogreClub, i*SIZE, j*SIZE, SIZE, SIZE, null);
-					break;
-				}
-				case 'k':{//key/lever
-					g.drawImage(key, i*SIZE, j*SIZE, SIZE, SIZE, null);
-					break;
-				}
-				default:{//White Space
-					g.setColor(Color.BLACK);
-				}
-				}
+				g.drawImage(imageMap.get(Character.toString(lvlEditor.getMap()[j][i])), i*SIZE, j*SIZE, SIZE, SIZE, null);
 			}
 		}
 		updateGraphics();
 	}
+	
 	private void initMouse()
 	{
 		this.addMouseListener(
