@@ -8,19 +8,9 @@ import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.BoxLayout;
-import javax.swing.SwingConstants;
 import java.awt.Component;
-import java.awt.FlowLayout;
-import java.awt.BorderLayout;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
 import java.awt.GridLayout;
-import java.awt.CardLayout;
-import javax.swing.JLabel;
+
 //TODO  Add Background Images
 public class MainMenu {
 
