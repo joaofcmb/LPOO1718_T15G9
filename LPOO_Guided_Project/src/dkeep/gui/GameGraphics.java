@@ -53,6 +53,8 @@ public class GameGraphics extends JPanel {
 			imageMap.put("G", ImageIO.read(new File("src/Images/Guard.png")));
 			imageMap.put("O", ImageIO.read(new File("src/Images/Ogre.png")));
 			imageMap.put("*", ImageIO.read(new File("src/Images/OgreClub.png")));
+			imageMap.put("$", ImageIO.read(new File("src/Images/KeyHidden.png")));
+
 		} catch(IOException e)
 		{
 			System.out.println("An error occured while loading Images.");

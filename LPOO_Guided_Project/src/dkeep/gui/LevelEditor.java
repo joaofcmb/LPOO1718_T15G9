@@ -14,10 +14,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import dkeep.logic.CustomMap;
+
 public class LevelEditor {
 	private JFrame frame;
 	private JLabel lblInstruction;
-	private JButton btnHero, btnDoor, btnOgre, btnKey, btnQuit, btnWall;
+	private JButton btnHero, btnDoor, btnOgre, btnKey, btnQuit, btnWall, btnSaveCustomMap;
 	private JPanel graphics;
 
 	private int width, height, nOgres;
@@ -29,7 +31,7 @@ public class LevelEditor {
 	public LevelEditor(int w, int h, int o) {
 		width = w;
 		height = h;
-		nOgres = o;
+		o = nOgres;
 		customMap = new char[width][height];
 		initialise();
 	}
@@ -50,7 +52,7 @@ public class LevelEditor {
 		frame.getContentPane().setLayout(null);
 	}
 
-	public void initMap()
+	private void initMap()
 	{
 		for(int i = 0; i < customMap.length; i++)
 		{
@@ -68,9 +70,9 @@ public class LevelEditor {
 		graphics.setBackground(Color.GRAY);
 
 		lblInstruction = new JLabel("<html>Select an element.</html>");
-		lblInstruction.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblInstruction.setHorizontalAlignment(SwingConstants.LEFT);
 		lblInstruction.setFont(new Font("Courier New", Font.PLAIN, 17));
-		lblInstruction.setBounds(558, 26, 140, 202);
+		lblInstruction.setBounds(561, 5, 263, 141);
 
 		initKeys();
 	}
@@ -82,31 +84,33 @@ public class LevelEditor {
 		initBtnOgre();
 		initBtnKey();
 		initBtnQuit();
+		initBtnSaveCustomMap();
 	}
 
 	private void initBtnHero()
 	{
-
 		btnHero = new JButton("1. Hero");
 		btnHero.setFont(new Font("Courier New", Font.PLAIN, 15));
-		btnHero.setBounds(708, 26, 116, 32);
+		btnHero.setBounds(561, 156, 116, 32);
 		btnListener(btnHero, 'A', "the Hero");
-
 	}
 
 	private void initBtnDoor()
 	{
-
 		btnDoor = new JButton("5. Door");
+		btnDoor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		btnDoor.setFont(new Font("Courier New", Font.PLAIN, 15));
-		btnDoor.setBounds(708, 196, 116, 32);
+		btnDoor.setBounds(561, 240, 116, 32);
 		btnListener(btnDoor, 'I', "a Door");
 	}
 	private void initBtnWall()
 	{
 		btnWall = new JButton("2. Wall");
 		btnWall.setFont(new Font("Courier New", Font.PLAIN, 15));
-		btnWall.setBounds(708, 68, 116, 32);
+		btnWall.setBounds(708, 156, 116, 32);
 		btnListener(btnWall, 'X', "a Wall");
 	}
 
@@ -114,7 +118,7 @@ public class LevelEditor {
 	{
 		btnOgre = new JButton("3. Ogre");
 		btnOgre.setFont(new Font("Courier New", Font.PLAIN, 15));
-		btnOgre.setBounds(708, 112, 116, 32);
+		btnOgre.setBounds(561, 198, 116, 32);
 		btnListener(btnOgre, 'O', "an Ogre");
 
 	}
@@ -122,7 +126,7 @@ public class LevelEditor {
 	{
 		btnKey = new JButton("4. Key");
 		btnKey.setFont(new Font("Courier New", Font.PLAIN, 15));
-		btnKey.setBounds(708, 154, 116, 32);
+		btnKey.setBounds(708, 198, 116, 32);
 		btnListener(btnKey, 'k', "a Key");
 
 	}
@@ -135,6 +139,56 @@ public class LevelEditor {
 				new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						quitToMainMenu();					}
+				});
+	}
+
+	private void initBtnSaveCustomMap()
+	{
+		btnSaveCustomMap = new JButton("<html>Save Custom Map</html>");
+		btnSaveCustomMap.setVerticalAlignment(SwingConstants.TOP);
+		btnSaveCustomMap.setFont(new Font("Courier New", Font.PLAIN, 15));
+		btnSaveCustomMap.setBounds(708, 243, 116, 63);
+
+		btnSaveCustomMap.addActionListener(
+				new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						if(checkElements())
+						{
+							int xPlayer = 0, yPlayer = 0;
+							int xOgre = 0, yOgre = 0;
+							int xKey = 0, yKey = 0;
+							for(int i = 0; i < customMap.length; i++)
+								for(int j = 0; j < customMap[i].length; j++)
+								{
+									switch(customMap[i][j])
+									{
+									case 'A': 
+									{
+										xPlayer = i;
+										yPlayer = j;
+										customMap[i][j] = ' ';
+										break;
+									}
+									case 'O': 
+									{
+										xOgre = i;
+										yOgre = j;
+										customMap[i][j] = ' ';
+										break;
+									}
+									case 'k':
+									{
+										xKey = i;
+										yKey = j;
+										customMap[i][j] = ' ';
+										break;
+									}
+									}
+								}
+							CustomMap cMap = new CustomMap(xPlayer, yPlayer, xOgre, yOgre, xKey, yKey, customMap, nOgres);
+							//TODO save cMap
+						}
+					}
 				});
 	}
 
@@ -230,6 +284,8 @@ public class LevelEditor {
 		frame.getContentPane().add(btnQuit);
 		frame.getContentPane().add(btnWall);
 
+		frame.getContentPane().add(btnSaveCustomMap);
+
 		frame.getContentPane().add(lblInstruction);
 	}
 
@@ -243,7 +299,6 @@ public class LevelEditor {
 		{
 			checkElement(i-1,j-1, -1);
 			customMap[i-1][j-1] = ' ';
-
 		}
 		else if (customMap[i-1][j-1]  != ' ') //if you want to replace a cell
 		{
@@ -256,10 +311,9 @@ public class LevelEditor {
 	public boolean checkElements(){
 
 		if ( !checkDynamic() || nDoorsPlaced == 0 || nWallsPlaced == 0 || nKeysPlaced == 0){
-			lblInstruction.setText("There's, at least, a missing element to the map!");
+			lblInstruction.setText("<html>There's, at least, a missing element to the map!</html>");
 			return false;
 		}		
-
 		return checkNumbElements();
 	}
 
@@ -270,21 +324,21 @@ public class LevelEditor {
 	}
 	public boolean checkNumbElements(){
 		if (nOgresPlaced > 1){
-			lblInstruction.setText("Place only ONE Ogre");
+			lblInstruction.setText("<html>Place only ONE Ogre</html>");
 			return false;
 		}	
 		if (nHeroesPlaced > 1){
-			lblInstruction.setText("Place only ONE Hero");
+			lblInstruction.setText("<html>Place only ONE Hero</html>");
 			return false;
 		}	
 
 		if (nKeysPlaced > 1){
-			lblInstruction.setText("Place only ONE Key");
+			lblInstruction.setText("<html>Place only ONE Key</html>");
 			return false;
 		}		
 
 		if (nDoorsPlaced > 1){
-			lblInstruction.setText("Place only ONE Door");
+			lblInstruction.setText("<html>Place only ONE Door</html>");
 			return false;
 		}	
 		return true;
