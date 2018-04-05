@@ -67,81 +67,85 @@ public class LevelEditor {
 		graphics.setBounds(10, 10, width*LevelEditorGraphics.SIZE, height*LevelEditorGraphics.SIZE);
 		graphics.setBackground(Color.GRAY);
 
-		lblInstruction = new JLabel("Select an element.");
-		lblInstruction.setHorizontalAlignment(SwingConstants.CENTER);
+		lblInstruction = new JLabel("<html>Select an element.</html>");
+		lblInstruction.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblInstruction.setFont(new Font("Courier New", Font.PLAIN, 17));
-		lblInstruction.setBounds(649, 283, 165, 46);
+		lblInstruction.setBounds(558, 26, 140, 202);
 
 		initKeys();
 	}
 
 	private void initButtons() {
+		initBtnHero();
+		initBtnDoor();
+		initBtnDoor();
+		initBtnOgre();
+		initBtnKey();
+		initBtnQuit();
+	}
+
+	private void initBtnHero()
+	{
+
 		btnHero = new JButton("1. Hero");
 		btnHero.setFont(new Font("Courier New", Font.PLAIN, 15));
 		btnHero.setBounds(708, 26, 116, 32);
+		btnListener(btnHero, 'A', "the Hero");
+
+	}
+
+	private void initBtnDoor()
+	{
 
 		btnDoor = new JButton("5. Door");
 		btnDoor.setFont(new Font("Courier New", Font.PLAIN, 15));
 		btnDoor.setBounds(708, 196, 116, 32);
-
-		btnOgre = new JButton("3. Ogre");
-		btnOgre.setFont(new Font("Courier New", Font.PLAIN, 15));
-		btnOgre.setBounds(708, 112, 116, 32);
-
-		btnKey = new JButton("4. Key");
-		btnKey.setFont(new Font("Courier New", Font.PLAIN, 15));
-		btnKey.setBounds(708, 154, 116, 32);
-
-		btnQuit = new JButton("QUIT");
-		btnQuit.setFont(new Font("Courier New", Font.PLAIN, 15));
-		btnQuit.setBounds(718, 675, 106, 32);
-
+		btnListener(btnDoor, 'I', "a Door");
+	}
+	private void initBtnWall()
+	{
 		btnWall = new JButton("2. Wall");
 		btnWall.setFont(new Font("Courier New", Font.PLAIN, 15));
 		btnWall.setBounds(708, 68, 116, 32);
+		btnListener(btnWall, 'X', "a Wall");
+	}
 
-		btnHero.addActionListener(
-				new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						selection  = 'A';
-						lblInstruction.setText("Choose where to place the Hero");
-					}
-				});
-		btnDoor.addActionListener(
-				new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						selection  = 'I';
-						lblInstruction.setText("Choose where to place a Door");
+	private void initBtnOgre()
+	{
+		btnOgre = new JButton("3. Ogre");
+		btnOgre.setFont(new Font("Courier New", Font.PLAIN, 15));
+		btnOgre.setBounds(708, 112, 116, 32);
+		btnListener(btnOgre, 'O', "an Ogre");
 
-					}
-				});
-		btnWall.addActionListener(
-				new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						selection  = 'X';
-						lblInstruction.setText("Choose where to place a Wall");
-					}
-				});
+	}
+	private void initBtnKey()
+	{
+		btnKey = new JButton("4. Key");
+		btnKey.setFont(new Font("Courier New", Font.PLAIN, 15));
+		btnKey.setBounds(708, 154, 116, 32);
+		btnListener(btnKey, 'k', "a Key");
 
-		btnOgre.addActionListener(
-				new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						selection  = 'O';
-						lblInstruction.setText("Choose where to place an Ogre");
-					}
-				});
-		btnKey.addActionListener(
-				new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						selection  = 'k';
-						lblInstruction.setText("Choose where to place a Key");
-					}
-				});
-
+	}
+	private void initBtnQuit()
+	{
+		btnQuit = new JButton("QUIT");
+		btnQuit.setFont(new Font("Courier New", Font.PLAIN, 15));
+		btnQuit.setBounds(718, 675, 106, 32);
 		btnQuit.addActionListener(
 				new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						quitToMainMenu();					}
+				});
+	}
+
+	private void btnListener(JButton btn, char symbol, String name)
+	{
+		btn.addActionListener(
+				new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						selection  = symbol;
+						lblInstruction.setText("<html>Choose where to place " + name +".</html>");
+					}
 				});
 	}
 
@@ -155,27 +159,27 @@ public class LevelEditor {
 						{
 						case KeyEvent.VK_1: {//Hero
 							selection  = 'A';
-							lblInstruction.setText("Choose where to place the Hero");
+							lblInstruction.setText("<html>Choose where to place the Hero.</html>");
 							break;
 						}
 						case KeyEvent.VK_2: {//Wall
 							selection  = 'X';
-							lblInstruction.setText("Choose where to place a Wall");
+							lblInstruction.setText("<html>Choose where to place a Wall.</html>");
 							break;
 						}
 						case KeyEvent.VK_3: {//Ogre
 							selection  = 'O';
-							lblInstruction.setText("Choose where to place an Ogre");
+							lblInstruction.setText("<html>Choose where to place an Ogre.</html>");
 							break;
 						}
 						case KeyEvent.VK_4: {//Key
 							selection  = 'k';
-							lblInstruction.setText("Choose where to place a Key");
+							lblInstruction.setText("<html>Choose where to place a Key.</html>");
 							break;
 						}
 						case KeyEvent.VK_5: {//Door
 							selection  = 'I';
-							lblInstruction.setText("Choose where to place a Key");
+							lblInstruction.setText("<html>Choose where to place a Key.</html>");
 							break;
 						}
 						case KeyEvent.VK_ESCAPE: {
@@ -228,7 +232,7 @@ public class LevelEditor {
 
 		frame.getContentPane().add(lblInstruction);
 	}
-	
+
 	public void mouseHandler(int i, int j) {
 		if (customMap[i-1][j-1] == ' ' && selection != ' ') //if cell is empty
 		{
@@ -248,17 +252,17 @@ public class LevelEditor {
 			checkElement(i-1,j-1,1);
 		}
 	}
-	
+
 	public boolean checkElements(){
 
 		if ( !checkDynamic() || nDoorsPlaced == 0 || nWallsPlaced == 0 || nKeysPlaced == 0){
 			lblInstruction.setText("There's, at least, a missing element to the map!");
 			return false;
 		}		
-		
+
 		return checkNumbElements();
 	}
-	
+
 	public boolean checkDynamic(){
 		if( nOgresPlaced == 0 || nHeroesPlaced == 0)
 			return false;
@@ -306,21 +310,21 @@ public class LevelEditor {
 				return false;	
 		return true;
 	}
-	
+
 	public boolean checkUpper(int i){
 		if(customMap[i][0] == 'O'|| customMap[i][0] == 'A' || customMap[i][0] == 'k' ||customMap[i][0] == ' ')
 			return false;
 		return true;
 	}
-	
-	
+
+
 	public boolean lowerBorder(){
 		for(int i = 0; i < width;i++)
 			if (!checkLower(i))
 				return false;
 		return true;
 	}
-	
+
 	public boolean checkLower(int i){
 		if(customMap[i][height-1] == 'O'||customMap[i][height-1] == 'A' || customMap[i][height-1] == 'k' ||customMap[i][height-1] == ' ')
 			return false;
@@ -333,25 +337,25 @@ public class LevelEditor {
 				return false;	
 		return true;
 	}
-	
+
 	public boolean checkLeft(int j){
 		if(customMap[0][j] == 'O' || customMap[0][j] == 'A'  || customMap[0][j] == 'k' || customMap[0][j] == ' ')
 			return false;	
-	return true;
-		
+		return true;
+
 	}
-	
+
 	public boolean rightBorder(){
 		for(int j = 0; j < height;j++)
 			if (!checkRight(j))
-			return false;		
+				return false;		
 		return true;
 	}
 	public boolean checkRight(int j){
 		if(customMap[width-1][j] == 'O' || customMap[width-1][j] == 'A'  || customMap[width-1][j] == 'k' || customMap[width-1][j] == ' ')					
 			return false;		
-	return true;
-		
+		return true;
+
 	}
 
 	public JFrame getFrame() {return frame;}

@@ -63,11 +63,9 @@ public class LevelEditorGraphics extends JPanel {
 	protected void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);
-		g.setColor(Color.BLACK);
 		for(int j = 0; j < lvlEditor.getMap().length; j++) { 
 			for(int i = 0; i < lvlEditor.getMap()[j].length; i++) 
 			{
-				g.fillRect(i*SIZE, j*SIZE, SIZE, SIZE);
 				g.drawImage(imageMap.get(Character.toString(lvlEditor.getMap()[j][i])), i*SIZE, j*SIZE, SIZE, SIZE, null);
 			}
 		}

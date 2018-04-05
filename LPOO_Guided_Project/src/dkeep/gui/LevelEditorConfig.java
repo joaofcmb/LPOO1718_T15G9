@@ -50,13 +50,16 @@ public class LevelEditorConfig {
 
 	private void initButtons(JFrame mainFrame)
 	{
+		initBtnContinue(mainFrame);
+		initBtnBack();
+	}
+
+
+	private void initBtnContinue(JFrame mainFrame)
+	{
 		btnContinue = new JButton("Continue");
 		btnContinue.setBounds(161, 101, 135, 33);
 		btnContinue.setFont(new Font("Courier New", Font.PLAIN, 15));
-
-		btnBack = new JButton("Back");
-		btnBack.setBounds(0, 103, 135, 29);
-		btnBack.setFont(new Font("Courier New", Font.PLAIN, 15));
 
 		btnContinue.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -70,7 +73,7 @@ public class LevelEditorConfig {
 					JOptionPane.showMessageDialog(frame, "Enter a positive integer number below 11 for Width.");
 					return;
 				}
-				
+
 				try {
 					height = Integer.parseUnsignedInt(txtHeight.getText());
 					if(height > 10) {
@@ -90,15 +93,22 @@ public class LevelEditorConfig {
 					JOptionPane.showMessageDialog(frame, "Enter a positive integer number below 6 for Ogre Number.");
 					return;
 				}
-				
+
 				LevelEditor lvle = new LevelEditor(width, height, nOgres);
 				lvle.getFrame().setVisible(true);
 				lvle.getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				
+
 				frame.dispose();
 				mainFrame.dispose();
 			}
 		});
+	}
+
+	private void initBtnBack()
+	{
+		btnBack = new JButton("Back");
+		btnBack.setBounds(0, 103, 135, 29);
+		btnBack.setFont(new Font("Courier New", Font.PLAIN, 15));
 
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -109,36 +119,60 @@ public class LevelEditorConfig {
 
 	private void initOtherObjects()
 	{
+		initLblWidth();
+		initTxtWidth();
+		initLblHeight();
+		initTxtHeight();
+		initLblOgre();
+		initTxtOgre();
+	}
 
-		lblOgre = new JLabel("Number of Ogres");
-		lblOgre.setFont(new Font("Courier New", Font.PLAIN, 15));
-		lblOgre.setBounds(10, 59, 141, 22);
-
-		txtOgre = new JTextField("1");
-		txtOgre.setBounds(161, 59, 45, 22);
-		txtOgre.setFont(new Font("Courier New", Font.PLAIN, 15));
-		txtOgre.setBackground(Color.WHITE);
-		txtOgre.setColumns(1);
-
-		lblHeight = new JLabel("Height");
-		lblHeight.setFont(new Font("Courier New", Font.PLAIN, 15));
-		lblHeight.setBounds(161, 10, 59, 29);
-
+	private void initLblWidth()
+	{
 		lblWidth = new JLabel("Width");
 		lblWidth.setFont(new Font("Courier New", Font.PLAIN, 15));
-		lblWidth.setBounds(10, 10, 59, 29);
+		lblWidth.setBounds(10, 10, 59, 29);			
+	}
 
-		txtHeight = new JTextField("1");
-		txtHeight.setFont(new Font("Courier New", Font.PLAIN, 15));
-		txtHeight.setColumns(1);
-		txtHeight.setBackground(Color.WHITE);
-		txtHeight.setBounds(230, 13, 45, 22);
-
+	private void initTxtWidth()
+	{
 		txtWidth = new JTextField("1");
 		txtWidth.setFont(new Font("Courier New", Font.PLAIN, 15));
 		txtWidth.setColumns(1);
 		txtWidth.setBackground(Color.WHITE);
 		txtWidth.setBounds(79, 13, 45, 22);
+	}
+
+	private void initLblHeight()
+	{
+		lblHeight = new JLabel("Height");
+		lblHeight.setFont(new Font("Courier New", Font.PLAIN, 15));
+		lblHeight.setBounds(161, 10, 59, 29);
+	}
+
+	private void initTxtHeight()
+	{
+		txtHeight = new JTextField("1");
+		txtHeight.setFont(new Font("Courier New", Font.PLAIN, 15));
+		txtHeight.setColumns(1);
+		txtHeight.setBackground(Color.WHITE);
+		txtHeight.setBounds(230, 13, 45, 22);
+	}
+
+	private void initLblOgre()
+	{
+		lblOgre = new JLabel("Number of Ogres");
+		lblOgre.setFont(new Font("Courier New", Font.PLAIN, 15));
+		lblOgre.setBounds(10, 59, 141, 22);
+	}
+
+	private void initTxtOgre()
+	{
+		txtOgre = new JTextField("1");
+		txtOgre.setBounds(161, 59, 45, 22);
+		txtOgre.setFont(new Font("Courier New", Font.PLAIN, 15));
+		txtOgre.setBackground(Color.WHITE);
+		txtOgre.setColumns(1);
 	}
 
 	public void addToContentPane(){

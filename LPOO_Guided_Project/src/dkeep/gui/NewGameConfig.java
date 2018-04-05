@@ -49,13 +49,15 @@ public class NewGameConfig {
 
 	private void initButtons(JFrame mainFrame)
 	{
+		initBtnStart(mainFrame);
+		initBtnBack();
+	}
+
+	private void initBtnStart(JFrame mainFrame)
+	{
 		btnStart = new JButton("Start Game");
 		btnStart.setBounds(191, 128, 135, 33);
 		btnStart.setFont(new Font("Courier New", Font.PLAIN, 15));
-
-		btnBack = new JButton("Back");
-		btnBack.setBounds(10, 130, 135, 29);
-		btnBack.setFont(new Font("Courier New", Font.PLAIN, 15));
 
 		btnStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -86,6 +88,13 @@ public class NewGameConfig {
 				mainFrame.dispose();
 			}
 		});
+	}
+
+	private void initBtnBack()
+	{
+		btnBack = new JButton("Back");
+		btnBack.setBounds(10, 130, 135, 29);
+		btnBack.setFont(new Font("Courier New", Font.PLAIN, 15));
 
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -96,20 +105,37 @@ public class NewGameConfig {
 
 	private void initOtherObjects()
 	{
+		initGuardLabel();
+		initOgreLabel();
+		initOgreTextField();
+		initGuardComboBox();
+	}
+
+	private void initGuardLabel()
+	{
 		guardLabel = new JLabel("Guard's Personality");
 		guardLabel.setBounds(10, 20, 178, 29);
 		guardLabel.setFont(new Font("Courier New", Font.PLAIN, 15));
+	}
 
+	private void initOgreLabel()
+	{
 		ogreLabel = new JLabel("Number of Ogres");
 		ogreLabel.setFont(new Font("Courier New", Font.PLAIN, 15));
 		ogreLabel.setBounds(10, 59, 141, 21);
+	}
 
+	private void initOgreTextField()
+	{
 		ogreTextField = new JTextField("1");
 		ogreTextField.setBounds(191, 58, 135, 22);
 		ogreTextField.setFont(new Font("Courier New", Font.PLAIN, 15));
 		ogreTextField.setBackground(Color.WHITE);
 		ogreTextField.setColumns(1);
+	}
 
+	private void initGuardComboBox()
+	{
 		guardComboBox = new JComboBox<String>();
 		guardComboBox.setBounds(191, 23, 135, 22);
 		guardComboBox.setFont(new Font("Courier New", Font.PLAIN, 15));

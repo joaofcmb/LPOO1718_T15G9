@@ -60,55 +60,71 @@ public class GameWindow {
 	}
 
 	private void initButtons() {
+		initBtnUp();
+		initBtnDown();
+		initBtnLeft();
+		initBtnRight();
+		initBtnQuit();
+	}
+	private void initBtnUp()
+	{
 		btnUp = new JButton("UP");
 		btnUp.setFont(new Font("Courier New", Font.PLAIN, 15));
 		btnUp.setBounds(669, 266, 91, 32);
+		btnListener(btnUp, Game.Direction.UP);
+	}
+
+	private void initBtnDown()
+	{
 
 		btnDown = new JButton("DOWN");
 		btnDown.setFont(new Font("Courier New", Font.PLAIN, 15));
 		btnDown.setBounds(669, 361, 91, 32);
 
+		btnListener(btnDown, Game.Direction.DOWN);
+	}
+
+	private void initBtnLeft()
+	{
+
 		btnLeft = new JButton("LEFT");
 		btnLeft.setFont(new Font("Courier New", Font.PLAIN, 15));
 		btnLeft.setBounds(622, 319, 91, 32);
+
+		btnListener(btnLeft, Game.Direction.LEFT);
+	}
+
+	private void initBtnRight()
+	{
 
 		btnRight = new JButton("RIGHT");
 		btnRight.setFont(new Font("Courier New", Font.PLAIN, 15));
 		btnRight.setBounds(723, 319, 91, 32);
 
+		btnListener(btnRight, Game.Direction.RIGHT);
+	}
+
+	private void initBtnQuit()
+	{
 		btnQuit = new JButton("QUIT");
 		btnQuit.setFont(new Font("Courier New", Font.PLAIN, 15));
 		btnQuit.setBounds(669, 642, 91, 32);
-
-		btnUp.addActionListener(
-				new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						pressedKey(Game.Direction.UP);
-					}
-				});
-		btnDown.addActionListener(
-				new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						pressedKey(Game.Direction.DOWN);
-					}
-				});
-		btnLeft.addActionListener(
-				new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						pressedKey(Game.Direction.LEFT);
-					}
-				});
-		btnRight.addActionListener(
-				new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						pressedKey(Game.Direction.RIGHT);
-					}
-				});
 
 		btnQuit.addActionListener(
 				new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						quitToMainMenu();
+					}
+				});
+
+	}
+
+	private void btnListener(JButton btn, Game.Direction dir)
+	{
+		btn.addActionListener(
+				new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						pressedKey(dir);
 					}
 				});
 	}
