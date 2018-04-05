@@ -4,9 +4,12 @@ public class Game {
 	public enum Personality {ROOKIE, DRUNK, SUSPICIOUS, STATIC}
 	public enum GameState {DEFAULT, NEXT_LEVEL, GAME_OVER, VICTORY}
 	public enum Direction {UP, LEFT, DOWN, RIGHT}
+	
 	private GameState state = GameState.DEFAULT;
 	
 	private Map map;
+	
+	private int nOgres = 1;
 	
 	public Game(Map map) {
 		this.map = map;
@@ -18,13 +21,13 @@ public class Game {
 	
 	public Game(int nOgres, Personality type)
 	{
-		this(new PrisonLevel());
-		//TODO implement with remaining parameters
+		this.nOgres = nOgres;
+		this.map = new PrisonLevel(type);
 	}
 	
 	private void nextLevel() {
 		if (map instanceof PrisonLevel)
-			map = new CrazyOgreLevel();
+			map = new CrazyOgreLevel(nOgres);
 		else if (map instanceof CrazyOgreLevel)
 			state = GameState.VICTORY;
 	}
