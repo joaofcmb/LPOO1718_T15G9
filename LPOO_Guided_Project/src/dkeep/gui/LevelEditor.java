@@ -14,8 +14,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import dkeep.logic.CustomMap;
-
 public class LevelEditor {
 	private JFrame frame;
 	private JLabel lblInstruction;
@@ -55,12 +53,8 @@ public class LevelEditor {
 	private void initMap()
 	{
 		for(int i = 0; i < customMap.length; i++)
-		{
 			for(int j = 0; j < customMap[i].length; j++)
-			{
 				customMap[i][j] = ' ';
-			}
-		}
 	}
 
 	private void initOtherObjects() {
@@ -98,10 +92,6 @@ public class LevelEditor {
 	private void initBtnDoor()
 	{
 		btnDoor = new JButton("5. Door");
-		btnDoor.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
 		btnDoor.setFont(new Font("Courier New", Font.PLAIN, 15));
 		btnDoor.setBounds(561, 240, 116, 32);
 		btnListener(btnDoor, 'I', "a Door");
@@ -138,7 +128,7 @@ public class LevelEditor {
 		btnQuit.addActionListener(
 				new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						quitToMainMenu();					}
+						quitToMainMenu();}
 				});
 	}
 
@@ -153,40 +143,8 @@ public class LevelEditor {
 				new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						if(checkElements())
-						{
-							int xPlayer = 0, yPlayer = 0;
-							int xOgre = 0, yOgre = 0;
-							int xKey = 0, yKey = 0;
-							for(int i = 0; i < customMap.length; i++)
-								for(int j = 0; j < customMap[i].length; j++)
-								{
-									switch(customMap[i][j])
-									{
-									case 'A': 
-									{
-										xPlayer = i;
-										yPlayer = j;
-										customMap[i][j] = ' ';
-										break;
-									}
-									case 'O': 
-									{
-										xOgre = i;
-										yOgre = j;
-										customMap[i][j] = ' ';
-										break;
-									}
-									case 'k':
-									{
-										xKey = i;
-										yKey = j;
-										customMap[i][j] = ' ';
-										break;
-									}
-									}
-								}
-							CustomMap cMap = new CustomMap(xPlayer, yPlayer, xOgre, yOgre, xKey, yKey, customMap, nOgres);
-							//TODO save cMap
+						{	
+							//TODO save cMap with nOgres
 						}
 					}
 				});
@@ -198,7 +156,7 @@ public class LevelEditor {
 				new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						selection  = symbol;
-						lblInstruction.setText("<html>Choose where to place " + name +".</html>");
+						setInstruction("Choose where to place " + name +".");
 					}
 				});
 	}
@@ -213,27 +171,27 @@ public class LevelEditor {
 						{
 						case KeyEvent.VK_1: {//Hero
 							selection  = 'A';
-							lblInstruction.setText("<html>Choose where to place the Hero.</html>");
+							setInstruction("Choose where to place the Hero.");
 							break;
 						}
 						case KeyEvent.VK_2: {//Wall
 							selection  = 'X';
-							lblInstruction.setText("<html>Choose where to place a Wall.</html>");
+							setInstruction("Choose where to place a Wall.");
 							break;
 						}
 						case KeyEvent.VK_3: {//Ogre
 							selection  = 'O';
-							lblInstruction.setText("<html>Choose where to place an Ogre.</html>");
+							setInstruction("Choose where to place an Ogre.");
 							break;
 						}
 						case KeyEvent.VK_4: {//Key
 							selection  = 'k';
-							lblInstruction.setText("<html>Choose where to place a Key.</html>");
+							setInstruction("Choose where to place a Key.");
 							break;
 						}
 						case KeyEvent.VK_5: {//Door
 							selection  = 'I';
-							lblInstruction.setText("<html>Choose where to place a Key.</html>");
+							setInstruction("Choose where to place a Key.");
 							break;
 						}
 						case KeyEvent.VK_ESCAPE: {
@@ -258,19 +216,6 @@ public class LevelEditor {
 		menu.getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		frame.dispose();
-	}
-
-	public void checkElement(int x, int y, int inc){
-		if (customMap[x][y] == 'O')
-			nOgresPlaced += inc;
-		else if (customMap[x][y] == 'A')
-			nHeroesPlaced+= inc;
-		else if (customMap[x][y] == 'k')
-			nKeysPlaced+= inc;
-		else if (customMap[x][y] == 'X')
-			nWallsPlaced+= inc;
-		else if(customMap[x][y] == 'I')
-			nDoorsPlaced+= inc;
 	}
 
 	private void addToContentPane()
@@ -307,111 +252,119 @@ public class LevelEditor {
 			checkElement(i-1,j-1,1);
 		}
 	}
+	
+	public void checkElement(int x, int y, int inc){
+		if (customMap[x][y] == 'O')
+			nOgresPlaced += inc;
+		else if (customMap[x][y] == 'A')
+			nHeroesPlaced+= inc;
+		else if (customMap[x][y] == 'k')
+			nKeysPlaced+= inc;
+		else if (customMap[x][y] == 'X')
+			nWallsPlaced+= inc;
+		else if(customMap[x][y] == 'I')
+			nDoorsPlaced+= inc;
+	}
 
 	public boolean checkElements(){
-
-		if ( !checkDynamic() || nDoorsPlaced == 0 || nWallsPlaced == 0 || nKeysPlaced == 0){
-			lblInstruction.setText("<html>There's, at least, a missing element to the map!</html>");
+		if ( nOgresPlaced == 0 || nHeroesPlaced == 0 || nDoorsPlaced == 0 || nWallsPlaced == 0 || nKeysPlaced == 0){
+			setInstruction("There's, at least, a missing element to the map!");
 			return false;
 		}		
-		return checkNumbElements();
+		return checkNumberOfElements();
 	}
 
-	public boolean checkDynamic(){
-		if( nOgresPlaced == 0 || nHeroesPlaced == 0)
-			return false;
-		return true;
-	}
-	public boolean checkNumbElements(){
+	public boolean checkNumberOfElements(){
 		if (nOgresPlaced > 1){
-			lblInstruction.setText("<html>Place only ONE Ogre</html>");
+			setInstruction("Place only ONE Ogre");
 			return false;
 		}	
 		if (nHeroesPlaced > 1){
-			lblInstruction.setText("<html>Place only ONE Hero</html>");
+			setInstruction("Place only ONE Hero");
 			return false;
 		}	
 
 		if (nKeysPlaced > 1){
-			lblInstruction.setText("<html>Place only ONE Key</html>");
+			setInstruction("Place only ONE Key");
 			return false;
 		}		
 
 		if (nDoorsPlaced > 1){
-			lblInstruction.setText("<html>Place only ONE Door</html>");
+			setInstruction("Place only ONE Door");
 			return false;
 		}	
 		return true;
 	}
 
 	public boolean checkCorners(){
-		if (customMap[0][0] == 'I' || customMap[width-1][0] == 'I' || customMap[0][height-1] == 'I' || customMap[width-1][height-1] == 'I')
-			return false;
-		return true;
-
+		if (customMap[0][0] == 'X' || customMap[width-1][0] == 'X' || customMap[0][height-1] == 'X' || customMap[width-1][height-1] == 'X')
+			return true;
+		return false;
 	}
 
 	public boolean checkBorders(){
-		if (!upperBorder() || !lowerBorder() || !leftBorder() || !rightBorder())
-			return false;		
-		return true;
-
+		if (checkUpperBorder() && checkLowerBorder() && checkLeftBorder() && checkRightBorder())
+			return true;		
+		setInstruction("Borders must have only doors and walls");	
+		return false;
 	}
 
-	public boolean upperBorder(){
+	public boolean checkUpperBorder(){
 		for(int i = 0; i < width;i++)
-			if (!checkUpper(i))
+			if (!checkUpperCell(i))
 				return false;	
 		return true;
 	}
 
-	public boolean checkUpper(int i){
-		if(customMap[i][0] == 'O'|| customMap[i][0] == 'A' || customMap[i][0] == 'k' ||customMap[i][0] == ' ')
-			return false;
-		return true;
+	public boolean checkUpperCell(int i){
+		if(customMap[i][0] == 'X'|| customMap[i][0] == 'I')
+			return true;
+		return false;
 	}
 
-
-	public boolean lowerBorder(){
+	public boolean checkLowerBorder(){
 		for(int i = 0; i < width;i++)
-			if (!checkLower(i))
+			if (!checkLowerCell(i))
 				return false;
 		return true;
 	}
 
-	public boolean checkLower(int i){
-		if(customMap[i][height-1] == 'O'||customMap[i][height-1] == 'A' || customMap[i][height-1] == 'k' ||customMap[i][height-1] == ' ')
-			return false;
-		return true;
+	public boolean checkLowerCell(int i){
+		if(customMap[i][0] == 'X'|| customMap[i][0] == 'I')
+			return true;
+		return false;
 	}
 
-	public boolean leftBorder(){
+	public boolean checkLeftBorder(){
 		for(int j = 0; j < height;j++)
-			if (!checkLeft(j))
+			if (!checkLeftCell(j))
 				return false;	
 		return true;
 	}
 
-	public boolean checkLeft(int j){
-		if(customMap[0][j] == 'O' || customMap[0][j] == 'A'  || customMap[0][j] == 'k' || customMap[0][j] == ' ')
-			return false;	
-		return true;
-
+	public boolean checkLeftCell(int j){
+		if(customMap[j][0] == 'X'|| customMap[j][0] == 'I')
+			return true;
+		return false;
 	}
 
-	public boolean rightBorder(){
+	public boolean checkRightBorder(){
 		for(int j = 0; j < height;j++)
-			if (!checkRight(j))
+			if (!checkRightCell(j))
 				return false;		
 		return true;
 	}
-	public boolean checkRight(int j){
-		if(customMap[width-1][j] == 'O' || customMap[width-1][j] == 'A'  || customMap[width-1][j] == 'k' || customMap[width-1][j] == ' ')					
-			return false;		
-		return true;
-
+	public boolean checkRightCell(int j){
+		if(customMap[j][0] == 'X'|| customMap[j][0] == 'I')
+			return true;
+		return false;
 	}
 
+	private void setInstruction(String instruction)
+	{
+		lblInstruction.setText("<html>" + instruction + "</html>");	
+	}
+	
 	public JFrame getFrame() {return frame;}
 
 	public char[][] getMap() { return customMap;}
