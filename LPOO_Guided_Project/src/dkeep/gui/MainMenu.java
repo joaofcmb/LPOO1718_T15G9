@@ -8,6 +8,19 @@ import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.BoxLayout;
+import javax.swing.SwingConstants;
+import java.awt.Component;
+import java.awt.FlowLayout;
+import java.awt.BorderLayout;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+import java.awt.GridLayout;
+import java.awt.CardLayout;
+import javax.swing.JLabel;
 //TODO  Add Background Images
 public class MainMenu {
 
@@ -46,26 +59,20 @@ public class MainMenu {
 	private void initFrame() 
 	{
 		frame = new JFrame("Main Menu");
-		frame.setResizable(false);
 		frame.setBounds(100, 100, 800, 650);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setBackground(Color.LIGHT_GRAY);
-		frame.getContentPane().setLayout(null);
 	}
 
 	private void initButtons()
 	{
+	}
+
+	private void addToContentPane()
+	{
 		btnNewGame = new JButton("New Game");
+		btnNewGame.setAlignmentX(Component.CENTER_ALIGNMENT);
 		btnNewGame.setFont(new Font("Courier New", Font.PLAIN, 15));
-		btnNewGame.setBounds(10, 433, 150, 50);
-
-		btnLevelEditor = new JButton("Level Editor");
-		btnLevelEditor.setFont(new Font("Courier New", Font.PLAIN, 15));
-		btnLevelEditor.setBounds(10, 493, 150, 50);
-
-		btnExit = new JButton("Exit");
-		btnExit.setFont(new Font("Courier New", Font.PLAIN, 15));
-		btnExit.setBounds(10, 553, 150, 50);
 
 		btnNewGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
@@ -76,6 +83,12 @@ public class MainMenu {
 
 			}
 		});
+		frame.getContentPane().setLayout(new GridLayout(0, 1, 0, 0));
+		frame.getContentPane().add(btnNewGame);
+
+		btnLevelEditor = new JButton("Level Editor");
+		btnLevelEditor.setAlignmentX(Component.CENTER_ALIGNMENT);
+		btnLevelEditor.setFont(new Font("Courier New", Font.PLAIN, 15));
 
 		btnLevelEditor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
@@ -86,19 +99,18 @@ public class MainMenu {
 
 			}
 		});
+		frame.getContentPane().add(btnLevelEditor);
+
+		btnExit = new JButton("Exit");
+		btnExit.setAlignmentX(Component.CENTER_ALIGNMENT);
+		btnExit.setFont(new Font("Courier New", Font.PLAIN, 15));
 
 		btnExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
 			}
 		});
-	}
-
-	private void addToContentPane()
-	{
-		frame.getContentPane().add(btnNewGame);
 		frame.getContentPane().add(btnExit);
-		frame.getContentPane().add(btnLevelEditor);
 	}
 
 	public JFrame getFrame() {return this.frame;}

@@ -44,7 +44,6 @@ public class LevelEditor {
 
 	private void initFrame() {
 		frame = new JFrame("Level Editor");
-		frame.setResizable(false);
 		frame.setBounds(100, 100, 837, 754);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);

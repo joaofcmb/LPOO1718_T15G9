@@ -25,7 +25,7 @@ public class LevelEditorConfig {
 
 	public LevelEditorConfig(JFrame mainFrame)
 	{
-		frame = new JDialog(mainFrame, "New Game Configuration", true);
+		frame = new JDialog(mainFrame, "Level Editor Configuration", true);
 		initialise(mainFrame);
 	}
 
