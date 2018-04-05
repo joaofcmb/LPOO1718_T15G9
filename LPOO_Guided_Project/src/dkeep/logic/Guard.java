@@ -96,4 +96,8 @@ public class Guard extends GameEntity {
 			return null;
 		}
 	}
+	
+	public boolean hasInverted() {
+		return inverseDirection;
+	}
 }
