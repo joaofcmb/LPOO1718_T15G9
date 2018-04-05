@@ -1,8 +1,11 @@
 package dkeep.logic;
 
+import java.io.Serializable;
 import java.util.Random;
 
-public class CrazyOgre extends GameEntity {
+public class CrazyOgre extends GameEntity implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	private GameEntity club = null;
 	private boolean isStatic = false;
 	

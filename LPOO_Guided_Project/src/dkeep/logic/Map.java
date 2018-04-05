@@ -1,6 +1,10 @@
 package dkeep.logic;
 
-public abstract class Map {
+import java.io.Serializable;
+
+public abstract class Map implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	protected Game.GameState state = Game.GameState.DEFAULT;
 	
 	boolean isUnlocked = false;

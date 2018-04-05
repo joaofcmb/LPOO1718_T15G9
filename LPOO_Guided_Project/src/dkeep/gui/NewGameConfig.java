@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
@@ -53,7 +54,7 @@ public class NewGameConfig {
 	{
 		initBtnStart(mainFrame);
 		initBtnBack();
-		initBtnLoad();
+		initBtnLoad(mainFrame);
 		
 	}
 
@@ -103,7 +104,7 @@ public class NewGameConfig {
 		});
 	}
 	
-	private void initBtnLoad()
+	private void initBtnLoad(JFrame mainframe)
 	{
 		btnLoad = new JButton("Load Game");
 		btnLoad.setFont(new Font("Courier New", Font.PLAIN, 15));
@@ -114,27 +115,32 @@ public class NewGameConfig {
 				fileChooser.setFileFilter(new FileNameExtensionFilter("Dungeon Keep Save Files", "dksf"));
 				
 				if (fileChooser.showOpenDialog(frame) == JFileChooser.APPROVE_OPTION) {
-					ObjectInputStream in;
-					try {
-						in = new ObjectInputStream(new FileInputStream(fileChooser.getSelectedFile().getPath()));
-						
-						game = (Game) in.readObject();
-						
-						in.close();
-					} catch (IOException e1) {
-						e1.printStackTrace();
-						return;
-					} catch (ClassNotFoundException e1) {
-						e1.printStackTrace();
+					try { 
+						if ((game = loadGame(fileChooser)) == null)	return;
+					} catch (IOException e2) {
+						e2.printStackTrace();
 						return;
 					}
-					
-					
+
 					GameWindow gameWindow = new GameWindow(game);
 					gameWindow.getFrame().setVisible(true);
 					gameWindow.getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	
 					frame.dispose();
+					mainframe.dispose();
+				}
+			}
+			
+			private Game loadGame(JFileChooser fileChooser) throws IOException, FileNotFoundException {
+				ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileChooser.getSelectedFile().getPath()));
+				try { 
+					Game game = (Game) in.readObject();
+					in.close();
+					return game;
+				} catch (ClassNotFoundException e1) {
+					e1.printStackTrace();
+					in.close();
+					return null;
 				}
 			}
 		});

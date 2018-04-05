@@ -1,6 +1,10 @@
 package dkeep.logic;
 
-public class Player extends GameEntity {
+import java.io.Serializable;
+
+public class Player extends GameEntity implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	private boolean isArmed = false;
 	
 	public Player(int x, int y) {

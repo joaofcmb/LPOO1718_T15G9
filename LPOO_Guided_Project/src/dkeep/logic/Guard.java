@@ -1,10 +1,13 @@
 package dkeep.logic;
 
+import java.io.Serializable;
 import java.util.Random;
 
 import dkeep.logic.Game.Personality;
 
-public class Guard extends GameEntity {
+public class Guard extends GameEntity implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	private Random random = new Random();
 	
 	private static final int MIN_STEPS_SUSPICION = 3; // Steps until suspicious might trigger his patrol reversion

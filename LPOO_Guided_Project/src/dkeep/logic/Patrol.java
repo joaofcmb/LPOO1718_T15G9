@@ -1,9 +1,12 @@
 package dkeep.logic;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Patrol {
+public class Patrol implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	private ArrayList<String> nodeList = new ArrayList<String>();
 	private ArrayList<Game.Direction> directionList = new ArrayList<Game.Direction>();
 	

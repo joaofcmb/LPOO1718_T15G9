@@ -1,6 +1,10 @@
 package dkeep.logic;
 
-public class MapEntity { // Key, Levers, etc..
+import java.io.Serializable;
+
+public class MapEntity implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	protected int xPos;
 	protected int yPos;
 

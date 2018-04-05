@@ -1,6 +1,10 @@
 package dkeep.logic;
 
-public class GameEntity extends MapEntity {
+import java.io.Serializable;
+
+public class GameEntity extends MapEntity implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	protected int nextXPos;
 	protected int nextYPos;
 	

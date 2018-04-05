@@ -1,6 +1,10 @@
 package dkeep.logic;
 
-public class Game {
+import java.io.Serializable;
+
+public class Game implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	public enum Personality {ROOKIE, DRUNK, SUSPICIOUS, STATIC}
 	public enum GameState {DEFAULT, NEXT_LEVEL, GAME_OVER, VICTORY}
 	public enum Direction {UP, LEFT, DOWN, RIGHT}
