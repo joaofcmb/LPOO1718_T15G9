@@ -78,7 +78,7 @@ public class LevelEditor {
 	private void initButtons() {
 		initBtnHero();
 		initBtnDoor();
-		initBtnDoor();
+		initBtnWall();
 		initBtnOgre();
 		initBtnKey();
 		initBtnQuit();
