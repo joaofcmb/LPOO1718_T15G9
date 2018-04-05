@@ -120,15 +120,6 @@ public class DungeonWindow {
 		gameStatuslbl.setToolTipText("Nothing to see here");
 		gameStatuslbl.setFont(new Font("Times New Roman", Font.PLAIN, 15));
 		gameStatuslbl.setBounds(10, 15, 308, 65);
-
-//	  	Panel panel = new Panel(game);
-//		panel.setBackground(Color.LIGHT_GRAY);
-//		panel.setBounds(0, 0, 600, 600);
-		
-		/*
-		 * ADD TO CONTENT PANE
-		 */
-		//frame.getContentPane().add(panel);
 		
 		frame.getContentPane().add(ogreLabel);
 		frame.getContentPane().add(ogreTextField);

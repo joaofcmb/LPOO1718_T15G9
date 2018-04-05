@@ -63,33 +63,18 @@ public class LevelEditorConfig {
 
 		btnContinue.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int width, height, nOgres;
-				try {
-					width = Integer.parseUnsignedInt(txtWidth.getText());
-					if(width > 20) {
-						throw new NumberFormatException();
-					}
-				} catch(NumberFormatException n) { 
+				int width = Integer.parseUnsignedInt(txtWidth.getText());
+				if (width > 20) { 
 					JOptionPane.showMessageDialog(frame, "Enter a positive integer number below 21 for Width.");
 					return;
 				}
-
-				try {
-					height = Integer.parseUnsignedInt(txtHeight.getText());
-					if(height > 20) {
-						throw new NumberFormatException();
-					}
-				} catch(NumberFormatException n) { 
+				int height = Integer.parseUnsignedInt(txtHeight.getText());
+				if (height > 20) {
 					JOptionPane.showMessageDialog(frame, "Enter a positive integer number below 21 for Height.");
 					return;
 				}
-
-				try {
-					nOgres = Integer.parseUnsignedInt(txtOgre.getText());
-					if(nOgres > 5) {
-						throw new NumberFormatException();
-					}
-				} catch(NumberFormatException n) { 
+				int nOgres = Integer.parseUnsignedInt(txtOgre.getText());
+				if (nOgres > 5) {
 					JOptionPane.showMessageDialog(frame, "Enter a positive integer number below 6 for Ogre Number.");
 					return;
 				}
