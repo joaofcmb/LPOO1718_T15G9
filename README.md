@@ -9,5 +9,6 @@ First Project of the Laboratory of Object Oriented Programming Course in FEUP's 
 
 ## Test Coverage and Mutation Criteria
 
-![EclEmma](https://github.com/joaofcmb/LPOO1718_T15G9/LPOO_Guided_Project/images/GuidedProject_EclEmma.jpg)
-![PIT](https://github.com/joaofcmb/LPOO1718_T15G9/LPOO_Guided_Project/images/GuidedProject_PIT.jpg)
+![EclEmma](https://github.com/joaofcmb/LPOO1718_T15G9/blob/master/LPOO_Guided_Project/images/GuidedProject_EclEmma.jpg)
+
+![PIT](https://github.com/joaofcmb/LPOO1718_T15G9/blob/master/LPOO_Guided_Project/images/GuidedProject_PIT.jpg)
