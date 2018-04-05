@@ -4,6 +4,9 @@ import java.awt.Color;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -107,24 +110,33 @@ public class NewGameConfig {
 		btnLoad.setFont(new Font("Courier New", Font.PLAIN, 15));
 		btnLoad.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
 				// Load game from file
-				/*JFileChooser chooser = new JFileChooser();
-		    FileNameExtensionFilter filter = new FileNameExtensionFilter(
-		        "JPG & GIF Images", "jpg", "gif");
-		    chooser.setFileFilter(filter);
-		    int returnVal = chooser.showOpenDialog(parent);
-		    if(returnVal == JFileChooser.APPROVE_OPTION) {
-		       System.out.println("You chose to open this file: " +
-		            chooser.getSelectedFile().getName());
-		    }
-				 */
-
-				GameWindow gameWindow = new GameWindow(game);
-				gameWindow.getFrame().setVisible(true);
-				gameWindow.getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				JFileChooser fileChooser = new JFileChooser();
+				fileChooser.setFileFilter(new FileNameExtensionFilter("Dungeon Keep Save Files", "dksf"));
 				
-				frame.dispose();
+				if (fileChooser.showOpenDialog(frame) == JFileChooser.APPROVE_OPTION) {
+					ObjectInputStream in;
+					try {
+						in = new ObjectInputStream(new FileInputStream(fileChooser.getSelectedFile().getPath()));
+						
+						game = (Game) in.readObject();
+						
+						in.close();
+					} catch (IOException e1) {
+						e1.printStackTrace();
+						return;
+					} catch (ClassNotFoundException e1) {
+						e1.printStackTrace();
+						return;
+					}
+					
+					
+					GameWindow gameWindow = new GameWindow(game);
+					gameWindow.getFrame().setVisible(true);
+					gameWindow.getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	
+					frame.dispose();
+				}
 			}
 		});
 	}

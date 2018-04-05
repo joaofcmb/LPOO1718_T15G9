@@ -1,6 +1,5 @@
 package dkeep.gui;
 
-
 import dkeep.logic.Game;
 import javax.swing.JFrame;
 import javax.swing.JButton;
