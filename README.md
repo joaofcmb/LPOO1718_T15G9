@@ -8,3 +8,6 @@ First Project of the Laboratory of Object Oriented Programming Course in FEUP's 
 - **(201606124)** Diogo Alexandre Silva Teixeira up201606124@fe.up.pt
 
 ## Test Coverage and Mutation Criteria
+
+![EclEmma](https://github.com/joaofcmb/LPOO1718_T15G9/LPOO_Guided_Project/images/GuidedProject_EclEmma.jpg)
+![PIT](https://github.com/joaofcmb/LPOO1718_T15G9/LPOO_Guided_Project/images/GuidedProject_PIT.jpg)
