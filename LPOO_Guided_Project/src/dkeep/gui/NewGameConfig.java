@@ -42,8 +42,6 @@ public class NewGameConfig {
 		addToContentPane();
 	}
 
-
-
 	private void initFrame()
 	{
 		frame.setBounds(300, 300, 350, 220);
@@ -89,6 +87,7 @@ public class NewGameConfig {
 				gameWindow.getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 				frame.dispose();
+				mainFrame.dispose(); //to close the main menu window
 			}
 		});
 	}

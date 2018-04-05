@@ -66,21 +66,21 @@ public class LevelEditorConfig {
 				int width, height, nOgres;
 				try {
 					width = Integer.parseUnsignedInt(txtWidth.getText());
-					if(width > 10) {
+					if(width > 20) {
 						throw new NumberFormatException();
 					}
 				} catch(NumberFormatException n) { 
-					JOptionPane.showMessageDialog(frame, "Enter a positive integer number below 11 for Width.");
+					JOptionPane.showMessageDialog(frame, "Enter a positive integer number below 21 for Width.");
 					return;
 				}
 
 				try {
 					height = Integer.parseUnsignedInt(txtHeight.getText());
-					if(height > 10) {
+					if(height > 20) {
 						throw new NumberFormatException();
 					}
 				} catch(NumberFormatException n) { 
-					JOptionPane.showMessageDialog(frame, "Enter a positive integer number below 11 for Height.");
+					JOptionPane.showMessageDialog(frame, "Enter a positive integer number below 21 for Height.");
 					return;
 				}
 

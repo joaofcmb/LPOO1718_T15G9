@@ -21,7 +21,7 @@ public class GameWindow {
 	private JFrame frame;
 	protected JPanel graphics;
 	private JLabel lblGameState;
-	private JButton btnUp, btnDown, btnLeft, btnRight, btnQuit;
+	private JButton btnUp, btnDown, btnLeft, btnRight, btnQuit, btnSaveGame;
 
 	public GameWindow(Game g) {
 		this.game = g;
@@ -50,7 +50,7 @@ public class GameWindow {
 		graphics.setBounds(10, 10, 600, 700);
 		graphics.setBackground(Color.GRAY);
 
-		lblGameState = new JLabel("Try to Escape!");
+		lblGameState = new JLabel("<html>Try to Escape!</html>");
 		lblGameState.setHorizontalAlignment(SwingConstants.CENTER);
 		lblGameState.setFont(new Font("Courier New", Font.PLAIN, 17));
 		lblGameState.setBounds(622, 10, 192, 95);
@@ -64,6 +64,7 @@ public class GameWindow {
 		initBtnLeft();
 		initBtnRight();
 		initBtnQuit();
+		initBtnSaveGame();
 	}
 	private void initBtnUp()
 	{
@@ -95,7 +96,6 @@ public class GameWindow {
 
 	private void initBtnRight()
 	{
-
 		btnRight = new JButton("RIGHT");
 		btnRight.setFont(new Font("Courier New", Font.PLAIN, 15));
 		btnRight.setBounds(723, 319, 91, 32);
@@ -115,7 +115,22 @@ public class GameWindow {
 						quitToMainMenu();
 					}
 				});
-
+	}
+	
+	private void initBtnSaveGame()
+	{
+		btnSaveGame = new JButton("<html>SAVE GAME</html>");
+		btnSaveGame.setHorizontalAlignment(SwingConstants.RIGHT);
+		btnSaveGame.setVerticalAlignment(SwingConstants.TOP);
+		btnSaveGame.setFont(new Font("Courier New", Font.PLAIN, 15));
+		btnSaveGame.setBounds(669, 555, 91, 45);
+		
+		btnSaveGame.addActionListener(
+				new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						//TODO Code goes here
+					}
+				});
 	}
 
 	private void btnListener(JButton btn, Game.Direction dir)
@@ -177,6 +192,7 @@ public class GameWindow {
 		frame.getContentPane().add(btnLeft);
 		frame.getContentPane().add(btnRight);		
 		frame.getContentPane().add(btnQuit);
+		frame.getContentPane().add(btnSaveGame);
 
 		frame.getContentPane().add(lblGameState);
 	}
@@ -201,12 +217,12 @@ public class GameWindow {
 		if(game.gameLost()) {
 			deactivateButtons();
 			disablePanel();
-			lblGameState.setText("You were caught!");
+			setGameState("You were caught!</html>");
 		}
 		else if(game.gameWon()) {
 			deactivateButtons();
 			disablePanel();
-			lblGameState.setText("You Escaped!!");
+			setGameState("You Escaped!!");
 		}
 	}
 
@@ -221,6 +237,11 @@ public class GameWindow {
 	private void disablePanel()
 	{
 		graphics.setEnabled(false);
+	}
+	
+	private void setGameState(String state)
+	{
+		lblGameState.setText("<html>" + state + "</html>");
 	}
 
 	public JFrame getFrame() {return frame;}

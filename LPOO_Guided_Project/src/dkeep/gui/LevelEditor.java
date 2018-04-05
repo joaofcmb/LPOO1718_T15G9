@@ -15,12 +15,17 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 public class LevelEditor {
+	
+	//Constants for Panel Position
+	private static final int XPANEL = 150;
+	private static final int YPANEL = 10;
+		
 	private JFrame frame;
 	private JLabel lblInstruction;
 	private JButton btnHero, btnDoor, btnOgre, btnKey, btnQuit, btnWall, btnSaveCustomMap;
 	private JPanel graphics;
 
-	private int width, height, nOgres;
+	private int width=10, height=10, nOgres;
 	private char selection = ' ';
 	private char[][] customMap;
 	private int  nOgresPlaced, nHeroesPlaced, nWallsPlaced, nDoorsPlaced, nKeysPlaced;
@@ -44,7 +49,10 @@ public class LevelEditor {
 
 	private void initFrame() {
 		frame = new JFrame("Level Editor");
-		frame.setBounds(100, 100, 837, 754);
+		int y = height*LevelEditorGraphics.SIZE;
+		if(y < 500) y = 500;
+		frame.setBounds(100, 100,XPANEL + width*LevelEditorGraphics.SIZE + 10, YPANEL + y + 50);
+		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 	}
@@ -59,13 +67,13 @@ public class LevelEditor {
 	private void initOtherObjects() {
 		graphics = new LevelEditorGraphics(width, height,this);
 		graphics.setLayout(null);
-		graphics.setBounds(10, 10, width*LevelEditorGraphics.SIZE, height*LevelEditorGraphics.SIZE);
+		graphics.setBounds(150, 10, width*LevelEditorGraphics.SIZE, height*LevelEditorGraphics.SIZE);
 		graphics.setBackground(Color.GRAY);
 
 		lblInstruction = new JLabel("<html>Select an element.</html>");
 		lblInstruction.setHorizontalAlignment(SwingConstants.LEFT);
 		lblInstruction.setFont(new Font("Courier New", Font.PLAIN, 17));
-		lblInstruction.setBounds(561, 5, 263, 141);
+		lblInstruction.setBounds(10, 10, 156, 141);
 
 		initKeys();
 	}
@@ -84,7 +92,7 @@ public class LevelEditor {
 	{
 		btnHero = new JButton("1. Hero");
 		btnHero.setFont(new Font("Courier New", Font.PLAIN, 15));
-		btnHero.setBounds(561, 156, 116, 32);
+		btnHero.setBounds(10, 162, 116, 32);
 		btnListener(btnHero, 'A', "the Hero");
 	}
 
@@ -92,14 +100,14 @@ public class LevelEditor {
 	{
 		btnDoor = new JButton("5. Door");
 		btnDoor.setFont(new Font("Courier New", Font.PLAIN, 15));
-		btnDoor.setBounds(561, 240, 116, 32);
+		btnDoor.setBounds(10, 333, 116, 32);
 		btnListener(btnDoor, 'I', "a Door");
 	}
 	private void initBtnWall()
 	{
 		btnWall = new JButton("2. Wall");
 		btnWall.setFont(new Font("Courier New", Font.PLAIN, 15));
-		btnWall.setBounds(708, 156, 116, 32);
+		btnWall.setBounds(10, 204, 116, 32);
 		btnListener(btnWall, 'X', "a Wall");
 	}
 
@@ -107,7 +115,7 @@ public class LevelEditor {
 	{
 		btnOgre = new JButton("3. Ogre");
 		btnOgre.setFont(new Font("Courier New", Font.PLAIN, 15));
-		btnOgre.setBounds(561, 198, 116, 32);
+		btnOgre.setBounds(10, 246, 116, 32);
 		btnListener(btnOgre, 'O', "an Ogre");
 
 	}
@@ -115,7 +123,7 @@ public class LevelEditor {
 	{
 		btnKey = new JButton("4. Key");
 		btnKey.setFont(new Font("Courier New", Font.PLAIN, 15));
-		btnKey.setBounds(708, 198, 116, 32);
+		btnKey.setBounds(10, 291, 116, 32);
 		btnListener(btnKey, 'k', "a Key");
 
 	}
@@ -123,7 +131,7 @@ public class LevelEditor {
 	{
 		btnQuit = new JButton("QUIT");
 		btnQuit.setFont(new Font("Courier New", Font.PLAIN, 15));
-		btnQuit.setBounds(718, 675, 106, 32);
+		btnQuit.setBounds(10, 477, 116, 32);
 		btnQuit.addActionListener(
 				new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
@@ -136,7 +144,7 @@ public class LevelEditor {
 		btnSaveCustomMap = new JButton("<html>Save Custom Map</html>");
 		btnSaveCustomMap.setVerticalAlignment(SwingConstants.TOP);
 		btnSaveCustomMap.setFont(new Font("Courier New", Font.PLAIN, 15));
-		btnSaveCustomMap.setBounds(708, 243, 116, 63);
+		btnSaveCustomMap.setBounds(10, 383, 116, 63);
 
 		btnSaveCustomMap.addActionListener(
 				new ActionListener() {
@@ -219,6 +227,10 @@ public class LevelEditor {
 
 	private void addToContentPane()
 	{	
+		JPanel graphics1 = new JPanel();
+		graphics1.setLayout(null);
+		graphics1.setBounds(150, 10, 565, 585);
+		graphics1.setBackground(Color.GRAY);
 		frame.getContentPane().add(graphics);
 
 		frame.getContentPane().add(btnHero);	
