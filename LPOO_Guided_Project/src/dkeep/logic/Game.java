@@ -138,7 +138,7 @@ public class Game implements Serializable {
 	/**
 	 * Progresses one tick/turn of the game logic
 	 * 
-	 * @param 	heroDirection		Direction where the hero is mean't to move.
+	 * @param 	heroDirection		Direction where the hero is meant to move.
 	 * @return	<code> 0 </code> if the heroDirection isn't <code> null </code>. <code> -1 </code> otherwise.
 	 */
 	public int update(Direction heroDirection) {
