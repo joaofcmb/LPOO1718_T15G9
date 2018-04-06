@@ -7,6 +7,12 @@ public class Player extends GameEntity implements Serializable {
 	
 	private boolean isArmed = false;
 	
+	/**
+	 * Constructor of Player class
+	 * 
+	 * @param x
+	 * @param y
+	 */
 	public Player(int x, int y) {
 		super(x, y, 'P');
 	}
