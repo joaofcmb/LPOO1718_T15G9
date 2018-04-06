@@ -7,12 +7,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class LevelEditor {
 	
@@ -151,7 +157,26 @@ public class LevelEditor {
 					public void actionPerformed(ActionEvent e) {
 						if(checkElements())
 						{	
-							//TODO save cMap with nOgres
+							JFileChooser fileChooser = new JFileChooser();
+							fileChooser.setFileFilter(new FileNameExtensionFilter("Crazy Ogre Map Files", "comf"));
+						
+							if (fileChooser.showSaveDialog(frame) == JFileChooser.APPROVE_OPTION) {
+								try {	
+									File f = fileChooser.getSelectedFile();
+									if (!f.getName().endsWith(".comf")) {
+										int i = f.getPath().lastIndexOf('.');
+										f.renameTo(new File(f.getPath().substring(0,i) + ".comf"));
+									}
+									f.createNewFile(); // create new file if it doesn't exist yet
+									ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(f.getPath()));
+									out.writeObject(customMap);
+									out.writeObject(nOgres);
+									out.close();
+								} catch (IOException e2) {
+									e2.printStackTrace();
+									return;
+								}
+							}
 						}
 					}
 				});
