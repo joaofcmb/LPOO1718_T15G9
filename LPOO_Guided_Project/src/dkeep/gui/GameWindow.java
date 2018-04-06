@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -137,10 +138,17 @@ public class GameWindow {
 				new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						JFileChooser fileChooser = new JFileChooser();
+						fileChooser.setFileFilter(new FileNameExtensionFilter("Dungeon Keep Save Files", "dksf"));
 					
 						if (fileChooser.showSaveDialog(frame) == JFileChooser.APPROVE_OPTION) {
-							try { 
-								ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fileChooser.getSelectedFile().getPath()));
+							try {	
+								File f = fileChooser.getSelectedFile();
+								if (!f.getName().endsWith(".dksf")) {
+									int i = f.getPath().lastIndexOf('.');
+									f.renameTo(new File(f.getPath().substring(0,i) + ".dksf"));
+								}
+								f.createNewFile(); // create new file if it doesn't exist yet
+								ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(f.getPath()));
 								out.writeObject(game);
 								out.close();
 							} catch (IOException e2) {
