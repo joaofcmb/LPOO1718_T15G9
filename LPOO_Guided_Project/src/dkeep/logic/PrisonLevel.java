@@ -18,6 +18,10 @@ public class PrisonLevel extends Map {
 	 * 
 	 */
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -803221497898750762L;
 	LinkedList<Door> doorList = new LinkedList<Door>();
 	LinkedList<Guard> guardList = new LinkedList<Guard>();
 	
