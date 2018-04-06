@@ -10,8 +10,8 @@ public class Player extends GameEntity implements Serializable {
 	/**
 	 * Constructor of Player class
 	 * 
-	 * @param x
-	 * @param y
+	 * @param x	Initial position in X Axis
+	 * @param y	Initial position in Y Axis
 	 */
 	public Player(int x, int y) {
 		super(x, y, 'P');

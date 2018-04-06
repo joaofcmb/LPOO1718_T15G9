@@ -14,11 +14,26 @@ public class CrazyOgre extends GameEntity implements Serializable {
 	
 	private Random random = new Random();
 	
+	/**
+	 * Constructor for Crazy Ogre
+	 * 
+	 * Defaults Crazy Ogre without a club
+	 * 
+	 * @param x Initial position in X Axis
+	 * @param y Initial position in Y Axis
+	 */
 	public CrazyOgre(int x, int y) {
 		this(x, y, false);
 		isStatic = true;
 	}
 
+	/**
+	 * Constructor for Crazy Ogre
+	 * 
+	 * @param x Initial position in X Axis
+	 * @param y Initial position in Y Axis
+	 * @param hasClub Whether Ogre has a club or not
+	 */
 	public CrazyOgre(int x, int y, boolean hasClub) {
 		super(x, y, 'O');
 		
