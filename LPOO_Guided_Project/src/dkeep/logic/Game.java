@@ -1,5 +1,4 @@
 package dkeep.logic;
-
 import java.io.Serializable;
 
 public class Game implements Serializable {
@@ -23,8 +22,7 @@ public class Game implements Serializable {
 		this(new PrisonLevel());
 	}
 	
-	public Game(int nOgres, Personality type)
-	{
+	public Game(int nOgres, Personality type) {
 		this.nOgres = nOgres;
 		this.map = new PrisonLevel(type);
 	}

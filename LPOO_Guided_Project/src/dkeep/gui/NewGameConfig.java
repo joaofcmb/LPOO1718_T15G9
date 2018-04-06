@@ -65,23 +65,23 @@ public class NewGameConfig {
 		btnStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int nOgres;
+				
 				try {
 					nOgres = Integer.parseUnsignedInt(ogreTextField.getText());
-					if(nOgres > 5) {
-						throw new NumberFormatException();
-					}
+					if(nOgres > 5)	throw new NumberFormatException();
 				} catch(NumberFormatException n) { 
 					JOptionPane.showMessageDialog(frame, "Enter a positive integer number below 6.");
 					return;
 				}
+				
 				Personality guardType;
-				switch(guardComboBox.getItemAt(guardComboBox.getSelectedIndex()))
-				{
+				switch(guardComboBox.getItemAt(guardComboBox.getSelectedIndex())) {
 				case "Rookie": guardType = Personality.ROOKIE;break;
 				case "Suspicious": guardType = Personality.SUSPICIOUS;break;
 				case "Drunk": guardType = Personality.DRUNK;break;
 				default: guardType = Personality.STATIC;break;
 				}
+				
 				game = new Game(nOgres, guardType);
 				GameWindow gameWindow = new GameWindow(game);
 				gameWindow.getFrame().setVisible(true);
@@ -130,20 +130,20 @@ public class NewGameConfig {
 					mainframe.dispose();
 				}
 			}
-			
-			private Game loadGame(JFileChooser fileChooser) throws IOException, FileNotFoundException {
-				ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileChooser.getSelectedFile().getPath()));
-				try { 
-					Game game = (Game) in.readObject();
-					in.close();
-					return game;
-				} catch (ClassNotFoundException e1) {
-					e1.printStackTrace();
-					in.close();
-					return null;
-				}
-			}
 		});
+	}
+	
+	private Game loadGame(JFileChooser fileChooser) throws IOException, FileNotFoundException {
+		ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileChooser.getSelectedFile().getPath()));
+		try { 
+			Game game = (Game) in.readObject();
+			in.close();
+			return game;
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+			in.close();
+			return null;
+		}
 	}
 
 	private void addToContentPane(){
