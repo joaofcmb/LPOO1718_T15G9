@@ -16,7 +16,8 @@ public class CrazyOgreLevel extends Map {
 	 * (clubs added automatically depending on Ogre symbol)
 	 * 
 	 */
-
+	private static final long serialVersionUID = 1L;
+	
 	LinkedList<CrazyOgre> ogreList = new LinkedList<CrazyOgre>();
 	Key key;
 
@@ -65,25 +66,27 @@ public class CrazyOgreLevel extends Map {
 	 * NOTICE: The isUnlocked boolean assumes there is only one door in the level, therefore
 	 * it'll trigger when any door is opened (This does not affect gameplay, it's just for testing purposes)
 	 */
-	public CrazyOgreLevel(char[][] blueprint) {
+	public CrazyOgreLevel(char[][] blueprint, int ogreNum) {
 		// iterate blueprint to look for entities (doors, guards and player) and add them
 		for (int i = 0; i < blueprint.length; i++) {
 			for (int j = 0; j < blueprint[i].length; j++) {
 				switch(blueprint[i][j]) {
+				case 'A':
 				case 'P':
 					hero = new Player(i, j);
+					if (blueprint[i][j] == 'A')	hero.arm();
 					blueprint[i][j] = ' ';
 					break;
 				case 'O':
-					ogreList.add(new CrazyOgre(i, j, true));
+					for (int k = 0; k < ogreNum; k++) ogreList.add(new CrazyOgre(i, j, true));
 					blueprint[i][j] = ' ';
 					break;
 				case 'o':
-					ogreList.add(new CrazyOgre(i, j, false));
+					for (int k = 0; k < ogreNum; k++) ogreList.add(new CrazyOgre(i, j, false));
 					blueprint[i][j] = ' ';
 					break;
 				case 'T':
-					ogreList.add(new CrazyOgre(i, j));
+					for (int k = 0; k < ogreNum; k++) ogreList.add(new CrazyOgre(i, j));
 					blueprint[i][j] = ' ';
 					break;
 				case 'k':
@@ -95,8 +98,8 @@ public class CrazyOgreLevel extends Map {
 
 		this.blueprint = blueprint;
 	}
-	public CrazyOgreLevel(char[][] blueprint, CrazyOgre ogre) {
-		this(blueprint);
+	public CrazyOgreLevel(char[][] blueprint, int ogreNum, CrazyOgre ogre) {
+		this(blueprint, ogreNum);
 		ogreList.add(ogre);
 	}
 

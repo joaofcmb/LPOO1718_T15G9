@@ -11,7 +11,7 @@ public abstract class Map implements Serializable {
 	
 	protected char[][] blueprint = { {'X','X','X'}, {'X',' ','X'}, {'X','X','X'} }; // static layout of map itself (Walls and doors and stuff)
 	
-	protected Player hero = new Player(1, 1); 
+	protected Player hero= new Player(1, 1); 
 	
 	public abstract Game.GameState update(Game.Direction heroDirection);
 	public abstract String toString();

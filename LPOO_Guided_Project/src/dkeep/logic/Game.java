@@ -11,6 +11,7 @@ public class Game implements Serializable {
 	private GameState state = GameState.DEFAULT;
 	
 	private Map map;
+	private char[][] customMap;
 	
 	private int nOgres = 1;
 	
@@ -22,14 +23,16 @@ public class Game implements Serializable {
 		this(new PrisonLevel());
 	}
 	
-	public Game(int nOgres, Personality type) {
+	public Game(int nOgres, Personality type, char[][] customMap) {
+		this.customMap = customMap;
 		this.nOgres = nOgres;
 		this.map = new PrisonLevel(type);
 	}
 	
 	private void nextLevel() {
 		if (map instanceof PrisonLevel)
-			map = new CrazyOgreLevel(nOgres);
+			if (customMap != null)	map = new CrazyOgreLevel(customMap, nOgres);
+			else 					map = new CrazyOgreLevel(nOgres);
 		else if (map instanceof CrazyOgreLevel)
 			state = GameState.VICTORY;
 	}

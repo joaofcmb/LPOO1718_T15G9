@@ -25,8 +25,10 @@ public class NewGameConfig {
 	private JLabel ogreLabel, guardLabel;
 	private JTextField ogreTextField;
 	private JComboBox<String> guardComboBox;
-	private JButton btnStart, btnBack, btnLoad;
+	private JButton btnStart, btnBack, btnLoad, btnCustomMap;
+	
 	protected Game game;
+	private char[][] customMap = null;
 
 	public NewGameConfig(JFrame mainFrame)
 	{
@@ -55,7 +57,7 @@ public class NewGameConfig {
 		initBtnStart(mainFrame);
 		initBtnBack();
 		initBtnLoad(mainFrame);
-		
+		initBtnCustomMap(mainFrame);	
 	}
 
 	private void initBtnStart(JFrame mainFrame)
@@ -82,7 +84,7 @@ public class NewGameConfig {
 				default: guardType = Personality.STATIC;break;
 				}
 				
-				game = new Game(nOgres, guardType);
+				game = new Game(nOgres, guardType, customMap);
 				GameWindow gameWindow = new GameWindow(game);
 				gameWindow.getFrame().setVisible(true);
 				gameWindow.getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -110,35 +112,55 @@ public class NewGameConfig {
 		btnLoad.setFont(new Font("Courier New", Font.PLAIN, 15));
 		btnLoad.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// Load game from file
-				JFileChooser fileChooser = new JFileChooser();
-				fileChooser.setFileFilter(new FileNameExtensionFilter("Dungeon Keep Save Files", "dksf"));
+				game = (Game) loadObject("Dungeon Keep Save Files", "dksf");
+			
+				if (game == null)	return;
 				
-				if (fileChooser.showOpenDialog(frame) == JFileChooser.APPROVE_OPTION) {
-					try { 
-						if ((game = loadGame(fileChooser)) == null)	return;
-					} catch (IOException e2) {
-						e2.printStackTrace();
-						return;
-					}
+				GameWindow gameWindow = new GameWindow(game);
+				gameWindow.getFrame().setVisible(true);
+				gameWindow.getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-					GameWindow gameWindow = new GameWindow(game);
-					gameWindow.getFrame().setVisible(true);
-					gameWindow.getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	
-					frame.dispose();
-					mainframe.dispose();
-				}
+				frame.dispose();
+				mainframe.dispose();
 			}
 		});
 	}
 	
-	private Game loadGame(JFileChooser fileChooser) throws IOException, FileNotFoundException {
+	private void initBtnCustomMap(JFrame mainframe)
+	{
+		btnCustomMap = new JButton("Load Custom Map");
+		btnCustomMap.setFont(new Font("Courier New", Font.PLAIN, 15));
+		btnCustomMap.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				customMap = (char[][]) loadObject("Crazy Ogre Map Files", "comf");
+				
+				if (customMap != null)
+					JOptionPane.showMessageDialog(frame,  "Custom Map loaded successfully. "
+														+ "Finish setting up and start game to proceed.");
+			}
+		});
+	}
+	
+	private Object loadObject(String extensionDescription, String extension) {
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setFileFilter(new FileNameExtensionFilter(extensionDescription, extension));
+		
+		if (fileChooser.showOpenDialog(frame) == JFileChooser.APPROVE_OPTION) {
+			try {
+				return load(fileChooser);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+	
+	private Object load(JFileChooser fileChooser) throws IOException, FileNotFoundException {
 		ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileChooser.getSelectedFile().getPath()));
 		try { 
-			Game game = (Game) in.readObject();
+			Object object = in.readObject();
 			in.close();
-			return game;
+			return object;
 		} catch (ClassNotFoundException e1) {
 			e1.printStackTrace();
 			in.close();
@@ -160,6 +182,13 @@ public class NewGameConfig {
 		gbc_btnLoad.gridx = 1;
 		gbc_btnLoad.gridy = 3;
 		frame.getContentPane().add(btnLoad, gbc_btnLoad);
+		
+		GridBagConstraints gbc_btnCustomMap = new GridBagConstraints();
+		gbc_btnCustomMap.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnCustomMap.insets = new Insets(0, 0, 5, 5);
+		gbc_btnCustomMap.gridx = 0;
+		gbc_btnCustomMap.gridy = 3;
+		frame.getContentPane().add(btnCustomMap, gbc_btnCustomMap);
 
 		GridBagConstraints gbc_btnBack = new GridBagConstraints();
 		gbc_btnBack.fill = GridBagConstraints.HORIZONTAL;

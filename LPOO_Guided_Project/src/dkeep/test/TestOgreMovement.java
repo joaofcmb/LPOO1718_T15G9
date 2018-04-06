@@ -32,11 +32,8 @@ public class TestOgreMovement {
 
 	private void testOgreMovement(boolean heroIsArmed) {
 		CrazyOgre testOgre = new CrazyOgre(1, 3, !heroIsArmed); // Test club only when unarmed, otherwise hard to get a stun to happen
-		CrazyOgreLevel testLevel = new CrazyOgreLevel(blueprint, testOgre);
+		CrazyOgreLevel testLevel = new CrazyOgreLevel(blueprint, 0, testOgre);
 		Game testGame = new Game(testLevel);
-		
-		if (heroIsArmed)	testLevel.getHero().arm();
-		
 		
 		boolean adjacentOgre = false, adjacentClub = false;
 		

@@ -17,7 +17,7 @@ public class TestOgreLogic {
 			{'X','X','X','X','X'}
 	};
 	
-	CrazyOgreLevel testLevel = new CrazyOgreLevel(blueprint);
+	CrazyOgreLevel testLevel = new CrazyOgreLevel(blueprint, 1);
 	
 	@Test
 	public void testMoveHeroWall() {
